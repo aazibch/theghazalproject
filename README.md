@@ -1,36 +1,15 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# The Ghazal Project
 
-## Getting Started
+## Overview
 
-First, run the development server:
+The Ghazal Project is a web-based platform that aims to explore and educate users on the rich artistic and poetic culture of Pakistan through the ghazal, an incredibly versatile form of poetry that allows for a wide array of expressions and themes. Furthermore, the application aims to promote cultural amalgamation by presenting a modified version of the traditional ghazal suited to the English language, and in a manner that is accessible to anyone unacquainted with the nuances of prosody. The application will consist of two main sections: One that details the history of the form, its cultural roots, and its connection to mysticism and metaphysical philosophy, as well as information on the English ghazal. And another interactive section where users can collectively contribute their own verses to a single ghazal poem, encouraging their creativity and familiarizing them with the often-rewarding process of composition.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Goals
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Spread information about the nature of the ghazal form and its deep cultural roots in Pakistan and the Indian subcontinent as a whole.
+2. Foster cultural synthesis by introducing an English-language adaptation of the ghazal.
+3. Encourage creativity, artistic expression, and metaphysical insight through ghazal-composition.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Specifications
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The project will mainly rely on modern technologies such as Next.js for the client- and server-side and MongoDB for the database, in addition to other minor tools that might be needed to enhance the application’s functionality.
