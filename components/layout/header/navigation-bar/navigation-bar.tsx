@@ -5,12 +5,12 @@ import { Avatar, Dropdown, Navbar } from 'flowbite-react';
 export default function NavigationBar() {
   return (
     <Navbar
-      theme={{ link: { active: { on: 'text-[#0F52BA]' } } }}
-      fluid
+      theme={{ link: { active: { on: 'text-primary_blue' } } }}
       rounded
+      border
     >
-      <Navbar.Brand href="https://flowbite-react.com">
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white text-[#0F52BA] font-crimson_text">
+      <Navbar.Brand href="/">
+        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white text-primary_blue font-crimson_text">
           The Ghazal Project
         </span>
       </Navbar.Brand>
@@ -44,10 +44,9 @@ export default function NavigationBar() {
             arrowIcon: 'ml-1 h-4 w-4'
           }}
         >
-          <Dropdown.Item>Dashboard</Dropdown.Item>
-          <Dropdown.Item>Settings</Dropdown.Item>
-          <Dropdown.Item>Earnings</Dropdown.Item>
-          <Dropdown.Item>Sign out</Dropdown.Item>
+          <Dropdown.Item>How to Write a Ghazal</Dropdown.Item>
+          <Dropdown.Item>Instructions on Contributing</Dropdown.Item>
+          <Dropdown.Item>History of the Ghazal</Dropdown.Item>
         </Dropdown>
         <Navbar.Link href="#">Contribute</Navbar.Link>
         <Navbar.Link href="#">About Us</Navbar.Link>

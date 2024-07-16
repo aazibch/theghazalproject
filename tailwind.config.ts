@@ -20,9 +20,13 @@ const config: Config = {
       fontFamily: {
         inter: ['var(--font-inter)'],
         crimson_text: ['var(--font-crimson_text)']
+      },
+      colors: {
+        primary_blue: '#0F52BA'
       }
     }
   },
   plugins: [flowbite.plugin()]
 };
+
 export default config;

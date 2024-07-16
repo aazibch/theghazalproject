@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Crimson_Text } from 'next/font/google';
 import './globals.css';
+import Layout from '@/components/layout/layout';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -28,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${crimson_text.variable}`}>
-        {children}
+        <Layout>{children}</Layout>
       </body>
     </html>
   );
