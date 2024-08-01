@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, Card } from 'flowbite-react';
+import { HiArrowRight } from 'react-icons/hi';
 
 export default function RecentArticles() {
   return (
@@ -13,25 +14,23 @@ export default function RecentArticles() {
               How to Write a Ghazal
             </h5>
             <p className="font-normal text-gray-700 dark:text-gray-400">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-              arcu enim, pharetra eu elit id, fringilla tempor ex. Aliquam
-              vulputate euismod purus, eget suscipit purus consectetur at. Morbi
-              euismod at eros a placerat.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Suspendisse volutpat condimentum congue. Phasellus fermentum, nunc
+              ac auctor eleifend, arcu risus tincidunt tortor, non posuere
+              turpis nibh et purus. Morbi non placerat sem, vel viverra arcu.
+              Suspendisse potenti. Quisque cursus, sapien et porta porta, leo
+              nunc sagittis ante, quis cursus risus ligula sit amet ipsum.
+              Quisque posuere dapibus neque, quis molestie nisi lacinia id.
             </p>
-            <Button>
-              Read more
-              <svg
-                className="-mr-1 ml-2 h-4 w-4"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
+            <Button
+              color="blue"
+              theme={{
+                inner: {
+                  base: 'flex items-center transition-all duration-200'
+                }
+              }}
+            >
+              Read More <HiArrowRight className="ml-2" />
             </Button>
           </Card>
           <Card>
@@ -39,25 +38,24 @@ export default function RecentArticles() {
               Instructions on Contributing
             </h5>
             <p className="font-normal text-gray-700 dark:text-gray-400">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-              arcu enim, pharetra eu elit id, fringilla tempor ex. Aliquam
-              vulputate euismod purus, eget suscipit purus consectetur at. Morbi
-              euismod at eros a placerat.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Suspendisse volutpat condimentum congue. Phasellus fermentum, nunc
+              ac auctor eleifend, arcu risus tincidunt tortor, non posuere
+              turpis nibh et purus. Morbi non placerat sem, vel viverra arcu.
+              Suspendisse potenti. Quisque cursus, sapien et porta porta, leo
+              nunc sagittis ante, quis cursus risus ligula sit amet ipsum.
+              Quisque posuere dapibus neque, quis molestie nisi lacinia id.
             </p>
-            <Button>
-              Read more
-              <svg
-                className="-mr-1 ml-2 h-4 w-4"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
+            <Button
+              color="blue"
+              theme={{
+                inner: {
+                  base: 'flex items-center transition-all duration-200'
+                }
+              }}
+            >
+              Read More
+              <HiArrowRight className="ml-2" />
             </Button>
           </Card>
           <Card>
@@ -65,25 +63,24 @@ export default function RecentArticles() {
               History of the Ghazal
             </h5>
             <p className="font-normal text-gray-700 dark:text-gray-400">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-              arcu enim, pharetra eu elit id, fringilla tempor ex. Aliquam
-              vulputate euismod purus, eget suscipit purus consectetur at. Morbi
-              euismod at eros a placerat.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Suspendisse volutpat condimentum congue. Phasellus fermentum, nunc
+              ac auctor eleifend, arcu risus tincidunt tortor, non posuere
+              turpis nibh et purus. Morbi non placerat sem, vel viverra arcu.
+              Suspendisse potenti. Quisque cursus, sapien et porta porta, leo
+              nunc sagittis ante, quis cursus risus ligula sit amet ipsum.
+              Quisque posuere dapibus neque, quis molestie nisi lacinia id.
             </p>
-            <Button>
-              Read more
-              <svg
-                className="-mr-1 ml-2 h-4 w-4"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
+            <Button
+              color="blue"
+              theme={{
+                inner: {
+                  base: 'flex items-center transition-all duration-200'
+                }
+              }}
+            >
+              Read More
+              <HiArrowRight className="ml-2" />
             </Button>
           </Card>
         </div>
