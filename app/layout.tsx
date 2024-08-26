@@ -6,6 +6,7 @@ import Layout from '@/components/layout/layout';
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
+  weight: ['300', '400', '600', '700'],
   variable: '--font-inter'
 });
 
