@@ -35,19 +35,7 @@ export default function NavigationBar() {
         <Navbar.Link href="#" active>
           Home
         </Navbar.Link>
-        <Dropdown
-          label="Articles"
-          inline
-          theme={{
-            inlineWrapper:
-              'flex items-center text-gray-700 hover:text-cyan-700',
-            arrowIcon: 'ml-1 h-4 w-4'
-          }}
-        >
-          <Dropdown.Item>How to Write a Ghazal</Dropdown.Item>
-          <Dropdown.Item>Instructions on Contributing</Dropdown.Item>
-          <Dropdown.Item>History of the Ghazal</Dropdown.Item>
-        </Dropdown>
+        <Navbar.Link href="#">Articles</Navbar.Link>
         <Navbar.Link href="#">Contribute</Navbar.Link>
         <Navbar.Link href="#">About Us</Navbar.Link>
         <Navbar.Link href="#">Contact</Navbar.Link>
