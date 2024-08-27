@@ -2,7 +2,7 @@
 
 import { Button } from 'flowbite-react';
 
-export default function AboutExcerpt() {
+export default function AboutSection() {
   return (
     <div className="py-16 px-8 bg-[url('/images/shahi-hammam-main-dome-bg.png')] bg-no-repeat bg-center bg-cover">
       <div className="container mx-auto my-10 text-white">

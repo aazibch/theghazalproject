@@ -1,6 +1,6 @@
 import { Avatar, Button } from 'flowbite-react';
 
-export default function RecentGhazalEntries() {
+export default function GhazalSection() {
   return (
     <div className="container mx-auto text-center my-10">
       <h2 className="uppercase mb-8 text-xl">The Collective Ghazal</h2>

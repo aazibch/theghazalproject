@@ -3,7 +3,7 @@
 import { Button, Card } from 'flowbite-react';
 import { HiArrowRight } from 'react-icons/hi';
 
-export default function RecentArticles() {
+export default function ArticlesSection() {
   return (
     <div className="bg-gray-100 p-8">
       <div className="container mx-auto my-10">

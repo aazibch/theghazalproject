@@ -1,15 +1,15 @@
-import Hero from '@/components/home/hero/hero';
-import RecentArticles from '@/components/home/recent-articles/recent-articles';
-import RecentGhazalEntries from '@/components/home/recent-ghazal-entries/recent-ghazal-entries';
-import AboutExcerpt from '@/components/home/about-excerpt/about-excerpt';
+import HeroSection from '@/components/home/hero-section/hero-section';
+import ArticlesSection from '@/components/home/articles-section/articles-section';
+import GhazalSection from '@/components/home/ghazal-section/ghazal-section';
+import AboutSection from '@/components/home/about-section/about-section';
 
 export default function Home() {
   return (
     <>
-      <Hero />
-      <RecentGhazalEntries />
-      <RecentArticles />
-      <AboutExcerpt />
+      <HeroSection />
+      <GhazalSection />
+      <ArticlesSection />
+      <AboutSection />
     </>
   );
 }
