@@ -6,7 +6,7 @@ export default async function ArticlesPage() {
 
   return (
     <div className="container mx-auto my-12">
-      <h2 className="text-3xl mb-8">Articles</h2>
+      <h2 className="text-2xl mb-4">Articles</h2>
 
       {articleData.map((e, i) => (
         <ArticlePreview

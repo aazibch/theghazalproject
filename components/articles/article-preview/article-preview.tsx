@@ -22,7 +22,7 @@ export default function ArticlePreview({
   return (
     <div className="mb-8">
       <header className="mb-4">
-        <h1 className="text-2xl mb-2">{title}</h1>
+        <h1 className="text-xl mb-1">{title}</h1>
         <div className="text-sm">
           <span>By {author}</span> ·{' '}
           <time dateTime={date.toString()}>{date}</time>
