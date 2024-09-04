@@ -1,5 +1,7 @@
 ---
 title: 'How to Write a Ghazal'
+author: 'Aazib Chaudhry'
+excerpt: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent cursus purus tellus, id pharetra nisi cursus vel. Nulla pretium iaculis justo, eget scelerisque mi rhoncus id. Vestibulum vehicula lacinia bibendum. Curabitur consequat metus metus, ut interdum metus placerat at. Nunc volutpat scelerisque lacus vel sollicitudin. Duis ultrices, dui nec sagittis gravida, ex leo auctor est, nec tincidunt lacus magna non elit. In hac habitasse platea dictumst. Phasellus et tincidunt turpis. Morbi lobortis, magna hendrerit convallis scelerisque, nulla quam tincidunt quam, non elementum enim neque id turpis. In sed ex et ligula mattis vehicula ut vel tortor. Phasellus vitae ullamcorper felis. Suspendisse egestas condimentum tortor at posuere. Nam non efficitur quam, quis commodo enim. Duis sed iaculis lacus, ac elementum tellus.'
 date: 'August 30, 2024'
 ---
 

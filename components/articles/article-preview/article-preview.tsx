@@ -5,40 +5,54 @@ import rehypeRaw from 'rehype-raw';
 import classNames from './article-preview.module.css';
 
 interface ArticlePreviewProps {
+  slug: string;
   title: string;
-  excerpt: string;
   date: string;
+  author: string;
+  excerpt: string;
 }
 
 export default function ArticlePreview({
+  slug,
   title,
-  excerpt,
-  date
+  date,
+  author,
+  excerpt
 }: ArticlePreviewProps) {
   return (
-    <>
-      <h1>{title}</h1>
-      <time dateTime={date.toString()}>{date}</time>
-      <div className={classNames.articleContent}>
-        <ReactMarkdown
-          rehypePlugins={[rehypeRaw]}
-          components={{
-            a({ href, children }) {
-              if (typeof href === 'string' && Array.isArray(children)) {
-                return (
-                  <Link href={href} target="_blank">
-                    {children[0]}
-                  </Link>
-                );
-              }
+    <div className="mb-8">
+      <header className="mb-4">
+        <h1 className="text-2xl mb-2">{title}</h1>
+        <div className="text-sm">
+          <span>By {author}</span> ·{' '}
+          <time dateTime={date.toString()}>{date}</time>
+        </div>
+      </header>
 
-              return;
-            }
-          }}
-        >
-          {excerpt}
-        </ReactMarkdown>
+      <div className={classNames.articleContent}>
+        <p>
+          {excerpt} <Link href={`/articles/${slug}`}>continue...</Link>
+        </p>
       </div>
-    </>
+    </div>
   );
 }
+
+// <ReactMarkdown
+// rehypePlugins={[rehypeRaw]}
+// components={{
+//   a({ href, children }) {
+//     if (typeof href === 'string' && Array.isArray(children)) {
+//       return (
+//         <Link href={href} target="_blank">
+//           {children[0]}
+//         </Link>
+//       );
+//     }
+
+//     return;
+//   }
+// }}
+// >
+// {excerpt}
+// </ReactMarkdown>
