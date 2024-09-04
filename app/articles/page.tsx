@@ -1,15 +1,16 @@
-import { getArticleFileNames } from '@/lib/articles';
+import { getArticleData, getArticleFileNames } from '@/lib/articles';
 
 export default async function ArticlesPage() {
-  const articleFileNames = await getArticleFileNames();
+  const articleFileNames = getArticleFileNames();
+  const articleData = getArticleData(articleFileNames);
 
   return (
-    <>
-      <h1>ArticlesPage</h1>
+    <div className="container mx-auto my-12">
+      <h2 className="text-2xl">Articles</h2>
 
       {articleFileNames.map((e, i) => (
         <p key={i}>{e}</p>
       ))}
-    </>
+    </div>
   );
 }
