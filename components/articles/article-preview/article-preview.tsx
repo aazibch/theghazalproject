@@ -2,10 +2,12 @@ import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 
+import classNames from './article-preview.module.css';
+
 interface ArticlePreviewProps {
   title: string;
   excerpt: string;
-  date: Date;
+  date: string;
 }
 
 export default function ArticlePreview({
@@ -16,16 +18,8 @@ export default function ArticlePreview({
   return (
     <>
       <h1>{title}</h1>
-      <time dateTime={date.toString()}>
-        {date.toLocaleTimeString(undefined, {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
-        })}
-      </time>
-      <div>
+      <time dateTime={date.toString()}>{date}</time>
+      <div className={classNames.articleContent}>
         <ReactMarkdown
           rehypePlugins={[rehypeRaw]}
           components={{

@@ -1,15 +1,15 @@
-import { getArticleData, getArticleFileNames } from '@/lib/articles';
+import ArticlePreview from '@/components/articles/article-preview/article-preview';
+import { getArticleData } from '@/lib/articles';
 
 export default async function ArticlesPage() {
-  const articleFileNames = getArticleFileNames();
-  const articleData = getArticleData(articleFileNames);
+  const articleData = getArticleData();
 
   return (
     <div className="container mx-auto my-12">
       <h2 className="text-2xl">Articles</h2>
 
-      {articleFileNames.map((e, i) => (
-        <p key={i}>{e}</p>
+      {articleData.map((e, i) => (
+        <ArticlePreview title={e.title} excerpt={e.content} date={e.date} />
       ))}
     </div>
   );

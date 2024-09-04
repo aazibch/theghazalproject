@@ -12,9 +12,6 @@ interface NavLinkProps {
 export default function NavLink({ href, children }: NavLinkProps) {
   const path = usePathname();
 
-  console.log('href', href);
-  console.log('path', path);
-
   return (
     <Navbar.Link
       as={Link}

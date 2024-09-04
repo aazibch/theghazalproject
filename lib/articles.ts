@@ -2,16 +2,22 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-export const getArticleFileNames = () => {
+// interface ArticleObject {
+//   slug: string;
+//   content: string;
+//   title: string;
+//   date: string;
+// }
+
+const getArticleFileNames = () => {
   const articlesDirectory = path.join(process.cwd(), 'articles');
   const fileNames = fs.readdirSync(articlesDirectory);
 
   return fileNames;
 };
 
-export const getArticleData = (fileNames: string[]) => {
-  console.log('fileNames', fileNames);
-
+export const getArticleData = () => {
+  const fileNames = getArticleFileNames();
   const articlesDirectory = path.join(process.cwd(), 'articles');
 
   const articles = fileNames.map((fileName) => {
@@ -24,7 +30,8 @@ export const getArticleData = (fileNames: string[]) => {
     return {
       slug,
       content,
-      ...data
+      title: data.title,
+      date: data.date
     };
   });
 
