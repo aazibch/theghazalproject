@@ -17,6 +17,10 @@ export default function Header() {
       </Navbar.Brand>
       <div className="flex md:order-2">
         <Dropdown
+          theme={{
+            inlineWrapper: 'flex items-center mr-2 md:mr-0'
+          }}
+          className="mr-4"
           arrowIcon={false}
           inline
           label={<Avatar alt="User settings" rounded />}
