@@ -1,10 +1,15 @@
 'use client';
 
-import { Footer as FooterComponent } from 'flowbite-react';
+import { Footer } from 'flowbite-react';
+import Link from 'next/link';
 
-export default function Footer() {
+const customLinkTheme = {
+  href: 'text-gray-500'
+};
+
+export default function FooterComponent() {
   return (
-    <FooterComponent className="rounded-none" bgDark>
+    <Footer className="rounded-none" bgDark>
       <div className="w-full text-center">
         <div className="px-6 py-8">
           <div className="container mx-auto">
@@ -12,26 +17,33 @@ export default function Footer() {
               <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white text-primary_blue font-crimson_text">
                 The Ghazal Project
               </span>
-              <FooterComponent.LinkGroup className="text-white">
-                <FooterComponent.Link href="#">About</FooterComponent.Link>
-                <FooterComponent.Link href="#">
+              <Footer.LinkGroup>
+                <Footer.Link as={Link} theme={customLinkTheme} href="#">
+                  About
+                </Footer.Link>
+                <Footer.Link as={Link} theme={customLinkTheme} href="#">
                   Privacy Policy
-                </FooterComponent.Link>
-                <FooterComponent.Link href="#">Contact</FooterComponent.Link>
-              </FooterComponent.LinkGroup>
+                </Footer.Link>
+                <Footer.Link as={Link} theme={customLinkTheme} href="#">
+                  Contact
+                </Footer.Link>
+              </Footer.LinkGroup>
             </div>
           </div>
         </div>
-        <div className="bg-gray-700 px-4 py-6">
+        <div className="bg-gray-700 text-gray-500 px-4 py-6">
           <div className="container mx-auto">
-            <FooterComponent.Copyright
-              href="#"
+            <Footer.Copyright
+              theme={{
+                href: 'ml-1 text-gray-500 hover:underline'
+              }}
+              href="/"
               by="The Ghazal Project"
               year={2024}
             />
           </div>
         </div>
       </div>
-    </FooterComponent>
+    </Footer>
   );
 }
