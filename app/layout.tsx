@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Crimson_Text } from 'next/font/google';
+import { Inter, Crimson_Text, Merriweather } from 'next/font/google';
 import './globals.css';
 import Layout from '@/components/layout/layout';
 
@@ -17,6 +17,13 @@ export const crimson_text = Crimson_Text({
   variable: '--font-crimson_text'
 });
 
+export const merriweather = Merriweather({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['300', '400', '700'],
+  variable: '--font-merriweather'
+});
+
 export const metadata: Metadata = {
   title: 'The Ghazal Project',
   description: 'Where Classic Meets Contemporary'
@@ -29,7 +36,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${crimson_text.variable}`}>
+      <body
+        className={`${inter.variable} ${crimson_text.variable} ${merriweather.variable}`}
+      >
         <Layout>{children}</Layout>
       </body>
     </html>

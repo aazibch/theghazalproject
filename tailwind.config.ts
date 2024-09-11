@@ -18,9 +18,9 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
       },
       fontFamily: {
-        roboto: ['var(--font-roboto)'],
         inter: ['var(--font-inter)'],
-        crimson_text: ['var(--font-crimson_text)']
+        crimson_text: ['var(--font-crimson_text)'],
+        merriweather: ['var(--font-merriweather)']
       },
       colors: {
         primary_blue: '#0F52BA'
