@@ -11,6 +11,9 @@ const config: Config = {
     flowbite.content()
   ],
   theme: {
+    container: {
+      padding: '1rem'
+    },
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

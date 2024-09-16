@@ -13,3 +13,7 @@ html,
 body {
   height: 100vh;
 }
+
+body {
+  @apply text-gray-800;
+}
