@@ -1,7 +1,7 @@
 ---
 title: 'Instructions on Contributing Your Own Verses'
 author: 'Aazib Chaudhry'
-excerpt: 'Ut sit amet scelerisque nisl. Sed semper arcu eu ipsum rhoncus consequat. Mauris dapibus bibendum imperdiet. Sed blandit, sem vel mollis condimentum, sapien massa finibus justo, a posuere lectus dui id nibh. Donec elementum bibendum quam vel sollicitudin. Quisque eu orci sit amet nisi interdum congue vitae eget nunc. Ut quis convallis magna. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.'
+excerpt: 'This article provides detailed instructions on how readers can contribute their own verses to the interactive section of The Ghazal Project. It covers the guidelines for maintaining consistency with the existing rhyme scheme and refrain, while also allowing for creative freedom in personal expression. Step-by-step instructions help contributors submit their verses, with tips on ensuring thematic coherence with the rest of the poem. The article aims to foster a collaborative spirit while preserving the traditional essence of the ghazal.'
 date: 'September 4, 2024'
 ---
 

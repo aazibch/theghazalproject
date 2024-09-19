@@ -1,7 +1,7 @@
 ---
 title: 'How to Write a Ghazal'
 author: 'Aazib Chaudhry'
-excerpt: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent cursus purus tellus, id pharetra nisi cursus vel. Nulla pretium iaculis justo, eget scelerisque mi rhoncus id. Vestibulum vehicula lacinia bibendum. Curabitur consequat metus metus, ut interdum metus placerat at. Nunc volutpat scelerisque lacus vel sollicitudin. Duis ultrices, dui nec sagittis gravida, ex leo auctor est, nec tincidunt lacus magna non elit. In hac habitasse platea dictumst. Phasellus et tincidunt turpis. Morbi lobortis, magna hendrerit convallis scelerisque, nulla quam tincidunt quam, non elementum enim neque id turpis. In sed ex et ligula mattis vehicula ut vel tortor. Phasellus vitae ullamcorper felis. Suspendisse egestas condimentum tortor at posuere. Nam non efficitur quam, quis commodo enim. Duis sed iaculis lacus, ac elementum tellus.'
+excerpt: 'In this step-by-step guide, readers will learn the essential elements of crafting a ghazal. The article breaks down the structure, rhyme scheme, and the unique requirements of the form, such as the radif (repeated refrain) and qafia (rhyme). It also discusses the thematic considerations central to the ghazal, encouraging writers to reflect on emotions like longing, spiritual reflection, or the paradoxes of love. Examples from classical and modern ghazals will be used to illustrate key points.'
 date: 'August 30, 2024'
 ---
 
