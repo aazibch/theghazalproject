@@ -15,10 +15,15 @@ export default function ArticlePreview({
   author,
   excerpt
 }: ArticlePreviewProps) {
+  const articleLink = `/articles/${slug}`;
+
   return (
     <div className="mb-6">
       <header className="mb-4">
-        <h1 className="text-xl mb-1">{title}</h1>
+        <h1 className="text-xl mb-1">
+          <Link href={articleLink}>{title}</Link>
+        </h1>
+
         <div className="text-sm">
           <span>By {author}</span> ·{' '}
           <time dateTime={date.toString()}>{date}</time>
@@ -27,7 +32,7 @@ export default function ArticlePreview({
 
       <div>
         <p>
-          {excerpt} <Link href={`/articles/${slug}`}>continue...</Link>
+          {excerpt} <Link href={articleLink}>continue...</Link>
         </p>
       </div>
     </div>

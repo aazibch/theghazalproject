@@ -1,8 +1,8 @@
 import ArticlePreview from '@/components/articles/article-preview/article-preview';
-import { getArticleData } from '@/lib/articles';
+import { getArticlesData } from '@/lib/articles';
 
 export default async function ArticlesPage() {
-  const articleData = getArticleData();
+  const articlesData = getArticlesData();
 
   return (
     <div className="container mx-auto my-12">
@@ -11,7 +11,7 @@ export default async function ArticlesPage() {
         <h2 className="text-2xl mb-4">Articles</h2>
       </header>
 
-      {articleData.map((e, i) => (
+      {articlesData.map((e, i) => (
         <ArticlePreview
           key={e.slug}
           slug={e.slug}

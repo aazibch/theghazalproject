@@ -9,7 +9,7 @@ const getArticleFileNames = () => {
   return fileNames;
 };
 
-export const getArticleData = () => {
+export const getArticlesData = () => {
   const fileNames = getArticleFileNames();
   const articlesDirectory = path.join(process.cwd(), 'articles');
 
