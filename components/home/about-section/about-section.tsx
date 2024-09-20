@@ -4,7 +4,7 @@ import { Button } from 'flowbite-react';
 
 export default function AboutSection() {
   return (
-    <div className="py-16 bg-[url('/images/shahi-hammam-main-dome-bg.png')] bg-no-repeat bg-center bg-cover">
+    <div className="py-24 bg-[url('/images/shahi-hammam-main-dome-bg.png')] bg-no-repeat bg-center bg-cover">
       <div className="container mx-auto text-white">
         <h1 className="uppercase text-center text-xl mb-12">
           Learn More About Us
