@@ -20,9 +20,9 @@ export default function ArticlePreview({
   return (
     <div className="mb-6">
       <header className="mb-4">
-        <h1 className="text-xl mb-1">
+        <h3 className="text-xl mb-1">
           <Link href={articleLink}>{title}</Link>
-        </h1>
+        </h3>
 
         <div className="text-sm">
           <span>By {author}</span> ·{' '}

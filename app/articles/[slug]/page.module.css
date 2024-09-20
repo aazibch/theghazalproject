@@ -1,0 +1,71 @@
+.content {
+  font-size: 1.1rem;
+}
+
+.content p {
+  margin-bottom: 1.1rem;
+}
+
+.content h1,
+.content h2,
+.content h3,
+.content h4 {
+  font-weight: 400;
+  margin-bottom: 1.1rem;
+}
+
+.content h5,
+.content h6 {
+  font-weight: 500;
+  margin-bottom: 1.1rem;
+}
+
+.content h1 {
+  font-size: 2rem;
+}
+
+.content h2 {
+  font-size: 1.75rem;
+}
+
+.content h3 {
+  font-size: 1.5rem;
+}
+
+.content h4 {
+  font-size: 1.25rem;
+}
+
+.content h5 {
+  font-size: 1rem;
+}
+
+.content h6 {
+  font-size: 0.75rem;
+}
+
+.content img {
+  width: 100%;
+}
+
+.content ul,
+.content ol {
+  margin-bottom: 1.1rem;
+  padding-left: 2rem;
+}
+
+.content blockquote {
+  padding-left: 1rem;
+  border-left: 5px solid #e0e0e0;
+  color: #616161;
+}
+
+.poetry {
+  margin-bottom: 1.1rem;
+}
+
+.poetry p {
+  text-indent: -1em;
+  padding-left: 1em;
+  margin: 0;
+}

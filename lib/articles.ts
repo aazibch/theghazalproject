@@ -36,3 +36,20 @@ export const getArticlesData = () => {
 
   return articles;
 };
+
+export const getArticleData = (slug: string) => {
+  const articlesDirectory = path.join(process.cwd(), 'articles');
+  const fullPath = path.join(articlesDirectory, `${slug}.md`);
+  const fileContents = fs.readFileSync(fullPath, 'utf8');
+
+  const { data, content } = matter(fileContents);
+
+  return {
+    slug,
+    title: data.title,
+    author: data.author,
+    excerpt: data.excerpt,
+    date: data.date,
+    content
+  };
+};
