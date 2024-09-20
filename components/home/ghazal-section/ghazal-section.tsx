@@ -65,7 +65,7 @@ export default function GhazalSection() {
         />
       </div>
 
-      <p className="mt-8 mb-4">
+      <p className="mb-4">
         Learn more about the collective ghazal project or contribute your own
         verses.
       </p>

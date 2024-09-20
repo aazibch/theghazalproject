@@ -17,10 +17,9 @@ export default function ArticleCard({
     <Card
       theme={{
         root: {
-          children: 'flex h-full flex-col justify-center gap-4 p-6'
+          children: 'flex h-full flex-col justify-between gap-4 p-6'
         }
       }}
-      className="flex flex-col items-center"
     >
       <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
         {title}
@@ -29,6 +28,7 @@ export default function ArticleCard({
       <Button
         as={Link}
         href={href}
+        className="hover:no-underline"
         color="blue"
         theme={{
           inner: {
