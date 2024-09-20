@@ -29,5 +29,10 @@ export const getArticlesData = () => {
     };
   });
 
+  // Sort by date in reverse chronological order
+  articles.sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
+
   return articles;
 };
