@@ -16,6 +16,7 @@ export default function ArticlePreview({
   excerpt
 }: ArticlePreviewProps) {
   const articleLink = `/articles/${slug}`;
+  const isoDate = new Date(date).toISOString().split('T')[0];
 
   return (
     <div className="mb-6">
@@ -25,8 +26,7 @@ export default function ArticlePreview({
         </h3>
 
         <div className="text-sm">
-          <span>By {author}</span> ·{' '}
-          <time dateTime={date.toString()}>{date}</time>
+          <span>By {author}</span> · <time dateTime={isoDate}>{date}</time>
         </div>
       </header>
 

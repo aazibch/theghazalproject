@@ -1,9 +1,9 @@
 .content {
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .content p {
-  margin-bottom: 1.1rem;
+  margin-bottom: 1rem;
 }
 
 .content h1,
@@ -11,13 +11,13 @@
 .content h3,
 .content h4 {
   font-weight: 400;
-  margin-bottom: 1.1rem;
+  margin-bottom: 1rem;
 }
 
 .content h5,
 .content h6 {
   font-weight: 500;
-  margin-bottom: 1.1rem;
+  margin-bottom: 1rem;
 }
 
 .content h1 {
@@ -50,7 +50,7 @@
 
 .content ul,
 .content ol {
-  margin-bottom: 1.1rem;
+  margin-bottom: 1rem;
   padding-left: 2rem;
 }
 
@@ -61,7 +61,7 @@
 }
 
 .poetry {
-  margin-bottom: 1.1rem;
+  margin-bottom: 1rem;
 }
 
 .poetry p {

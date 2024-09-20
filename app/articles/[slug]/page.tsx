@@ -7,18 +7,17 @@ import styles from './page.module.css';
 
 export default function Article({ params }: { params: { slug: string } }) {
   const articleData = getArticleData(params.slug);
+  const isoDate = new Date(articleData.date).toISOString().split('T')[0];
 
   return (
-    <div className="container mx-auto my-12">
-      <div className="max-w-3xl border mx-auto">
+    <div className="container mx-auto my-16">
+      <div className="max-w-3xl mx-auto">
         <article>
-          <header className="mb-8">
+          <header className="mb-6">
             <h2 className="text-2xl mb-1">{articleData.title}</h2>
             <div className="text-sm">
               <span>By {articleData.author}</span> ·{' '}
-              <time dateTime={articleData.date.toString()}>
-                {articleData.date}
-              </time>
+              <time dateTime={isoDate}>{articleData.date}</time>
             </div>
           </header>
           <div className={styles.content}>
@@ -45,5 +44,3 @@ export default function Article({ params }: { params: { slug: string } }) {
     </div>
   );
 }
-
-// TODO: Check the value of the dateTime attribute of element time.
