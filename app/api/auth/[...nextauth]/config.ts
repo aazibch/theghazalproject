@@ -109,7 +109,7 @@ const config = {
       session,
       token
     }: {
-      session: { [key: string]: any }; // TODO: Define more strict types for the arguments
+      session: { [key: string]: any; expires: any }; // TODO: Define more strict types for the arguments
       token: { [key: string]: any };
     }) {
       if (session?.user) {
