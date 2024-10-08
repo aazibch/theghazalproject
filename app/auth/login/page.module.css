@@ -1,0 +1,26 @@
+.signupMessage {
+  overflow: hidden;
+  text-align: center;
+  /* border: 1px solid red; */
+}
+
+.signupMessage::before,
+.signupMessage::after {
+  background-color: #cecece;
+  content: '';
+  display: inline-block;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  width: 50%;
+}
+
+.signupMessage::before {
+  margin-left: -50%;
+  right: 1rem;
+}
+
+.signupMessage::after {
+  margin-right: -50%;
+  left: 1rem;
+}

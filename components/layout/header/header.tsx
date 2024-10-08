@@ -1,7 +1,9 @@
 'use client';
 
-import { Avatar, Dropdown, Navbar } from 'flowbite-react';
+import { Avatar, Button, Dropdown, Navbar } from 'flowbite-react';
+import { HiOutlineUserCircle } from 'react-icons/hi';
 import NavLink from './nav-link';
+import Link from 'next/link';
 
 export default function Header() {
   return (
@@ -15,7 +17,7 @@ export default function Header() {
           The Ghazal Project
         </span>
       </Navbar.Brand>
-      <div className="flex md:order-2">
+      {/* <div className="flex md:order-2">
         <Dropdown
           theme={{
             inlineWrapper: 'flex items-center mr-2 md:mr-0'
@@ -35,6 +37,19 @@ export default function Header() {
           <Dropdown.Item>Sign out</Dropdown.Item>
         </Dropdown>
         <Navbar.Toggle />
+      </div> */}
+
+      <div className="flex md:order-2">
+        <Button
+          as={Link}
+          href="/auth/login"
+          color="blue"
+          gradientDuoTone="purpleToBlue"
+          outline
+        >
+          <HiOutlineUserCircle className="mr-1 h-5 w-5" />
+          Login
+        </Button>
       </div>
       <Navbar.Collapse>
         <NavLink href="/">Home</NavLink>
