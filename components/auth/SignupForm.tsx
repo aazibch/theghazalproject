@@ -1,22 +1,62 @@
+'use client';
+
+import { useRef } from 'react';
 import Link from 'next/link';
 import { Button, Label, TextInput } from 'flowbite-react';
+import { signIn } from 'next-auth/react';
 
 import styles from './form.module.css';
 
 export default function SignupForm() {
+  const fullNameRef = useRef<HTMLInputElement>(null);
+  const usernameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const passwordConfirmationRef = useRef<HTMLInputElement>(null);
+
+  const formSubmitHandler = async () => {
+    const fullName = fullNameRef.current!.value;
+    const username = usernameRef.current!.value;
+    const email = emailRef.current!.value;
+    const password = passwordRef.current!.value;
+    const passwordConfirmation = passwordConfirmationRef.current!.value;
+
+    const res = await signIn('credentials-signup', {
+      fullName,
+      username,
+      email,
+      password,
+      passwordConfirmation
+    });
+
+    if (res) {
+      console.log('[SignupForm][formSubmitHandler] res', res);
+    }
+  };
+
   return (
-    <form className="flex max-w-md flex-col gap-4 mx-auto">
+    <form
+      onSubmit={formSubmitHandler}
+      className="flex max-w-md flex-col gap-4 mx-auto"
+    >
       <div>
         <div className="mb-2 block">
           <Label htmlFor="fullName" value="Full Name" />
         </div>
-        <TextInput id="fullName" type="text" placeholder="John Doe" required />
+        <TextInput
+          ref={fullNameRef}
+          id="fullName"
+          type="text"
+          placeholder="John Doe"
+          required
+        />
       </div>
       <div>
         <div className="mb-2 block">
           <Label htmlFor="username" value="Username" />
         </div>
         <TextInput
+          ref={usernameRef}
           id="username"
           type="text"
           placeholder="JohnTheBard"
@@ -28,6 +68,7 @@ export default function SignupForm() {
           <Label htmlFor="email" value="Email" />
         </div>
         <TextInput
+          ref={emailRef}
           id="email"
           type="email"
           placeholder="poet@poetsdomain.com"
@@ -38,13 +79,18 @@ export default function SignupForm() {
         <div className="mb-2 block">
           <Label htmlFor="password" value="Password" />
         </div>
-        <TextInput id="password" type="password" required />
+        <TextInput ref={passwordRef} id="password" type="password" required />
       </div>
       <div>
         <div className="mb-2 block">
           <Label htmlFor="passwordConfirmation" value="Confirm Password" />
         </div>
-        <TextInput id="passwordConfirmation" type="password" required />
+        <TextInput
+          ref={passwordConfirmationRef}
+          id="passwordConfirmation"
+          type="password"
+          required
+        />
       </div>
 
       <Button color="blue" type="submit">

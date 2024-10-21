@@ -136,7 +136,8 @@ userSchema.methods.changedPasswordAfterToken = function (
   return false;
 };
 
-const User = mongoose.model<IUser, UserModel>('User', userSchema);
+const User =
+  mongoose.models.User || mongoose.model<IUser, UserModel>('User', userSchema);
 
 export default User;
 
