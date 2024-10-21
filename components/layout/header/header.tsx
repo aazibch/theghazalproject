@@ -1,6 +1,6 @@
 'use client';
 
-import { Avatar, Button, Dropdown, Navbar } from 'flowbite-react';
+import { Button, Navbar } from 'flowbite-react';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import NavLink from './nav-link';
 import Link from 'next/link';
@@ -40,16 +40,12 @@ export default function Header() {
       </div> */}
 
       <div className="flex md:order-2">
-        <Button
-          as={Link}
-          href="/auth/login"
-          color="blue"
-          gradientDuoTone="purpleToBlue"
-          outline
-        >
-          <HiOutlineUserCircle className="mr-1 h-5 w-5" />
-          Login
-        </Button>
+        <Link className="hover:no-underline" href="/auth/login">
+          <Button color="blue" gradientDuoTone="purpleToBlue" outline>
+            <HiOutlineUserCircle className="mr-1 h-5 w-5" />
+            Login
+          </Button>
+        </Link>
       </div>
       <Navbar.Collapse>
         <NavLink href="/">Home</NavLink>

@@ -1,10 +1,5 @@
 import type { Metadata } from 'next';
-import {
-  Inter,
-  Crimson_Text,
-  Merriweather,
-  EB_Garamond
-} from 'next/font/google';
+import { Inter, Crimson_Text, Merriweather } from 'next/font/google';
 import './globals.css';
 import Layout from '@/components/layout/layout';
 

@@ -34,15 +34,11 @@ export default function LoginPage() {
           <p className={`${styles.signupMessage} text-gray-500 text-sm mb-5`}>
             Don't have an account?
           </p>
-          <Button
-            as={Link}
-            outline
-            color="blue"
-            className="hover:no-underline"
-            href="/auth/signup"
-          >
-            Signup Instead
-          </Button>
+          <Link className="hover:no-underline block w-full" href="/auth/signup">
+            <Button outline color="blue" className="block w-full">
+              Signup Instead
+            </Button>
+          </Link>
         </div>
       </form>
     </div>
