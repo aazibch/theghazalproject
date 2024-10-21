@@ -1,6 +1,10 @@
-'use client';
-
-import { Footer } from 'flowbite-react';
+import {
+  Footer,
+  FooterLinkGroup,
+  FooterLink,
+  FooterDivider,
+  FooterCopyright
+} from 'flowbite-react';
 import Link from 'next/link';
 
 const customLinkTheme = {
@@ -16,22 +20,22 @@ export default function FooterComponent() {
             <span className="block mb-2 sm:mb-0 self-center whitespace-nowrap text-xl font-semibold dark:text-white text-primary_blue font-crimson_text">
               The Ghazal Project
             </span>
-            <Footer.LinkGroup className="flex justify-center">
-              <Footer.Link as={Link} theme={customLinkTheme} href="#">
+            <FooterLinkGroup className="flex justify-center">
+              <FooterLink as={Link} theme={customLinkTheme} href="#">
                 About
-              </Footer.Link>
-              <Footer.Link as={Link} theme={customLinkTheme} href="#">
+              </FooterLink>
+              <FooterLink as={Link} theme={customLinkTheme} href="#">
                 Privacy Policy
-              </Footer.Link>
-              <Footer.Link as={Link} theme={customLinkTheme} href="#">
+              </FooterLink>
+              <FooterLink as={Link} theme={customLinkTheme} href="#">
                 Contact
-              </Footer.Link>
-            </Footer.LinkGroup>
+              </FooterLink>
+            </FooterLinkGroup>
           </div>
         </div>
-        <Footer.Divider className="border-gray-700" />
+        <FooterDivider className="border-gray-700" />
         <div className="container mx-auto">
-          <Footer.Copyright
+          <FooterCopyright
             theme={{
               href: 'ml-1 hover:underline text-gray-500'
             }}

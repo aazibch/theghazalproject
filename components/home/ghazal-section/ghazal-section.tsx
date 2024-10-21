@@ -1,4 +1,4 @@
-import { Avatar, Button } from 'flowbite-react';
+import { Button } from 'flowbite-react';
 import GhazalCouplet from './ghazal-couplet';
 
 export default function GhazalSection() {

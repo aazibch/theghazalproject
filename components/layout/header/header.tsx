@@ -1,6 +1,4 @@
-'use client';
-
-import { Button, Navbar } from 'flowbite-react';
+import { Button, Navbar, NavbarBrand, NavbarCollapse } from 'flowbite-react';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import NavLink from './nav-link';
 import Link from 'next/link';
@@ -12,11 +10,11 @@ export default function Header() {
       rounded
       border
     >
-      <Navbar.Brand className="hover:no-underline" href="/">
+      <NavbarBrand className="hover:no-underline" href="/">
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white text-primary_blue font-crimson_text">
           The Ghazal Project
         </span>
-      </Navbar.Brand>
+      </NavbarBrand>
       {/* <div className="flex md:order-2">
         <Dropdown
           theme={{
@@ -47,13 +45,13 @@ export default function Header() {
           </Button>
         </Link>
       </div>
-      <Navbar.Collapse>
+      <NavbarCollapse>
         <NavLink href="/">Home</NavLink>
         <NavLink href="/articles">Articles</NavLink>
         <NavLink href="#">Contribute</NavLink>
         <NavLink href="#">About Us</NavLink>
         <NavLink href="#">Contact</NavLink>
-      </Navbar.Collapse>
+      </NavbarCollapse>
     </Navbar>
   );
 }
