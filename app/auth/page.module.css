@@ -1,11 +1,10 @@
-.signupMessage {
+.authAlternativeMessage {
   overflow: hidden;
   text-align: center;
-  /* border: 1px solid red; */
 }
 
-.signupMessage::before,
-.signupMessage::after {
+.authAlternativeMessage::before,
+.authAlternativeMessage::after {
   background-color: #cecece;
   content: '';
   display: inline-block;
@@ -15,12 +14,12 @@
   width: 50%;
 }
 
-.signupMessage::before {
+.authAlternativeMessage::before {
   margin-left: -50%;
   right: 1rem;
 }
 
-.signupMessage::after {
+.authAlternativeMessage::after {
   margin-right: -50%;
   left: 1rem;
 }
