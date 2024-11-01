@@ -1,5 +1,5 @@
 import PageHeader from '@/components/layout/pages/page-header';
-import LoginForm from '@/components/auth/LoginForm';
+import LoginForm from '@/components/auth/login-form';
 
 export default function LoginPage() {
   return (
