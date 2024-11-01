@@ -1,15 +1,17 @@
 'use client';
 
-import { useRef } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
 import Link from 'next/link';
 import { Button, Label, TextInput } from 'flowbite-react';
-import { signIn } from 'next-auth/react';
+// import { signIn } from 'next-auth/react';
 
 import styles from './form.module.css';
-import { useFormStatus } from 'react-dom';
+import { submitSignupData } from '@/lib/actions';
+import SubmitButton from './submit-button';
 
 export default function SignupForm() {
   const { pending } = useFormStatus();
+  const [state, formAction] = useFormState(submitSignupData, null);
 
   // const fullNameRef = useRef<HTMLInputElement>(null);
   // const usernameRef = useRef<HTMLInputElement>(null);
@@ -38,16 +40,14 @@ export default function SignupForm() {
   // };
 
   return (
-    <form
-      // onSubmit={formSubmitHandler}
-      className="flex max-w-md flex-col gap-4 mx-auto"
-    >
+    <form action={formAction} className="flex max-w-md flex-col gap-4 mx-auto">
       <div>
         <div className="mb-2 block">
           <Label htmlFor="fullName" value="Full Name" />
         </div>
         <TextInput
           // ref={fullNameRef}
+          name="fullName"
           id="fullName"
           type="text"
           placeholder="John Doe"
@@ -60,6 +60,7 @@ export default function SignupForm() {
         </div>
         <TextInput
           // ref={usernameRef}
+          name="username"
           id="username"
           type="text"
           placeholder="JohnTheBard"
@@ -72,6 +73,7 @@ export default function SignupForm() {
         </div>
         <TextInput
           // ref={emailRef}
+          name="email"
           id="email"
           type="email"
           placeholder="poet@poetsdomain.com"
@@ -83,7 +85,7 @@ export default function SignupForm() {
           <Label htmlFor="password" value="Password" />
         </div>
         {/* <TextInput ref={passwordRef} id="password" type="password" required /> */}
-        <TextInput id="password" type="password" required />
+        <TextInput name="password" id="password" type="password" required />
       </div>
       <div>
         <div className="mb-2 block">
@@ -91,15 +93,14 @@ export default function SignupForm() {
         </div>
         <TextInput
           // ref={passwordConfirmationRef}
+          name="passwordConfirmation"
           id="passwordConfirmation"
           type="password"
           required
         />
       </div>
+      <SubmitButton />
 
-      <Button color="blue" type="submit">
-        {pending ? <span>...Loading</span> : <span>Submit</span>}
-      </Button>
       <div className="mt-5">
         <p
           className={`${styles.authAlternativeMessage} text-gray-500 text-sm mb-5`}
