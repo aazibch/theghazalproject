@@ -1,52 +1,51 @@
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useRef } from 'react';
 import Link from 'next/link';
 import { Button, Label, TextInput } from 'flowbite-react';
-// import { signIn } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 
 import styles from './form.module.css';
-import { submitSignupData } from '@/lib/actions';
 import SubmitButton from './submit-button';
 
 export default function SignupForm() {
-  const { pending } = useFormStatus();
-  const [state, formAction] = useFormState(submitSignupData, null);
+  const fullNameRef = useRef<HTMLInputElement>(null);
+  const usernameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const passwordConfirmationRef = useRef<HTMLInputElement>(null);
 
-  // const fullNameRef = useRef<HTMLInputElement>(null);
-  // const usernameRef = useRef<HTMLInputElement>(null);
-  // const emailRef = useRef<HTMLInputElement>(null);
-  // const passwordRef = useRef<HTMLInputElement>(null);
-  // const passwordConfirmationRef = useRef<HTMLInputElement>(null);
+  const formSubmitHandler = async () => {
+    const fullName = fullNameRef.current!.value;
+    const username = usernameRef.current!.value;
+    const email = emailRef.current!.value;
+    const password = passwordRef.current!.value;
+    const passwordConfirmation = passwordConfirmationRef.current!.value;
 
-  // const formSubmitHandler = async () => {
-  //   const fullName = fullNameRef.current!.value;
-  //   const username = usernameRef.current!.value;
-  //   const email = emailRef.current!.value;
-  //   const password = passwordRef.current!.value;
-  //   const passwordConfirmation = passwordConfirmationRef.current!.value;
+    const res = await signIn('credentials-signup', {
+      fullName,
+      username,
+      email,
+      password,
+      passwordConfirmation
+    });
 
-  //   const res = await signIn('credentials-signup', {
-  //     fullName,
-  //     username,
-  //     email,
-  //     password,
-  //     passwordConfirmation
-  //   });
-
-  //   if (res) {
-  //     console.log('[SignupForm][formSubmitHandler] res', res);
-  //   }
-  // };
+    if (res) {
+      console.log('[SignupForm][formSubmitHandler] res', res);
+    }
+  };
 
   return (
-    <form action={formAction} className="flex max-w-md flex-col gap-4 mx-auto">
+    <form
+      onSubmit={formSubmitHandler}
+      className="flex max-w-md flex-col gap-4 mx-auto"
+    >
       <div>
         <div className="mb-2 block">
           <Label htmlFor="fullName" value="Full Name" />
         </div>
         <TextInput
-          // ref={fullNameRef}
+          ref={fullNameRef}
           name="fullName"
           id="fullName"
           type="text"
@@ -59,7 +58,7 @@ export default function SignupForm() {
           <Label htmlFor="username" value="Username" />
         </div>
         <TextInput
-          // ref={usernameRef}
+          ref={usernameRef}
           name="username"
           id="username"
           type="text"
@@ -72,7 +71,7 @@ export default function SignupForm() {
           <Label htmlFor="email" value="Email" />
         </div>
         <TextInput
-          // ref={emailRef}
+          ref={emailRef}
           name="email"
           id="email"
           type="email"
@@ -84,23 +83,21 @@ export default function SignupForm() {
         <div className="mb-2 block">
           <Label htmlFor="password" value="Password" />
         </div>
-        {/* <TextInput ref={passwordRef} id="password" type="password" required /> */}
-        <TextInput name="password" id="password" type="password" required />
+        <TextInput ref={passwordRef} id="password" type="password" required />
       </div>
       <div>
         <div className="mb-2 block">
           <Label htmlFor="passwordConfirmation" value="Confirm Password" />
         </div>
         <TextInput
-          // ref={passwordConfirmationRef}
           name="passwordConfirmation"
           id="passwordConfirmation"
           type="password"
           required
         />
       </div>
-      <SubmitButton />
 
+      <SubmitButton />
       <div className="mt-5">
         <p
           className={`${styles.authAlternativeMessage} text-gray-500 text-sm mb-5`}
