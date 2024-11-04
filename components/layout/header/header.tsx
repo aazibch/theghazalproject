@@ -1,9 +1,25 @@
-import { Button, Navbar, NavbarBrand, NavbarCollapse } from 'flowbite-react';
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  DropdownHeader,
+  DropdownItem,
+  Navbar,
+  NavbarBrand,
+  NavbarCollapse,
+  NavbarToggle
+} from 'flowbite-react';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import NavLink from './nav-link';
 import Link from 'next/link';
+import { getServerSession } from 'next-auth';
+import config from '@/app/api/auth/[...nextauth]/config';
 
-export default function Header() {
+export default async function Header() {
+  const session = await getServerSession(config);
+
+  console.log('[header.tsx] session', session);
+
   return (
     <Navbar
       theme={{ link: { active: { on: 'text-primary_blue' } } }}
@@ -15,7 +31,7 @@ export default function Header() {
           The Ghazal Project
         </span>
       </NavbarBrand>
-      {/* <div className="flex md:order-2">
+      <div className="flex md:order-2">
         <Dropdown
           theme={{
             inlineWrapper: 'flex items-center mr-2 md:mr-0'
@@ -25,17 +41,17 @@ export default function Header() {
           inline
           label={<Avatar alt="User settings" rounded />}
         >
-          <Dropdown.Header>
+          <DropdownHeader>
             <span className="block text-sm">Aazib Chaudhry</span>
             <span className="block truncate text-sm font-medium">
               aazibch@theghazalproject.com
             </span>
-          </Dropdown.Header>
-          <Dropdown.Item>Settings</Dropdown.Item>
-          <Dropdown.Item>Sign out</Dropdown.Item>
+          </DropdownHeader>
+          <DropdownItem>Settings</DropdownItem>
+          <DropdownItem>Sign out</DropdownItem>
         </Dropdown>
-        <Navbar.Toggle />
-      </div> */}
+        <NavbarToggle />
+      </div>
 
       <div className="flex md:order-2">
         <Link className="hover:no-underline" href="/auth/login">

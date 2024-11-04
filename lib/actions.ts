@@ -1,6 +1,8 @@
 'use server';
 
-import { signIn } from 'next-auth/react';
+// import { signIn } from 'next-auth/react';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 function getSampleData() {
   return new Promise((resolve, reject) => {
@@ -19,6 +21,11 @@ export async function submitSignupData(prevState: any, formData: any) {
   await getSampleData();
 
   return;
+}
+
+export async function redirectAfterAuth() {
+  revalidatePath('/', 'layout');
+  redirect('/');
 }
 
 // TODO: set proper types.

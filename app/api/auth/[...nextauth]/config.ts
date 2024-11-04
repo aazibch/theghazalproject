@@ -4,6 +4,9 @@ import User from '@/models/User';
 import dbConnect from '@/lib/dbConnect';
 import { signupSchema } from '@/lib/schemas';
 import { MongooseError } from 'mongoose';
+import { JWT } from 'next-auth/jwt';
+import { IUser, UserSession, UserToken } from '@/types';
+import { AdapterSession } from 'next-auth/adapters';
 
 const config = {
   providers: [
@@ -63,7 +66,7 @@ const config = {
           await dbConnect();
           const userDoc = await User.create(user);
 
-          return { ...userDoc.toObject(), id: userDoc._id.toString() };
+          return { ...userDoc.toObject(), _id: userDoc._id.toString() };
         } catch (err) {
           // TODO: Look into the type checking again
           if (err instanceof MongooseError && 'keyPattern' in err) {
@@ -89,6 +92,7 @@ const config = {
     })
   ],
   callbacks: {
+    // async jwt({ token, user }: { token: JWT; user: IUser }) {
     async jwt({
       token,
       user
@@ -97,10 +101,11 @@ const config = {
       user: { [key: string]: any };
     }) {
       if (user) {
-        token.id = user._id;
+        token._id = user._id;
         token.fullName = user.fullName;
         token.username = user.username;
         token.email = user.email;
+        token.profilePicture = user.profilePicture;
       }
 
       return token;
@@ -109,14 +114,18 @@ const config = {
       session,
       token
     }: {
-      session: { [key: string]: any; expires: any }; // TODO: Define more strict types for the arguments
+      session: { [key: string]: any; expires: string }; // TODO: Define more strict types for the arguments
       token: { [key: string]: any };
     }) {
+      console.log('[session callback] session', session);
+      console.log('[session callback] token', token);
+
       if (session?.user) {
-        session.user.id = token.id;
+        session.user._id = token._id;
         session.user.fullName = token.fullName;
         session.user.username = token.username;
         session.user.email = token.email;
+        session.user.profilePicture = token.profilePicture;
 
         delete session.user.name;
         delete session.user.image;
@@ -128,3 +137,6 @@ const config = {
 };
 
 export default config;
+
+// session: { user: UserSession } & AdapterSession;
+// token: UserToken;

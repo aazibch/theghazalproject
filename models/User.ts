@@ -3,20 +3,21 @@ import isEmail from 'validator/lib/isEmail';
 import bcrypt from 'bcryptjs';
 
 import { generateValidationMessage } from '@/lib/generateValidationMessage';
+import { IUser } from '@/types';
 
-export interface IUser {
-  _id: string | ObjectId;
-  __v: number;
-  fullName: string;
-  username: string;
-  email: string;
-  profilePicture: string;
-  password: string;
-  passwordChangeDate: Date;
-  bio: string;
-  laureateTitle: string;
-  couplets: ObjectId[];
-}
+// export interface IUser {
+//   _id: string | ObjectId;
+//   __v: number;
+//   fullName: string;
+//   username: string;
+//   email: string;
+//   profilePicture: string;
+//   password: string;
+//   passwordChangeDate: Date;
+//   bio: string;
+//   laureateTitle: string;
+//   couplets: ObjectId[];
+// }
 
 interface IUserMethods {
   isPasswordCorrect: (
