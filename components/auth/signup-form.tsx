@@ -34,10 +34,8 @@ export default function SignupForm() {
       redirect: false
     });
 
-    console.log('[formSubmitHandler] res', res);
-
     if (res?.error) {
-      console.log('res.error');
+      console.log('res.error', res.error);
     }
 
     if (res?.status === 200) {

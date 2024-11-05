@@ -3,11 +3,11 @@ import User from '@/models/User';
 
 import dbConnect from '@/lib/dbConnect';
 import { signupSchema } from '@/lib/schemas';
-import { MongooseError } from 'mongoose';
 import { JWT } from 'next-auth/jwt';
 import { IUser, UserSession, UserToken } from '@/types';
 import { AdapterUser } from 'next-auth/adapters';
 import { Session, User as UserType } from 'next-auth';
+import mongoose, { MongooseError } from 'mongoose';
 
 const config = {
   providers: [
@@ -58,7 +58,7 @@ const config = {
             passwordConfirmation: credentials?.passwordConfirmation
           };
 
-          const { error, value } = signupSchema.validate(user);
+          const { error } = signupSchema.validate(user);
 
           if (error) {
             throw new Error(error.details[0].message);
@@ -69,8 +69,7 @@ const config = {
 
           return { ...userDoc.toObject(), _id: userDoc._id.toString() };
         } catch (err) {
-          // TODO: Look into the type checking again
-          if (err instanceof MongooseError && 'keyPattern' in err) {
+          if (err instanceof mongoose.mongo.MongoError && 'keyPattern' in err) {
             if (err.keyPattern && Object.keys(err.keyPattern)[0] === 'email') {
               throw new Error(
                 'An account with the same email address already exists.'
@@ -82,6 +81,12 @@ const config = {
               throw new Error(
                 'An account with the same username already exists.'
               );
+            } else {
+              if (err.keyPattern) {
+                const key = Object.keys(err.keyPattern)[0];
+                const message = `Duplicate value for "${key}".`;
+                throw new Error(message);
+              }
             }
 
             throw err;
