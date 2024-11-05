@@ -6,7 +6,8 @@ import { signupSchema } from '@/lib/schemas';
 import { MongooseError } from 'mongoose';
 import { JWT } from 'next-auth/jwt';
 import { IUser, UserSession, UserToken } from '@/types';
-import { AdapterSession } from 'next-auth/adapters';
+import { AdapterUser } from 'next-auth/adapters';
+import { Session, User as UserType } from 'next-auth';
 
 const config = {
   providers: [
@@ -92,20 +93,21 @@ const config = {
     })
   ],
   callbacks: {
-    // async jwt({ token, user }: { token: JWT; user: IUser }) {
     async jwt({
       token,
       user
     }: {
-      token: { [key: string]: any }; // TODO: Define more strict types for the arguments
-      user: { [key: string]: any };
+      token: JWT;
+      user: IUser | UserType | AdapterUser;
     }) {
       if (user) {
-        token._id = user._id;
-        token.fullName = user.fullName;
-        token.username = user.username;
-        token.email = user.email;
-        token.profilePicture = user.profilePicture;
+        const typedUser = user as IUser;
+
+        token._id = typedUser._id;
+        token.fullName = typedUser.fullName;
+        token.username = typedUser.username;
+        token.email = typedUser.email;
+        token.profilePicture = typedUser.profilePicture;
       }
 
       return token;
@@ -114,21 +116,21 @@ const config = {
       session,
       token
     }: {
-      session: { [key: string]: any; expires: string }; // TODO: Define more strict types for the arguments
-      token: { [key: string]: any };
+      session: UserSession | Session;
+      token: JWT | UserToken;
     }) {
-      console.log('[session callback] session', session);
-      console.log('[session callback] token', token);
+      const typedSession = session as UserSession;
+      const typedToken = token as UserToken;
 
       if (session?.user) {
-        session.user._id = token._id;
-        session.user.fullName = token.fullName;
-        session.user.username = token.username;
-        session.user.email = token.email;
-        session.user.profilePicture = token.profilePicture;
+        typedSession.user._id = typedToken._id;
+        typedSession.user.fullName = typedToken.fullName;
+        typedSession.user.username = typedToken.username;
+        typedSession.user.email = typedToken.email;
+        typedSession.user.profilePicture = typedToken.profilePicture;
 
-        delete session.user.name;
-        delete session.user.image;
+        delete typedSession.user.name;
+        delete typedSession.user.image;
       }
 
       return session;
@@ -137,6 +139,3 @@ const config = {
 };
 
 export default config;
-
-// session: { user: UserSession } & AdapterSession;
-// token: UserToken;

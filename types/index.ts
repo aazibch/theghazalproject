@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongoose';
+import { ISODateString } from 'next-auth';
 
 export interface IUser {
   _id: string | ObjectId;
@@ -14,14 +15,20 @@ export interface IUser {
   couplets: ObjectId[];
 }
 
-export interface UserSession {
-  _id: string;
-  fullName: string;
-  username: string;
-  email: string;
-  profilePicture: string;
-  image?: string;
-  name?: string;
+interface SessionSpecific {
+  expires: ISODateString;
+}
+
+export interface UserSession extends SessionSpecific {
+  user: {
+    _id: string;
+    fullName: string;
+    username: string;
+    email: string;
+    profilePicture: string;
+    image?: string;
+    name?: string;
+  };
 }
 
 interface JwtSpecific {
