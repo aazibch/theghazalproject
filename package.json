@@ -12,6 +12,7 @@
     "bcryptjs": "^2.4.3",
     "flowbite": "^2.4.1",
     "flowbite-react": "^0.10.1",
+    "formik": "^2.4.6",
     "gray-matter": "^4.0.3",
     "joi": "^17.13.3",
     "mongoose": "^8.6.4",

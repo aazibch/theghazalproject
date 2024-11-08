@@ -61,7 +61,7 @@ const config = {
           const { error } = signupSchema.validate(user);
 
           if (error) {
-            throw new Error(error.details[0].message);
+            return new Error(error.details[0].message);
           }
 
           await dbConnect();

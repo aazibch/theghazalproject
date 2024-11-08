@@ -1,13 +1,15 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { Button, Label, TextInput } from 'flowbite-react';
 import { signIn } from 'next-auth/react';
+import { useFormik } from 'formik';
 
-import styles from './form.module.css';
-import SubmitButton from './submit-button';
 import { redirectAfterAuth } from '@/lib/actions';
+import { signupSchema } from '@/lib/schemas';
+import SubmitButton from './submit-button';
+import styles from './form.module.css';
 
 interface FormErrors {
   fullName: string | undefined;
@@ -18,51 +20,67 @@ interface FormErrors {
 }
 
 export default function SignupForm() {
-  const fullNameRef = useRef<HTMLInputElement>(null);
-  const usernameRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
-  const passwordConfirmationRef = useRef<HTMLInputElement>(null);
+  const validate = (values: FormErrors) => {
+    const validationErrors = {
+      fullName: '',
+      username: '',
+      email: '',
+      password: '',
+      passwordConfirmation: ''
+    };
 
-  const [formErrors, setFormErrors] = useState<FormErrors>({
-    fullName: undefined,
-    username: undefined,
-    email: undefined,
-    password: undefined,
-    passwordConfirmation: undefined
-  });
+    const { error } = signupSchema.validate(values, { abortEarly: false });
 
-  const formSubmitHandler = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const fullName = fullNameRef.current!.value;
-    const username = usernameRef.current!.value;
-    const email = emailRef.current!.value;
-    const password = passwordRef.current!.value;
-    const passwordConfirmation = passwordConfirmationRef.current!.value;
-
-    const res = await signIn('credentials-signup', {
-      fullName,
-      username,
-      email,
-      password,
-      passwordConfirmation,
-      redirect: false
-    });
-
-    if (res?.error) {
-      console.log('res.error', res.error);
+    if (error) {
+      for (let x of error.details) {
+        if (x.context?.label) {
+          validationErrors[x.context.label as keyof FormErrors] = x.message;
+        }
+      }
     }
 
-    if (res?.status === 200) {
-      redirectAfterAuth();
-    }
+    return validationErrors;
   };
+
+  const formik = useFormik({
+    initialValues: {
+      fullName: '',
+      username: '',
+      email: '',
+      password: '',
+      passwordConfirmation: ''
+    },
+    validate: validate,
+    validateOnChange: false,
+    validateOnBlur: false,
+    onSubmit: async (values) => {
+      console.log('values', values);
+      const { fullName, username, email, password, passwordConfirmation } =
+        values;
+
+      const res = await signIn('credentials-signup', {
+        fullName,
+        username,
+        email,
+        password,
+        passwordConfirmation,
+        redirect: false
+      });
+
+      if (res?.error) {
+        console.log('[singup-form.tsx] error', res.error);
+      }
+
+      if (res?.status === 200) {
+        redirectAfterAuth();
+      }
+    }
+  });
 
   return (
     <form
       method="post"
-      onSubmit={formSubmitHandler}
+      onSubmit={formik.handleSubmit}
       className="flex max-w-md flex-col gap-4 mx-auto"
     >
       <div>
@@ -70,14 +88,15 @@ export default function SignupForm() {
           <Label htmlFor="fullName" value="Full Name" />
         </div>
         <TextInput
-          ref={fullNameRef}
           name="fullName"
           id="fullName"
           type="text"
           placeholder="John Doe"
           required
-          color={formErrors.fullName && 'failure'}
-          helperText={formErrors.fullName && <>{formErrors.fullName}</>}
+          value={formik.values.fullName}
+          onChange={formik.handleChange}
+          color={formik.errors.fullName && 'failure'}
+          helperText={formik.errors.fullName && formik.errors.fullName}
         />
       </div>
       <div>
@@ -85,14 +104,15 @@ export default function SignupForm() {
           <Label htmlFor="username" value="Username" />
         </div>
         <TextInput
-          ref={usernameRef}
           name="username"
           id="username"
           type="text"
           placeholder="JohnTheBard"
           required
-          color={formErrors.username && 'failure'}
-          helperText={formErrors.username && <>{formErrors.username}</>}
+          value={formik.values.username}
+          onChange={formik.handleChange}
+          color={formik.errors.username && 'failure'}
+          helperText={formik.errors.username && formik.errors.username}
         />
       </div>
       <div>
@@ -100,14 +120,15 @@ export default function SignupForm() {
           <Label htmlFor="email" value="Email" />
         </div>
         <TextInput
-          ref={emailRef}
           name="email"
           id="email"
           type="email"
           placeholder="poet@poetsdomain.com"
           required
-          color={formErrors.email && 'failure'}
-          helperText={formErrors.email && <>{formErrors.email}</>}
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          color={formik.errors.email && 'failure'}
+          helperText={formik.errors.email && formik.errors.email}
         />
       </div>
       <div>
@@ -115,12 +136,13 @@ export default function SignupForm() {
           <Label htmlFor="password" value="Password" />
         </div>
         <TextInput
-          ref={passwordRef}
           id="password"
           type="password"
           required
-          color={formErrors.password && 'failure'}
-          helperText={formErrors.fullName && <>{formErrors.fullName}</>}
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          color={formik.errors.password && 'failure'}
+          helperText={formik.errors.password && formik.errors.password}
         />
       </div>
       <div>
@@ -128,16 +150,16 @@ export default function SignupForm() {
           <Label htmlFor="passwordConfirmation" value="Confirm Password" />
         </div>
         <TextInput
-          ref={passwordConfirmationRef}
           name="passwordConfirmation"
           id="passwordConfirmation"
           type="password"
           required
-          color={formErrors.passwordConfirmation && 'failure'}
+          value={formik.values.passwordConfirmation}
+          onChange={formik.handleChange}
+          color={formik.errors.passwordConfirmation && 'failure'}
           helperText={
-            formErrors.passwordConfirmation && (
-              <>{formErrors.passwordConfirmation}</>
-            )
+            formik.errors.passwordConfirmation &&
+            formik.errors.passwordConfirmation
           }
         />
       </div>
