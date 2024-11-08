@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { Button, Label, TextInput } from 'flowbite-react';
 import { signIn } from 'next-auth/react';
@@ -9,12 +9,28 @@ import styles from './form.module.css';
 import SubmitButton from './submit-button';
 import { redirectAfterAuth } from '@/lib/actions';
 
+interface FormErrors {
+  fullName: string | undefined;
+  username: string | undefined;
+  email: string | undefined;
+  password: string | undefined;
+  passwordConfirmation: string | undefined;
+}
+
 export default function SignupForm() {
   const fullNameRef = useRef<HTMLInputElement>(null);
   const usernameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const passwordConfirmationRef = useRef<HTMLInputElement>(null);
+
+  const [formErrors, setFormErrors] = useState<FormErrors>({
+    fullName: undefined,
+    username: undefined,
+    email: undefined,
+    password: undefined,
+    passwordConfirmation: undefined
+  });
 
   const formSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,6 +76,8 @@ export default function SignupForm() {
           type="text"
           placeholder="John Doe"
           required
+          color={formErrors.fullName && 'failure'}
+          helperText={formErrors.fullName && <>{formErrors.fullName}</>}
         />
       </div>
       <div>
@@ -73,6 +91,8 @@ export default function SignupForm() {
           type="text"
           placeholder="JohnTheBard"
           required
+          color={formErrors.username && 'failure'}
+          helperText={formErrors.username && <>{formErrors.username}</>}
         />
       </div>
       <div>
@@ -86,13 +106,22 @@ export default function SignupForm() {
           type="email"
           placeholder="poet@poetsdomain.com"
           required
+          color={formErrors.email && 'failure'}
+          helperText={formErrors.email && <>{formErrors.email}</>}
         />
       </div>
       <div>
         <div className="mb-2 block">
           <Label htmlFor="password" value="Password" />
         </div>
-        <TextInput ref={passwordRef} id="password" type="password" required />
+        <TextInput
+          ref={passwordRef}
+          id="password"
+          type="password"
+          required
+          color={formErrors.password && 'failure'}
+          helperText={formErrors.fullName && <>{formErrors.fullName}</>}
+        />
       </div>
       <div>
         <div className="mb-2 block">
@@ -104,6 +133,12 @@ export default function SignupForm() {
           id="passwordConfirmation"
           type="password"
           required
+          color={formErrors.passwordConfirmation && 'failure'}
+          helperText={
+            formErrors.passwordConfirmation && (
+              <>{formErrors.passwordConfirmation}</>
+            )
+          }
         />
       </div>
 
