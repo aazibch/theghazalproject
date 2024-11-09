@@ -2,32 +2,30 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Button, Label, TextInput } from 'flowbite-react';
+import { Button, Label, Spinner, TextInput } from 'flowbite-react';
 import { signIn } from 'next-auth/react';
 import { useFormik } from 'formik';
 
 import { redirectAfterAuth } from '@/lib/actions';
 import { signupSchema } from '@/lib/schemas';
-import SubmitButton from './submit-button';
 import styles from './form.module.css';
 
 interface FormErrors {
-  fullName: string | undefined;
-  username: string | undefined;
-  email: string | undefined;
-  password: string | undefined;
-  passwordConfirmation: string | undefined;
+  fullName?: string;
+  username?: string;
+  email?: string;
+  password?: string;
+  passwordConfirmation?: string;
 }
 
 export default function SignupForm() {
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [backendErrorMessage, setBackendErrorMessage] = useState<
+    string | undefined
+  >();
+
   const validate = (values: FormErrors) => {
-    const validationErrors = {
-      fullName: '',
-      username: '',
-      email: '',
-      password: '',
-      passwordConfirmation: ''
-    };
+    const validationErrors: FormErrors = {};
 
     const { error } = signupSchema.validate(values, { abortEarly: false });
 
@@ -54,9 +52,10 @@ export default function SignupForm() {
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: async (values) => {
-      console.log('values', values);
       const { fullName, username, email, password, passwordConfirmation } =
         values;
+
+      setIsSubmitting(true);
 
       const res = await signIn('credentials-signup', {
         fullName,
@@ -68,10 +67,12 @@ export default function SignupForm() {
       });
 
       if (res?.error) {
-        console.log('[singup-form.tsx] error', res.error);
+        setBackendErrorMessage(res.error);
+        setIsSubmitting(false);
       }
 
       if (res?.status === 200) {
+        setIsSubmitting(false);
         redirectAfterAuth();
       }
     }
@@ -84,6 +85,9 @@ export default function SignupForm() {
       className="flex max-w-md flex-col gap-4 mx-auto"
     >
       <div>
+        {backendErrorMessage && (
+          <p className="text-red-600 text-center mb-6">{backendErrorMessage}</p>
+        )}
         <div className="mb-2 block">
           <Label htmlFor="fullName" value="Full Name" />
         </div>
@@ -164,7 +168,13 @@ export default function SignupForm() {
         />
       </div>
 
-      <SubmitButton />
+      <Button color="blue" type="submit">
+        {isSubmitting ? (
+          <Spinner size="sm" aria-label="loading spinner" />
+        ) : (
+          <span>Submit</span>
+        )}
+      </Button>
       <div className="mt-5">
         <p
           className={`${styles.authAlternativeMessage} text-gray-500 text-sm mb-5`}

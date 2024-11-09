@@ -8,6 +8,7 @@ import { IUser, UserSession, UserToken } from '@/types';
 import { AdapterUser } from 'next-auth/adapters';
 import { Session, User as UserType } from 'next-auth';
 import mongoose, { MongooseError } from 'mongoose';
+import { ERROR_MESSAGES } from '@/constants';
 
 const config = {
   providers: [
@@ -61,7 +62,7 @@ const config = {
           const { error } = signupSchema.validate(user);
 
           if (error) {
-            return new Error(error.details[0].message);
+            return;
           }
 
           await dbConnect();
@@ -71,16 +72,12 @@ const config = {
         } catch (err) {
           if (err instanceof mongoose.mongo.MongoError && 'keyPattern' in err) {
             if (err.keyPattern && Object.keys(err.keyPattern)[0] === 'email') {
-              throw new Error(
-                'An account with the same email address already exists.'
-              );
+              throw new Error(ERROR_MESSAGES.nonUniqueEmail);
             } else if (
               err.keyPattern &&
               Object.keys(err.keyPattern)[0] === 'username'
             ) {
-              throw new Error(
-                'An account with the same username already exists.'
-              );
+              throw new Error(ERROR_MESSAGES.nonUniqueUsername);
             } else {
               if (err.keyPattern) {
                 const key = Object.keys(err.keyPattern)[0];
