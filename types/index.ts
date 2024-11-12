@@ -1,5 +1,5 @@
+import { ISODateString, RequestInternal } from 'next-auth';
 import { ObjectId } from 'mongoose';
-import { ISODateString } from 'next-auth';
 
 export interface IUser {
   _id: string | ObjectId;
@@ -44,3 +44,17 @@ export interface UserToken extends JwtSpecific {
   email: string;
   profilePicture: string;
 }
+
+export type AuthRequest = Pick<
+  RequestInternal,
+  'body' | 'query' | 'headers' | 'method'
+>;
+
+type LoginCredentials = Record<'email' | 'password', string>;
+
+type SignupCredentials = Record<
+  'email' | 'password' | 'username' | 'fullName' | 'passwordConfirmation',
+  string
+>;
+
+export type AuthCredentials = LoginCredentials | SignupCredentials | undefined;

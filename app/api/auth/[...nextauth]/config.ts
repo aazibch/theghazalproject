@@ -7,8 +7,10 @@ import { JWT } from 'next-auth/jwt';
 import { IUser, UserSession, UserToken } from '@/types';
 import { AdapterUser } from 'next-auth/adapters';
 import { Session, User as UserType } from 'next-auth';
-import mongoose, { MongooseError } from 'mongoose';
-import { ERROR_MESSAGES } from '@/constants';
+// import mongoose, { MongooseError } from 'mongoose';
+// import { ERROR_MESSAGES } from '@/constants';
+import catchAsync from '@/lib/catchAsync';
+import { isSignupCredentials } from '@/lib/utils';
 
 const config = {
   providers: [
@@ -19,7 +21,7 @@ const config = {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' }
       },
-      async authorize(credentials, req) {
+      authorize: catchAsync(async (credentials, req) => {
         if (!credentials?.email || !credentials?.password) {
           throw new Error('Please provide an email address and password.');
         }
@@ -37,7 +39,7 @@ const config = {
         }
 
         return { ...user.toObject(), id: user._id.toString() }; // Ensure id is a string
-      }
+      })
     }),
     CredentialsProvider({
       id: 'credentials-signup',
@@ -49,8 +51,8 @@ const config = {
         password: { label: 'Password', type: 'password' },
         passwordConfirmation: { label: 'Confirm Password', type: 'password' }
       },
-      async authorize(credentials, req) {
-        try {
+      authorize: catchAsync(async (credentials, req) => {
+        if (isSignupCredentials(credentials)) {
           const user = {
             fullName: credentials?.fullName,
             username: credentials?.username,
@@ -69,29 +71,30 @@ const config = {
           const userDoc = await User.create(user);
 
           return { ...userDoc.toObject(), _id: userDoc._id.toString() };
-        } catch (err) {
-          if (err instanceof mongoose.mongo.MongoError && 'keyPattern' in err) {
-            if (err.keyPattern && Object.keys(err.keyPattern)[0] === 'email') {
-              throw new Error(ERROR_MESSAGES.nonUniqueEmail);
-            } else if (
-              err.keyPattern &&
-              Object.keys(err.keyPattern)[0] === 'username'
-            ) {
-              throw new Error(ERROR_MESSAGES.nonUniqueUsername);
-            } else {
-              if (err.keyPattern) {
-                const key = Object.keys(err.keyPattern)[0];
-                const message = `Duplicate value for "${key}".`;
-                throw new Error(message);
-              }
-            }
-
-            throw err;
-          }
-
-          throw err;
         }
-      }
+
+        // } catch (err) {
+        //   if (err instanceof mongoose.mongo.MongoError && 'keyPattern' in err) {
+        //     if (err.keyPattern && Object.keys(err.keyPattern)[0] === 'email') {
+        //       throw new Error(ERROR_MESSAGES.nonUniqueEmail);
+        //     } else if (
+        //       err.keyPattern &&
+        //       Object.keys(err.keyPattern)[0] === 'username'
+        //     ) {
+        //       throw new Error(ERROR_MESSAGES.nonUniqueUsername);
+        //     } else {
+        //       if (err.keyPattern) {
+        //         const key = Object.keys(err.keyPattern)[0];
+        //         const message = `Duplicate value for "${key}".`;
+        //         throw new Error(message);
+        //       }
+        //     }
+
+        //     throw err;
+        //   }
+        //   throw err;
+        // }
+      })
     })
   ],
   callbacks: {
