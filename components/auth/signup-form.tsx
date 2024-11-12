@@ -84,10 +84,10 @@ export default function SignupForm() {
       onSubmit={formik.handleSubmit}
       className="flex max-w-md flex-col gap-4 mx-auto"
     >
+      {backendErrorMessage && (
+        <p className="text-red-600 text-center mb-6">{backendErrorMessage}</p>
+      )}
       <div>
-        {backendErrorMessage && (
-          <p className="text-red-600 text-center mb-6">{backendErrorMessage}</p>
-        )}
         <div className="mb-2 block">
           <Label htmlFor="fullName" value="Full Name" />
         </div>
@@ -168,7 +168,7 @@ export default function SignupForm() {
         />
       </div>
 
-      <Button color="blue" type="submit">
+      <Button disabled={isSubmitting} color="blue" type="submit">
         {isSubmitting ? (
           <Spinner size="sm" aria-label="loading spinner" />
         ) : (
