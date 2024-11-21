@@ -62,7 +62,7 @@ const config = {
           const { error } = signupSchema.validate(user);
 
           if (error) {
-            return;
+            throw new Error(`Joi Validation: ${error.message}`);
           }
 
           await dbConnect();
