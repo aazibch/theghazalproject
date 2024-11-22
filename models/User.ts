@@ -1,23 +1,9 @@
-import mongoose, { ObjectId } from 'mongoose';
+import mongoose from 'mongoose';
 import isEmail from 'validator/lib/isEmail';
 import bcrypt from 'bcryptjs';
 
 import { generateValidationMessage } from '@/lib/generateValidationMessage';
 import { IUser } from '@/types';
-
-// export interface IUser {
-//   _id: string | ObjectId;
-//   __v: number;
-//   fullName: string;
-//   username: string;
-//   email: string;
-//   profilePicture: string;
-//   password: string;
-//   passwordChangeDate: Date;
-//   bio: string;
-//   laureateTitle: string;
-//   couplets: ObjectId[];
-// }
 
 interface IUserMethods {
   isPasswordCorrect: (
@@ -88,7 +74,7 @@ const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
     type: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'ColGhazalEntry'
       }
     ],
     default: []
