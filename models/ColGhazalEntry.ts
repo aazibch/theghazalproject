@@ -19,7 +19,7 @@ const colGhazalEntrySchema = new mongoose.Schema<
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: [true, 'The ghazal entry must belong to a user.']
+      required: [true, 'The collective ghazal entry must belong to a user.']
     },
     couplet: {
       type: [String],
