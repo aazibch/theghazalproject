@@ -1,4 +1,7 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv'; // For use with the import-dev-data.ts script.
+
+dotenv.config({ path: '.env.local' });
 
 let DB: string;
 let cachedConnection: {
