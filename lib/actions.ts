@@ -8,8 +8,6 @@ import ColGhazalEntry from '@/models/ColGhazalEntry';
 export const getRecentColGhazalEntries = async () => {
   await dbConnect();
 
-  throw new Error('Unable to fetch data.');
-
   const recentEntries = await ColGhazalEntry.find()
     .populate('user')
     .sort({ createdAt: -1 })
@@ -18,9 +16,17 @@ export const getRecentColGhazalEntries = async () => {
   return recentEntries;
 };
 
+export const getColGhazalEntries = async () => {
+  await dbConnect();
+
+  const entries = await ColGhazalEntry.find()
+    .populate('user')
+    .sort({ createdAt: 1 });
+
+  return entries;
+};
+
 export async function redirectAfterAuth() {
   revalidatePath('/', 'layout');
   redirect('/');
 }
-
-// TODO: Implement error handling.
