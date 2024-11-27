@@ -1,5 +1,6 @@
 import GhazalCouplet from '@/components/home/ghazal-section/ghazal-couplet';
 import PageHeader from '@/components/layout/pages/page-header';
+import ScrollToBottomButton from '@/components/ui/scroll-to-bottom-button';
 import { getColGhazalEntries } from '@/lib/actions';
 
 export default async function CollectiveGhazal() {
@@ -15,6 +16,8 @@ export default async function CollectiveGhazal() {
           couplet={e.couplet}
         />
       ))}
+
+      <ScrollToBottomButton />
     </div>
   );
 }
