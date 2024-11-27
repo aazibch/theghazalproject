@@ -77,7 +77,7 @@ export default function LoginForm() {
         <p
           className={`${styles.authAlternativeMessage} text-gray-500 text-sm mb-5`}
         >
-          Don't have an account?
+          Don&apos;t have an account?
         </p>
         <Link className="hover:no-underline block w-full" href="/auth/signup">
           <Button outline color="blue" className="block w-full">

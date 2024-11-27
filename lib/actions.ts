@@ -7,6 +7,9 @@ import ColGhazalEntry from '@/models/ColGhazalEntry';
 
 export const getRecentColGhazalEntries = async () => {
   await dbConnect();
+
+  throw new Error('Unable to fetch data.');
+
   const recentEntries = await ColGhazalEntry.find()
     .populate('user')
     .sort({ createdAt: -1 })

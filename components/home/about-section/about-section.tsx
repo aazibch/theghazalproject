@@ -13,7 +13,7 @@ export default function AboutSection() {
             artistic culture of Pakistan and the subcontinent, and to encourage
             cultural emalgamation through a variant of the ghazal form, fit for
             adaption into English poetry, and to this end, we have partnered
-            with Virsapur, an organization dedicated to reviving Pakistan's
+            with Virsapur, an organization dedicated to reviving Pakistan&apos;s
             diverse cultural heritage.
           </p>
 
