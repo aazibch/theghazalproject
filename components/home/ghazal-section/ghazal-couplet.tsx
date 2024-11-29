@@ -17,7 +17,7 @@ export default function GhazalCouplet({
   return (
     <div className="flex items-center justify-center mb-6 mx-auto text-center">
       <div className="basis-[8rem] mr-2">
-        <Avatar rounded img={user.avatar} />
+        <Avatar rounded img={user.avatar} className="mb-1" />
         <span className="text-sm text-gray-600">{user.fullName}</span>
       </div>
       <div className="font-merriweather font-light basis-[26rem]">

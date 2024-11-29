@@ -7,3 +7,10 @@ export const isSignupCredentials = (credentials: AuthCredentials) => {
     'fullName' in credentials
   );
 };
+
+export const scrollToPageBottom = () => {
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: 'smooth'
+  });
+};

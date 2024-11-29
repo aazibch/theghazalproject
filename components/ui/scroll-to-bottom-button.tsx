@@ -1,14 +1,12 @@
 'use client';
 
+import { scrollToPageBottom } from '@/lib/utils';
 import { Button } from 'flowbite-react';
 import { IoIosArrowDown } from 'react-icons/io';
 
 export default function ScrollToBottomButton() {
   const handleClick = () => {
-    window.scrollTo({
-      top: document.body.scrollHeight,
-      behavior: 'smooth'
-    });
+    scrollToPageBottom();
   };
 
   return (
