@@ -72,7 +72,7 @@ export default async function Header() {
       <NavbarCollapse>
         <NavLink href="/">Home</NavLink>
         <NavLink href="/articles">Articles</NavLink>
-        <NavLink href="#">Contribute</NavLink>
+        <NavLink href="/collective-ghazal">Collective Ghazal</NavLink>
         <NavLink href="#">About Us</NavLink>
         <NavLink href="#">Contact</NavLink>
       </NavbarCollapse>

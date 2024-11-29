@@ -1,23 +1,33 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { Button, Modal } from 'flowbite-react';
 
 export default function ColGhazalButtons() {
   const [openContributeModal, setOpenContributeModal] =
     useState<boolean>(false);
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get('contributing') === 'true') {
+      setOpenContributeModal(true);
+    }
+  }, []);
 
   const handleContributeButtonClick = () => {
     setOpenContributeModal(true);
   };
 
   let contributeButton = (
-    <Button as={Link} href="/collective-ghazal?contribute-modal" color="blue">
-      Contribute
-    </Button>
+    <Link
+      className="hover:no-underline"
+      href="/collective-ghazal?contributing=true"
+    >
+      <Button color="blue">Contribute</Button>
+    </Link>
   );
 
   if (pathname === '/collective-ghazal') {
@@ -30,9 +40,6 @@ export default function ColGhazalButtons() {
 
   return (
     <div className="flex gap-2 justify-center">
-      <Button>Learn More</Button>
-      {contributeButton}
-
       <Modal
         dismissible
         show={openContributeModal}
@@ -81,6 +88,9 @@ export default function ColGhazalButtons() {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {contributeButton}
+      <Button>Learn More</Button>
     </div>
   );
 }
