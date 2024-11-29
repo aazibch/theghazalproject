@@ -1,9 +1,8 @@
 'use client';
-import { Button, Modal } from 'flowbite-react';
 
 import { scrollToPageBottom } from '@/lib/utils';
 
-export default function ColGhazalPageIntroduction() {
+export default function ColGhazalIntro() {
   const handleScrollToBottomButtonClick = () => {
     scrollToPageBottom();
   };
