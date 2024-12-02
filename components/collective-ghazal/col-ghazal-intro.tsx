@@ -14,9 +14,9 @@ export default function ColGhazalIntro() {
         onClick={handleScrollToBottomButtonClick}
         className="font-medium text-blue-600 hover:underline"
       >
-        Scroll all the way to the bottom
+        Scroll to the bottom
       </button>{' '}
-      to learn more or to contribute.
+      for options for contributing your own verses and more.
     </p>
   );
 }
