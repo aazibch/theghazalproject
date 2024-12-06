@@ -64,3 +64,26 @@ export const signupSchema = Joi.object({
       'any.only': generateValidationMessage('passwordConfirmation')
     })
 });
+
+export const colGhazalEntrySchema = Joi.object({
+  lineOne: Joi.string()
+    .min(30)
+    .max(60)
+    .required()
+    .messages({
+      'string.min': generateValidationMessage('min', 'line one', 30),
+      'string.max': generateValidationMessage('max', 'line one', 60),
+      'string.empty': generateValidationMessage('required', 'line one'),
+      'any.required': generateValidationMessage('required', 'line one')
+    }),
+  lineTwo: Joi.string()
+    .min(30)
+    .max(60)
+    .required()
+    .messages({
+      'string.min': generateValidationMessage('min', 'line two', 30),
+      'string.max': generateValidationMessage('max', 'line two', 60),
+      'string.empty': generateValidationMessage('required', 'line two'),
+      'any.required': generateValidationMessage('required', 'line two')
+    })
+});

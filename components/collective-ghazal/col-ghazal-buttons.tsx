@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Button, Modal } from 'flowbite-react';
 
-import ColGhazalContributeModal from './col-ghazal-contribute-modal';
+import ColGhazalContributeModal from './col-ghazal-contribute-modal/col-ghazal-contribute-modal';
 
 export default function ColGhazalButtons() {
   const [openContributeModal, setOpenContributeModal] =

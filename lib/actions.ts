@@ -6,6 +6,7 @@ import dbConnect from './dbConnect';
 import ColGhazalEntry from '@/models/ColGhazalEntry';
 import { getServerSession } from 'next-auth';
 import config from '@/app/api/auth/[...nextauth]/config';
+import { colGhazalEntrySchema } from './schemas';
 
 export const getRecentColGhazalEntries = async () => {
   await dbConnect();
@@ -28,10 +29,10 @@ export const getColGhazalEntries = async () => {
   return entries;
 };
 
-export const submitColGhazalCouplet = async (
-  prevState: any,
-  formData: FormData
-) => {
+export const submitColGhazalCouplet = async (couplet: {
+  lineOne: string;
+  lineTwo: string;
+}) => {
   const session = await getServerSession(config);
 
   if (!session) {
@@ -42,15 +43,23 @@ export const submitColGhazalCouplet = async (
     throw new Error('Invalid session.');
   }
 
+  const { error } = colGhazalEntrySchema.validate(couplet);
+
+  if (error) {
+    throw error;
+  }
+
   const colGhazalEntry = {
     user: session.user?._id,
-    couplet: [formData.get('lineOne'), formData.get('lineTwo')]
+    couplet: [couplet.lineOne, couplet.lineTwo]
   };
 
   await dbConnect();
   await ColGhazalEntry.create(colGhazalEntry);
 
-  return { message: 'Submitted successfully!' };
+  revalidatePath('/collective-ghazal');
+
+  return { status: 'success' };
 };
 
 export async function redirectAfterAuth() {
