@@ -69,15 +69,6 @@ const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
   laureateTitle: {
     type: String,
     maxlength: [50, generateValidationMessage('max', 'title', 25)]
-  },
-  couplets: {
-    type: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'ColGhazalEntry'
-      }
-    ],
-    default: []
   }
 });
 

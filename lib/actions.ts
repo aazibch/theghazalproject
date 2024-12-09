@@ -7,6 +7,7 @@ import ColGhazalEntry from '@/models/ColGhazalEntry';
 import { getServerSession } from 'next-auth';
 import config from '@/app/api/auth/[...nextauth]/config';
 import { colGhazalEntrySchema } from './schemas';
+import User from '@/models/User';
 
 export const getRecentColGhazalEntries = async () => {
   await dbConnect();
@@ -27,6 +28,16 @@ export const getColGhazalEntries = async () => {
     .sort({ createdAt: 1 });
 
   return entries;
+};
+
+export const getUser = async (username: string) => {
+  await dbConnect();
+
+  const user = await User.findOne({ username });
+
+  console.log('[getUser] user', user);
+
+  return user;
 };
 
 export const submitColGhazalCouplet = async (couplet: {
