@@ -1,14 +1,5 @@
-import { generateValidationMessage } from '@/lib/generateValidationMessage';
-import { IUser } from '@/types';
 import mongoose, { ObjectId } from 'mongoose';
-
-interface IColGhazalEntry {
-  _id: ObjectId;
-  __v: number;
-  user: ObjectId | IUser;
-  couplet: [string, string];
-  approved: boolean;
-}
+import { IColGhazalEntry } from '@/types';
 
 type ColGhazalEntryModel = mongoose.Model<IColGhazalEntry>;
 

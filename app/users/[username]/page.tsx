@@ -17,14 +17,12 @@ export default async function UserPage({
     notFound();
   }
 
-  const contributionsByuser = await getColGhazalEntriesByUser(
-    user._id.toString()
-  );
+  const contributions = await getColGhazalEntriesByUser(user._id.toString());
 
   return (
     <div>
       <HeaderSection user={user} />
-      <ContributionsSection />
+      <ContributionsSection contributions={contributions} />
     </div>
   );
 }

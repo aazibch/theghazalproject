@@ -15,6 +15,16 @@ export interface IUser {
   couplets: ObjectId[];
 }
 
+export interface IColGhazalEntry {
+  _id: ObjectId;
+  __v: number;
+  user: ObjectId | IUser;
+  couplet: [string, string];
+  approved: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
 interface SessionSpecific {
   expires: ISODateString;
 }
