@@ -8,6 +8,7 @@ import { getServerSession } from 'next-auth';
 import config from '@/app/api/auth/[...nextauth]/config';
 import { colGhazalEntrySchema } from './schemas';
 import User from '@/models/User';
+import { IUser } from '@/types';
 
 export const getRecentColGhazalEntries = async () => {
   await dbConnect();
@@ -30,7 +31,7 @@ export const getColGhazalEntries = async () => {
   return entries;
 };
 
-export const getUser = async (username: string) => {
+export const getUser = async (username: string): Promise<IUser | undefined> => {
   await dbConnect();
 
   const user = await User.findOne({ username });
