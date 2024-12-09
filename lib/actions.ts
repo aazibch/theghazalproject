@@ -11,7 +11,7 @@ import { colGhazalEntrySchema } from './schemas';
 export const getRecentColGhazalEntries = async () => {
   await dbConnect();
 
-  const recentEntries = await ColGhazalEntry.find()
+  const recentEntries = await ColGhazalEntry.find({ approved: true })
     .populate('user')
     .sort({ createdAt: -1 })
     .limit(5);
@@ -22,7 +22,7 @@ export const getRecentColGhazalEntries = async () => {
 export const getColGhazalEntries = async () => {
   await dbConnect();
 
-  const entries = await ColGhazalEntry.find()
+  const entries = await ColGhazalEntry.find({ approved: true })
     .populate('user')
     .sort({ createdAt: 1 });
 
