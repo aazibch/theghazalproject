@@ -16,4 +16,19 @@ const getData = async () => {
   }
 };
 
-getData();
+const deleteData = async () => {
+  try {
+    await dbConnect();
+    await ColGhazalEntry.deleteMany();
+
+    console.log('Data deleted...');
+  } catch (error) {
+    console.log('error', error);
+  }
+};
+
+if (process.argv[2] === '--import') {
+  getData();
+} else if (process.argv[2] === '--delete') {
+  deleteData();
+}
