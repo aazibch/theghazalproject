@@ -1,7 +1,9 @@
 import { notFound } from 'next/navigation';
 
-import { getUser } from '@/lib/actions';
+import { getColGhazalEntriesByUser, getUser } from '@/lib/actions';
 import { Avatar } from 'flowbite-react';
+import ContributionsTable from '@/components/user/contributions-section/contributions-table';
+import ContributionsSection from '@/components/user/contributions-section/contributions-section';
 
 export default async function UserPage({
   params
@@ -13,6 +15,10 @@ export default async function UserPage({
   if (!user) {
     notFound();
   }
+
+  const contributionsByuser = await getColGhazalEntriesByUser(
+    user._id.toString()
+  );
 
   return (
     <div className="my-12">
@@ -30,6 +36,7 @@ export default async function UserPage({
           <h3 className="text-sm">@{user.username}</h3>
         </div>
       </header>
+      <ContributionsSection />
     </div>
   );
 }

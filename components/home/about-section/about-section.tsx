@@ -4,9 +4,9 @@ export default function AboutSection() {
   return (
     <div className="py-24 bg-[url('/images/shahi-hammam-main-dome-bg.png')] bg-no-repeat bg-center bg-cover">
       <div className="container mx-auto text-white">
-        <h1 className="uppercase text-center text-xl mb-12">
+        <h2 className="uppercase text-center text-xl mb-8">
           Learn More About Us
-        </h1>
+        </h2>
         <div className="max-w-[50rem] mx-auto text-center">
           <p className="text-lg mb-8">
             The Ghazal Project was started with the goal of promoting the rich

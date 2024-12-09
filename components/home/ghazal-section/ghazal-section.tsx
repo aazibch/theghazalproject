@@ -7,8 +7,8 @@ export default async function GhazalSection() {
 
   return (
     <div className="container mx-auto text-center py-16">
-      <h2 className="uppercase mb-8 text-xl">The Collective Ghazal</h2>
-      <h3 className="text-lg mb-4 text-gray-500">Recent Entries</h3>
+      <h2 className="uppercase mb-2 text-xl">The Collective Ghazal</h2>
+      <h3 className="text-lg mb-6 text-gray-500">Recent Entries</h3>
       <div className="mb-8">
         {recentEntries.map((e) => (
           <GhazalCouplet

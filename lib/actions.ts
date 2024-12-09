@@ -9,6 +9,7 @@ import config from '@/app/api/auth/[...nextauth]/config';
 import { colGhazalEntrySchema } from './schemas';
 import User from '@/models/User';
 import { IUser } from '@/types';
+import { ObjectId } from 'mongoose';
 
 export const getRecentColGhazalEntries = async () => {
   await dbConnect();
@@ -39,6 +40,17 @@ export const getUser = async (username: string): Promise<IUser | undefined> => {
   console.log('[getUser] user', user);
 
   return user;
+};
+
+export const getColGhazalEntriesByUser = async (userId: string) => {
+  await dbConnect();
+
+  const colGhazalEntries = await ColGhazalEntry.find({
+    user: userId,
+    approved: true
+  });
+
+  return colGhazalEntries;
 };
 
 export const submitColGhazalCouplet = async (couplet: {

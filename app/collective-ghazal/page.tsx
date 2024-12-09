@@ -18,6 +18,7 @@ export default async function CollectiveGhazal() {
             key={e._id}
             user={{ fullName: e.user.fullName, avatar: e.user.profilePicture }}
             couplet={e.couplet}
+            id={e._id}
           />
         ))}
       </div>
