@@ -53,7 +53,7 @@ const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
   profilePicture: {
     type: String,
     default:
-      'https://res.cloudinary.com/aazibch/image/upload/v1727421924/the-ghazal-project/users/default.jpg'
+      'https://theghazalproject-user-avatars.s3.ap-southeast-2.amazonaws.com/default.jpg'
   },
   password: {
     type: String,
@@ -118,5 +118,3 @@ const User =
   mongoose.models.User || mongoose.model<IUser, UserModel>('User', userSchema);
 
 export default User;
-
-// TODO: Switch cloudinary link to AWS.

@@ -15,8 +15,6 @@ export default async function UserPage({
     notFound();
   }
 
-  console.log('user', user);
-
   const contributions = await getColGhazalEntriesByUser(user._id.toString());
 
   return (
