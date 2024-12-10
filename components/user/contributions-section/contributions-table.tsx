@@ -24,7 +24,7 @@ export default function ContributionsTable({
           </Table.Head>
           <Table.Body className="divide-y">
             {contributions.map((e) => (
-              <Table.Row>
+              <Table.Row key={typeof e._id === 'string' ? e._id : undefined}>
                 <Table.Cell className="font-merriweather font-light">
                   <div className="indent-[-0.5rem] pl-[0.5rem] mb-1">
                     {e.couplet[0]}

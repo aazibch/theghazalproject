@@ -16,7 +16,7 @@ export interface IUser {
 }
 
 export interface IColGhazalEntry {
-  _id: ObjectId;
+  _id: string | ObjectId;
   __v: number;
   user: ObjectId | IUser;
   couplet: [string, string];

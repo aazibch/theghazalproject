@@ -1,8 +1,6 @@
 import { notFound } from 'next/navigation';
 
 import { getColGhazalEntriesByUser, getUser } from '@/lib/actions';
-import { Avatar } from 'flowbite-react';
-import ContributionsTable from '@/components/user/contributions-section/contributions-table';
 import ContributionsSection from '@/components/user/contributions-section/contributions-section';
 import HeaderSection from '@/components/user/header-section/header-section';
 

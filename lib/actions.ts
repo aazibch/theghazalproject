@@ -29,15 +29,20 @@ export const getColGhazalEntries = async () => {
     .populate('user')
     .sort({ createdAt: 1 });
 
-  return entries;
+  return entries.map((e) => {
+    const docObject = e.toObject();
+
+    return {
+      ...docObject,
+      _id: docObject._id.toString()
+    };
+  });
 };
 
 export const getUser = async (username: string): Promise<IUser | undefined> => {
   await dbConnect();
 
   const user = await User.findOne({ username });
-
-  console.log('[getUser] user', user);
 
   return user;
 };
@@ -50,7 +55,15 @@ export const getColGhazalEntriesByUser = async (userId: string) => {
     approved: true
   });
 
-  return colGhazalEntries;
+  return colGhazalEntries.map((e) => {
+    const docObject = e.toObject();
+
+    return {
+      ...docObject,
+      _id: docObject._id.toString(),
+      user: docObject.user.toString()
+    };
+  });
 };
 
 export const submitColGhazalCouplet = async (couplet: {
