@@ -22,7 +22,7 @@ export default async function Header() {
         </span>
       </NavbarBrand>
       {session ? (
-        <HeaderDropdown authSession={session} />
+        <HeaderDropdown />
       ) : (
         <div className="flex md:order-2">
           <Link className="hover:no-underline" href="/auth/login">
@@ -38,7 +38,7 @@ export default async function Header() {
         <NavLink href="/">Home</NavLink>
         <NavLink href="/articles">Articles</NavLink>
         <NavLink href="/collective-ghazal">Collective Ghazal</NavLink>
-        <NavLink href="#">About Us</NavLink>
+        <NavLink href="#">About</NavLink>
         <NavLink href="#">Contact</NavLink>
       </NavbarCollapse>
     </Navbar>

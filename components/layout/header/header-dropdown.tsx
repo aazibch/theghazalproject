@@ -2,12 +2,15 @@
 
 import { UserSession } from '@/types';
 import { Avatar, Dropdown, Navbar } from 'flowbite-react';
+import { useSession, signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
-export default function HeaderDropdown({
-  authSession
-}: {
-  authSession: UserSession;
-}) {
+export default function HeaderDropdown() {
+  const router = useRouter();
+  const { data: session } = useSession();
+
+  const userSession = session as UserSession;
+
   return (
     <div className="flex md:order-2">
       <Dropdown
@@ -19,7 +22,7 @@ export default function HeaderDropdown({
         inline
         label={
           <Avatar
-            img={authSession.user.profilePicture}
+            img={userSession.user.profilePicture}
             alt="User settings"
             rounded
           />
@@ -28,14 +31,24 @@ export default function HeaderDropdown({
       >
         <Dropdown.Header>
           <span className="block text-sm font-semibold">
-            {authSession.user.fullName}
+            {userSession.user.fullName}
           </span>
           <span className="block truncate text-sm font-medium">
-            {authSession.user.email}
+            <a href={`mailto:${userSession.user.email}`}>
+              {userSession.user.email}
+            </a>
           </span>
         </Dropdown.Header>
-        <Dropdown.Item>Profile</Dropdown.Item>
-        <Dropdown.Item>Sign out</Dropdown.Item>
+        <Dropdown.Item
+          onClick={() => router.push(`/users/${userSession.user.username}`)}
+        >
+          Profile
+        </Dropdown.Item>
+        <Dropdown.Item
+          onClick={() => signOut({ callbackUrl: '/', redirect: true })}
+        >
+          Sign out
+        </Dropdown.Item>
       </Dropdown>
       <Navbar.Toggle />
     </div>
