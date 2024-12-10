@@ -10,14 +10,18 @@ export default function HeaderSection({ user }: { user: IUser }) {
       <div className="container mx-auto">
         <div className="w-7 h-1 mb-4 bg-primary_blue"></div>
 
-        <div className="relative group border">
+        <div className="relative group h-36 w-36 mx-auto mb-4">
           <Avatar
             className="mb-4"
             img={user.profilePicture}
             rounded
             size="xl"
           />
-          <Button className="absolute rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <Button
+            pill
+            color="light"
+            className="absolute top-0 right-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          >
             <FiEdit />
           </Button>
         </div>
