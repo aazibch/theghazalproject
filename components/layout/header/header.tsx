@@ -1,20 +1,11 @@
-import {
-  Avatar,
-  Button,
-  Dropdown,
-  DropdownHeader,
-  DropdownItem,
-  Navbar,
-  NavbarBrand,
-  NavbarCollapse,
-  NavbarToggle
-} from 'flowbite-react';
+import { Button, Navbar, NavbarBrand, NavbarCollapse } from 'flowbite-react';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import NavLink from './nav-link';
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import config from '@/app/api/auth/[...nextauth]/config';
 import { UserSession } from '@/types';
+import HeaderDropdown from './header-dropdown';
 
 export default async function Header() {
   const session = (await getServerSession(config)) as UserSession | null;
@@ -31,33 +22,7 @@ export default async function Header() {
         </span>
       </NavbarBrand>
       {session ? (
-        <div className="flex md:order-2">
-          <Dropdown
-            theme={{
-              inlineWrapper: 'flex items-center mr-2 md:mr-0'
-            }}
-            className="mr-4"
-            arrowIcon={false}
-            inline
-            label={
-              <Avatar
-                img={session.user.profilePicture}
-                alt="User settings"
-                rounded
-              />
-            }
-          >
-            <DropdownHeader>
-              <span className="block text-sm">{session.user.fullName}</span>
-              <span className="block truncate text-sm font-medium">
-                {session.user.email}
-              </span>
-            </DropdownHeader>
-            <DropdownItem>Settings</DropdownItem>
-            <DropdownItem>Sign out</DropdownItem>
-          </Dropdown>
-          <NavbarToggle />
-        </div>
+        <HeaderDropdown authSession={session} />
       ) : (
         <div className="flex md:order-2">
           <Link className="hover:no-underline" href="/auth/login">

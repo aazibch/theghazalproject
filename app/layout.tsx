@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import { Inter, Crimson_Text, Merriweather } from 'next/font/google';
 import './globals.css';
 import Layout from '@/components/layout/layout';
+import AuthProvider from '@/components/auth/auth-provider';
+import MyComponent from '@/components/my-component';
+import MyHocComponent from '@/components/my-hoc-component';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -39,7 +42,9 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${crimson_text.variable} ${merriweather.variable}`}
       >
-        <Layout>{children}</Layout>
+        <AuthProvider>
+          <Layout>{children}</Layout>
+        </AuthProvider>
       </body>
     </html>
   );

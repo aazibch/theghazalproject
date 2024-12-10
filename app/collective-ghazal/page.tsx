@@ -5,7 +5,7 @@ import PageHeader from '@/components/layout/pages/page-header';
 import ScrollToBottomButton from '@/components/ui/scroll-to-bottom-button';
 import { getColGhazalEntries } from '@/lib/actions';
 
-export default async function CollectiveGhazal() {
+export default async function CollectiveGhazalPage() {
   const entries = await getColGhazalEntries();
 
   return (
