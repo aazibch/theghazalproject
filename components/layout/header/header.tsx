@@ -1,15 +1,8 @@
-import { Button, Navbar, NavbarBrand, NavbarCollapse } from 'flowbite-react';
-import { HiOutlineUserCircle } from 'react-icons/hi';
 import NavLink from './nav-link';
-import Link from 'next/link';
-import { getServerSession } from 'next-auth';
-import config from '@/app/api/auth/[...nextauth]/config';
-import { UserSession } from '@/types';
 import HeaderDropdown from './header-dropdown';
+import { Navbar, NavbarBrand, NavbarCollapse } from 'flowbite-react';
 
 export default async function Header() {
-  const session = (await getServerSession(config)) as UserSession | null;
-
   return (
     <Navbar
       theme={{ link: { active: { on: 'text-primary_blue' } } }}
@@ -21,18 +14,7 @@ export default async function Header() {
           The Ghazal Project
         </span>
       </NavbarBrand>
-      {session ? (
-        <HeaderDropdown />
-      ) : (
-        <div className="flex md:order-2">
-          <Link className="hover:no-underline" href="/auth/login">
-            <Button color="blue" gradientDuoTone="purpleToBlue" outline>
-              <HiOutlineUserCircle className="mr-1 h-5 w-5" />
-              Login
-            </Button>
-          </Link>
-        </div>
-      )}
+      <HeaderDropdown />
 
       <NavbarCollapse>
         <NavLink href="/">Home</NavLink>
