@@ -10,6 +10,7 @@ import ColGhazalEntry from '@/models/ColGhazalEntry';
 import { colGhazalEntrySchema } from './schemas';
 import User from '@/models/User';
 import { IUser } from '@/types';
+import sharp from 'sharp';
 
 let s3: S3 | undefined;
 
@@ -136,10 +137,18 @@ export const updateProfilePicture = async (
 
     const bufferImage = await newImage.arrayBuffer();
 
+    // Resize profile picture.
+    const resizedBufferImage = await sharp(bufferImage)
+      .resize(300, 300)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toBuffer();
+
+    // Upload to cloud storage
     await s3.putObject({
       Bucket: 'theghazalproject-user-avatars',
       Key: fileName,
-      Body: Buffer.from(bufferImage),
+      Body: Buffer.from(resizedBufferImage),
       ContentType: newImage.type
     });
 
