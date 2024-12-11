@@ -16,7 +16,11 @@ export default async function CollectiveGhazalPage() {
         {entries.map((e) => (
           <GhazalCouplet
             key={e._id}
-            user={{ fullName: e.user.fullName, avatar: e.user.profilePicture }}
+            user={{
+              fullName: e.user.fullName,
+              username: e.user.username,
+              avatar: e.user.profilePicture
+            }}
             couplet={e.couplet}
             id={e._id}
           />

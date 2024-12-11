@@ -1,8 +1,10 @@
 import { Avatar } from 'flowbite-react';
+import Link from 'next/link';
 
 interface UserObj {
   avatar: string;
   fullName: string;
+  username: string;
 }
 
 type Couplet = [string, string];
@@ -23,7 +25,15 @@ export default function GhazalCouplet({
     >
       <div className="basis-[8rem] mr-2">
         <Avatar rounded img={user.avatar} className="mb-1" />
-        <span className="text-sm text-gray-600">{user.fullName}</span>
+
+        <span className="text-sm text-gray-600">
+          <Link
+            className="text-inherit no-underline hover:no-underline"
+            href={`/users/${user.username}`}
+          >
+            {user.fullName}
+          </Link>
+        </span>
       </div>
       <div className="font-merriweather font-light basis-[26rem]">
         <span className="block mb-1">{couplet[0]}</span>

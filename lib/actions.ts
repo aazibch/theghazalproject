@@ -55,10 +55,10 @@ export const getColGhazalEntries = async () => {
 export const getUser = async (username: string): Promise<IUser | undefined> => {
   await dbConnect();
 
-  const user = (await User.findOne({ username })).toObject();
+  const user = await User.findOne({ username });
 
   return {
-    ...user,
+    ...user.toObject(),
     _id: user._id.toString()
   };
 };

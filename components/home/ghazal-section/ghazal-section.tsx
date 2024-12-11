@@ -13,7 +13,11 @@ export default async function GhazalSection() {
         {recentEntries.map((e) => (
           <GhazalCouplet
             key={e._id}
-            user={{ fullName: e.user.fullName, avatar: e.user.profilePicture }}
+            user={{
+              fullName: e.user.fullName,
+              username: e.user.username,
+              avatar: e.user.profilePicture
+            }}
             couplet={e.couplet}
           />
         ))}
