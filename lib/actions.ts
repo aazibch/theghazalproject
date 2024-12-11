@@ -3,11 +3,10 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { S3 } from '@aws-sdk/client-s3';
-
-import dbConnect from './dbConnect';
-import ColGhazalEntry from '@/models/ColGhazalEntry';
 import { getServerSession } from 'next-auth';
 import config from '@/app/api/auth/[...nextauth]/config';
+import dbConnect from './dbConnect';
+import ColGhazalEntry from '@/models/ColGhazalEntry';
 import { colGhazalEntrySchema } from './schemas';
 import User from '@/models/User';
 import { IUser } from '@/types';
@@ -55,9 +54,12 @@ export const getColGhazalEntries = async () => {
 export const getUser = async (username: string): Promise<IUser | undefined> => {
   await dbConnect();
 
-  const user = await User.findOne({ username });
+  const user = (await User.findOne({ username })).toObject();
 
-  return user;
+  return {
+    ...user,
+    _id: user._id.toString()
+  };
 };
 
 export const getColGhazalEntriesByUser = async (userId: string) => {
@@ -112,7 +114,10 @@ export const submitColGhazalCouplet = async (couplet: {
   return { status: 'success' };
 };
 
-export const updateProfilePicture = async (formData: FormData) => {
+export const updateProfilePicture = async (
+  prevState: any,
+  formData: FormData
+) => {
   if (s3) {
     const newImage = formData.get('newImage') as File;
 
@@ -148,6 +153,8 @@ export const updateProfilePicture = async (formData: FormData) => {
     );
 
     revalidatePath(`/profile/${session.user.username}`);
+
+    return { status: 'success' };
   } else {
     throw new Error('Could not connect to cloud storage.');
   }

@@ -1,7 +1,7 @@
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { JWT } from 'next-auth/jwt';
 import { AdapterUser } from 'next-auth/adapters';
-import { Session, User as UserType } from 'next-auth';
+import NextAuth, { Session, User as UserType } from 'next-auth';
 
 import User from '@/models/User';
 import dbConnect from '@/lib/dbConnect';
@@ -76,10 +76,12 @@ const config = {
   callbacks: {
     async jwt({
       token,
-      user
+      user,
+      trigger
     }: {
       token: JWT;
       user: IUser | UserType | AdapterUser;
+      trigger?: string | undefined;
     }) {
       if (user) {
         const typedUser = user as IUser;
@@ -89,6 +91,15 @@ const config = {
         token.username = typedUser.username;
         token.email = typedUser.email;
         token.profilePicture = typedUser.profilePicture;
+      }
+
+      if (trigger === 'update') {
+        const user = await User.findById(token._id);
+
+        token.fullName = user.fullName;
+        token.username = user.username;
+        token.email = user.email;
+        token.profilePicture = user.profilePicture;
       }
 
       return token;
