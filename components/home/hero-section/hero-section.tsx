@@ -8,8 +8,8 @@ export default function HeroSection() {
       <div className="basis-[30rem]">
         <Image
           src={heroBanner}
-          alt='Hero banner with the text, "Where you can learn about the history of the ghazal,
-and contribute your own verses."'
+          alt='Hero banner with the text, "Where you can learn about the ghazal
+and share your own verses with the world."'
         />
       </div>
     </div>

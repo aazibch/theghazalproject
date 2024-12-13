@@ -3,8 +3,6 @@ import { Inter, Crimson_Text, Merriweather } from 'next/font/google';
 import './globals.css';
 import Layout from '@/components/layout/layout';
 import AuthProvider from '@/components/auth/auth-provider';
-import MyComponent from '@/components/my-component';
-import MyHocComponent from '@/components/my-hoc-component';
 
 const inter = Inter({
   subsets: ['latin'],
