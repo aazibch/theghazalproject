@@ -5,6 +5,7 @@ import { HiArrowRight } from 'react-icons/hi';
 interface ArticleCardProps {
   title: string;
   image: string;
+  imageAlt: string;
   excerpt: string;
   href: string;
 }
@@ -12,12 +13,14 @@ interface ArticleCardProps {
 export default function ArticleCard({
   title,
   image,
+  imageAlt,
   excerpt,
   href
 }: ArticleCardProps) {
   return (
     <Card
       imgSrc={image}
+      imgAlt={imageAlt}
       theme={{
         root: {
           children: 'flex h-full flex-col justify-between gap-4 p-6'

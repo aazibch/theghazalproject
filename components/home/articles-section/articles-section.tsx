@@ -14,6 +14,7 @@ export default function ArticlesSection() {
               key={article.slug}
               title={article.title}
               image={article.image}
+              imageAlt={article.imageAlt}
               excerpt={article.excerpt}
               href={`/articles/${article.slug}`}
             />
