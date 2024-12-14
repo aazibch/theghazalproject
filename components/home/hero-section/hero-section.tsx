@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import heroBanner from '@/assets/images/hero-banner.png';
+import heroBanner from '@/assets/images/home/hero-banner.png';
 
 export default function HeroSection() {
   return (

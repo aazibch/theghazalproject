@@ -13,6 +13,7 @@ export default function ArticlesSection() {
             <ArticleCard
               key={article.slug}
               title={article.title}
+              image={article.image}
               excerpt={article.excerpt}
               href={`/articles/${article.slug}`}
             />

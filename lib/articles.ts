@@ -24,6 +24,7 @@ export const getArticlesData = () => {
       slug,
       title: data.title,
       author: data.author,
+      image: data.image,
       excerpt: data.excerpt,
       date: data.date
     };
