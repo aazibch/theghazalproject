@@ -15,6 +15,7 @@ export default async function ArticlesPage() {
           slug={e.slug}
           title={e.title}
           image={e.image}
+          imageAlt={e.imageAlt}
           author={e.author}
           date={e.date}
           excerpt={e.excerpt}

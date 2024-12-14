@@ -5,6 +5,7 @@ interface ArticlePreviewProps {
   slug: string;
   title: string;
   image: string;
+  imageAlt: string;
   date: string;
   author: string;
   excerpt: string;
@@ -14,6 +15,7 @@ export default function ArticlePreview({
   slug,
   title,
   image,
+  imageAlt,
   date,
   author,
   excerpt
@@ -29,7 +31,7 @@ export default function ArticlePreview({
           height={540}
           className="w-full rounded-md"
           src={image}
-          alt="Article image"
+          alt={imageAlt}
         />
       </div>
       <div>
