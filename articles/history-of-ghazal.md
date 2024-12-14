@@ -2,6 +2,7 @@
 title: 'History of the Ghazal'
 author: 'Aazib Chaudhry'
 image: '/images/articles/ghazal-history.png'
+imageAlt: "Khusraw Listening to Barbad Playing Music, Nizami's Khamsa (Five Poems), 16th century"
 excerpt: 'This article traces the evolution of the ghazal from its origins in 7th-century Arabia to its flourishing in Persia and the Indian Subcontinent. It explores how the form was shaped by Sufi mysticism, classical poets like Hafiz and Ghalib, and its later adoption into Urdu literature. The article also touches on the contemporary adaptations of the ghazal in the English language, highlighting its thematic emphasis on love, loss, and the human condition.'
 date: 'August 30, 2024'
 ---

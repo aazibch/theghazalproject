@@ -2,6 +2,7 @@
 title: 'How to Write a Ghazal'
 author: 'Aazib Chaudhry'
 image: '/images/articles/write-ghazal.png'
+imageAlt: 'Nizamuddin Auliya with His Disciple Amir Khusrow, 17th century'
 excerpt: 'In this step-by-step guide, readers will learn the essential elements of crafting a ghazal. The article breaks down the structure, rhyme scheme, and the unique requirements of the form, such as the radif (repeated refrain) and qafia (rhyme). It also discusses the thematic considerations central to the ghazal, encouraging writers to reflect on emotions like longing, spiritual reflection, or the paradoxes of love. Examples from classical and modern ghazals will be used to illustrate key points.'
 date: 'September 4, 2024'
 ---
