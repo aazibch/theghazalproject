@@ -5,7 +5,18 @@ import rehypeRaw from 'rehype-raw';
 import { getArticleData } from '@/lib/articles';
 import styles from './page.module.css';
 
-export default function Article({ params }: { params: { slug: string } }) {
+type PageProps = { params: { slug: string } };
+
+export async function generateMetadata({ params }: PageProps) {
+  const articleData = getArticleData(params.slug);
+
+  return {
+    title: `${articleData.title} by ${articleData.author} | The Ghazal Project`,
+    description: articleData.excerpt
+  };
+}
+
+export default function Article({ params }: PageProps) {
   const articleData = getArticleData(params.slug);
   const isoDate = new Date(articleData.date).toISOString().split('T')[0];
 

@@ -1,6 +1,11 @@
+import type { Metadata } from 'next';
 import ArticlePreview from '@/components/articles/article-preview/article-preview';
 import PageHeader from '@/components/layout/pages/page-header';
 import { getArticlesData } from '@/lib/articles';
+
+export const metadata: Metadata = {
+  title: 'Articles | The Ghazal Project'
+};
 
 export default async function ArticlesPage() {
   const articlesData = getArticlesData();
