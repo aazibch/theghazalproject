@@ -4,6 +4,8 @@ import rehypeRaw from 'rehype-raw';
 
 import { getArticleData } from '@/lib/articles';
 import styles from './page.module.css';
+import Image from 'next/image';
+import StyledImage from '@/components/ui/styled-image';
 
 type PageProps = { params: { slug: string } };
 
@@ -31,6 +33,17 @@ export default function Article({ params }: PageProps) {
               <time dateTime={isoDate}>{articleData.date}</time>
             </div>
           </header>
+
+          <div className="mb-6">
+            <StyledImage
+              src={articleData.image}
+              alt={articleData.imageAlt}
+              width={960}
+              height={540}
+              caption={articleData.imageAlt}
+            />
+          </div>
+
           <div className={styles.content}>
             <ReactMarkdown
               rehypePlugins={[rehypeRaw]}

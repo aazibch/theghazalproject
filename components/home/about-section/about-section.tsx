@@ -2,9 +2,9 @@ import { Button } from 'flowbite-react';
 
 export default function AboutSection() {
   return (
-    <div className="py-24 bg-[url('/images/shahi-hammam-main-dome-bg.png')] bg-no-repeat bg-center bg-cover">
+    <div className="py-28 bg-[url('/images/shahi-hammam-main-dome-bg.png')] bg-no-repeat bg-center bg-cover">
       <div className="container mx-auto text-white">
-        <h2 className="uppercase text-center text-xl mb-8">
+        <h2 className="uppercase text-center text-xl mb-10">
           Learn More About Us
         </h2>
         <div className="max-w-[50rem] mx-auto text-center">

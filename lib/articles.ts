@@ -50,6 +50,8 @@ export const getArticleData = (slug: string) => {
     slug,
     title: data.title,
     author: data.author,
+    image: data.image,
+    imageAlt: data.imageAlt,
     excerpt: data.excerpt,
     date: data.date,
     content
