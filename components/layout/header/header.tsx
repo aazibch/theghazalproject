@@ -20,7 +20,7 @@ export default async function Header() {
         <NavLink href="/">Home</NavLink>
         <NavLink href="/articles">Articles</NavLink>
         <NavLink href="/collective-ghazal">Collective Ghazal</NavLink>
-        <NavLink href="#">About</NavLink>
+        <NavLink href="/about">About</NavLink>
         <NavLink href="#">Contact</NavLink>
       </NavbarCollapse>
     </Navbar>

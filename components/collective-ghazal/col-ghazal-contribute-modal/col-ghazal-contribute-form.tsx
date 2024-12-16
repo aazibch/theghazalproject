@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 
 import { submitColGhazalCouplet } from '@/lib/actions';
 import { colGhazalEntrySchema } from '@/lib/schemas';
+import Link from 'next/link';
 
 interface FormErrors {
   lineOne?: string;
@@ -63,12 +64,35 @@ export default function ColGhazalContributeForm({
       <form onSubmit={formik.handleSubmit}>
         <Modal.Body className="flex items-center justify-center">
           <div className="space-y-6">
-            <p className="text-base leading-relaxed text-gray-500">
-              Before submitting, keep in mind: The maximum allowed length of
-              syllables is eighteen per line, and both lines should end in the
-              refrain "silence." It is also recommended that the two lines are
-              roughly equal length in terms of syllable-count.
-            </p>
+            <div className="text-base leading-relaxed text-gray-500 space-y-2">
+              <p>
+                To maintain a sense of balance, the two lines of your couplet
+                should be roughly equal in length. To aid contributors in
+                achieving this balance, we require each line of your entry to be
+                at least 30 characters and no more than 60 characters in length.
+              </p>
+              <p>
+                Before submitting, we recommend that you read this{' '}
+                <Link
+                  href="/articles/instructions-on-contributing-collective-ghazal"
+                  target="_blank"
+                >
+                  short article
+                </Link>{' '}
+                for instructions and tips on contributing.
+              </p>
+              <p>
+                To learn more about the ghazal and its variants, see this{' '}
+                <Link
+                  href="/articles/how-to-write-english-ghazal"
+                  target="_blank"
+                >
+                  article
+                </Link>
+                .
+              </p>
+            </div>
+
             <div>
               <TextInput
                 className="mb-4"

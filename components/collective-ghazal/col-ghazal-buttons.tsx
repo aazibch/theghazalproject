@@ -56,7 +56,12 @@ export default function ColGhazalButtons() {
       </p>
       <div className="flex gap-2 justify-center">
         {contributeButton}
-        <Button>Learn More</Button>
+        <Link
+          className="hover:no-underline"
+          href="/articles/how-to-write-english-ghazal"
+        >
+          <Button>Learn More</Button>
+        </Link>
       </div>
     </>
   );
