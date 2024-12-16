@@ -31,19 +31,19 @@ export default function ArticleCard({
         {title}
       </h3>
       <p className="font-normal text-gray-700 dark:text-gray-400">{excerpt}</p>
-      <Button
-        as={Link}
-        href={href}
-        className="hover:no-underline"
-        color="blue"
-        theme={{
-          inner: {
-            base: 'flex items-center transition-all duration-200'
-          }
-        }}
-      >
-        Read More <HiArrowRight className="ml-2" />
-      </Button>
+      <Link href={href} className="hover:no-underline">
+        <Button
+          color="blue"
+          className="w-full"
+          theme={{
+            inner: {
+              base: 'flex items-center transition-all duration-200'
+            }
+          }}
+        >
+          Read More <HiArrowRight className="ml-2" />
+        </Button>
+      </Link>
     </Card>
   );
 }
