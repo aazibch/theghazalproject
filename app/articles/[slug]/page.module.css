@@ -54,8 +54,16 @@
   padding-left: 2rem;
 }
 
+.content ul {
+  list-style-type: disc;
+}
+
 .content ol {
   list-style-type: decimal;
+}
+
+.content li {
+  margin-bottom: 0.5rem;
 }
 
 .content blockquote {

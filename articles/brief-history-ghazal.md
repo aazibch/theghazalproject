@@ -1,7 +1,7 @@
 ---
 title: 'A Brief History of the Ghazal'
 author: 'Aazib Chaudhry'
-image: '/images/articles/ghazal-history.png'
+image: '/images/articles/brief-history-ghazal.png'
 imageAlt: "Khusraw Listening to Barbad Playing Music, Nizami's Khamsa (Five Poems), 16th century"
 excerpt: 'The ghazal is one of the most enduring poetic forms in the history of literature, with origins deeply rooted in the Arabic, Persian, Turkish, and South Asian traditions. Over the centuries, it has transcended linguistic and cultural boundaries, evolving into a versatile medium for expressing themes of love, loss, spirituality, and existential longing.'
 date: 'August 30, 2024'

@@ -4,7 +4,6 @@ import rehypeRaw from 'rehype-raw';
 
 import { getArticleData } from '@/lib/articles';
 import styles from './page.module.css';
-import Image from 'next/image';
 import StyledImage from '@/components/ui/styled-image';
 
 type PageProps = { params: { slug: string } };
@@ -49,10 +48,10 @@ export default function Article({ params }: PageProps) {
               rehypePlugins={[rehypeRaw]}
               components={{
                 a({ href, children }) {
-                  if (typeof href === 'string' && Array.isArray(children)) {
+                  if (typeof href === 'string') {
                     return (
                       <Link href={href} target="_blank">
-                        {children[0]}
+                        {children}
                       </Link>
                     );
                   }

@@ -1,7 +1,7 @@
 ---
 title: 'How to Write an English Ghazal: Exploring Three Variants'
 author: 'Aazib Chaudhry'
-image: '/images/articles/write-ghazal.png'
+image: '/images/articles/how-to-write-english-ghazal.png'
 imageAlt: 'Nizamuddin Auliya with His Disciple Amir Khusrow, 17th century'
 excerpt: 'The ghazal consists of a series of couplets, each of which is autonomous yet connected through thematic resonance. In this guide, we explore three variations of the ghazal. We also discuss the importance of meter and offer examples to illustrate the art of crafting a ghazal.'
 date: 'September 4, 2024'
