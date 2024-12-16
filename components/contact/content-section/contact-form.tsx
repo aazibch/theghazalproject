@@ -17,9 +17,15 @@ export default function ContactForm() {
       </div>
       <div>
         <div className="mb-2 block">
+          <Label htmlFor="username" value="Username" />
+        </div>
+        <TextInput id="username" type="text" />
+      </div>
+      <div>
+        <div className="mb-2 block">
           <Label htmlFor="message" value="Message" />
         </div>
-        <Textarea id="message" required rows={4} />
+        <Textarea id="message" required rows={15} />
       </div>
       <Button color="blue">Send</Button>
     </form>

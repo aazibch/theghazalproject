@@ -17,8 +17,8 @@ export default function ContentSection() {
           <p>
             Our mission is twofold: to preserve this cherished tradition while
             fostering cultural amalgamation by adapting the ghazal for English
-            poetry. By exploring a variant of the ghazal form that resonates
-            with contemporary voices, we aim to create a bridge between diverse
+            poetry. By exploring variants of the ghazal form that resonate with
+            contemporary voices, we aim to create a bridge between diverse
             cultures and artistic expressions.
           </p>
 

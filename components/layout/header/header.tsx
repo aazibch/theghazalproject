@@ -21,7 +21,7 @@ export default async function Header() {
         <NavLink href="/articles">Articles</NavLink>
         <NavLink href="/collective-ghazal">Collective Ghazal</NavLink>
         <NavLink href="/about">About</NavLink>
-        <NavLink href="#">Contact</NavLink>
+        <NavLink href="/contact">Contact</NavLink>
       </NavbarCollapse>
     </Navbar>
   );

@@ -10,9 +10,9 @@ export default function AboutSection() {
         </h2>
         <div className="max-w-[50rem] mx-auto text-center">
           <p className="text-lg mb-8">
-            The Ghazal Project was started with the goal of promoting the rich
+            The Ghazal Project was founded with the goal of promoting the rich
             artistic culture of Pakistan and the subcontinent, and to encourage
-            cultural emalgamation through a variant of the ghazal form, fit for
+            cultural emalgamation through variants of the ghazal form, fit for
             adaption into English poetry, and to this end, we have partnered
             with Virsapur, an organization dedicated to reviving Pakistan&apos;s
             diverse cultural heritage.

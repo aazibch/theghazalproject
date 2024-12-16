@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import { Button } from 'flowbite-react';
+import { CONTACT_INTRO } from '@/constants';
 
 export default function ContactSection() {
   return (
@@ -10,11 +11,7 @@ export default function ContactSection() {
           Want to Get In Touch?
         </h2>
         <div className="max-w-3xl mx-auto text-center">
-          <p className="mb-8">
-            Whether you would like to suggest a feature, submit a support
-            request, or propose a partnership with the shared goal of promoting
-            art and culture, please don't hesitate to get in touch.
-          </p>
+          <p className="mb-8">{CONTACT_INTRO}</p>
 
           <div className="flex justify-center">
             <Link className="hover:no-underline" href="/contact">
