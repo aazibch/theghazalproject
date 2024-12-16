@@ -11,9 +11,9 @@ export default function ContactSection() {
         </h2>
         <div className="max-w-3xl mx-auto text-center">
           <p className="mb-8">
-            Whether you want to suggest a feature, submit a support request, or
-            propose a partnership with the shared goal of promoting art and
-            culture, please don't hesitate to get in touch.
+            Whether you would like to suggest a feature, submit a support
+            request, or propose a partnership with the shared goal of promoting
+            art and culture, please don't hesitate to get in touch.
           </p>
 
           <div className="flex justify-center">

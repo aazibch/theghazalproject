@@ -1,4 +1,5 @@
 import { Button } from 'flowbite-react';
+import Link from 'next/link';
 
 export default function AboutSection() {
   return (
@@ -18,9 +19,16 @@ export default function AboutSection() {
           </p>
 
           <div className="flex justify-center">
-            <Button color="blue" gradientDuoTone="purpleToBlue" size="lg" pill>
-              Learn More
-            </Button>
+            <Link className="hover:no-underline" href="/about">
+              <Button
+                color="blue"
+                gradientDuoTone="purpleToBlue"
+                size="lg"
+                pill
+              >
+                Learn More
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
