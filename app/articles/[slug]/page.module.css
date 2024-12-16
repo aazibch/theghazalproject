@@ -16,12 +16,12 @@
 
 .content h5,
 .content h6 {
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 1rem;
 }
 
 .content h1 {
-  font-size: 1.75rem;
+  font-size: 1.875rem;
 }
 
 .content h2 {
@@ -33,15 +33,15 @@
 }
 
 .content h4 {
-  font-size: 1rem;
+  font-size: 1.125rem;
 }
 
 .content h5 {
-  font-size: 0.75rem;
+  font-size: 1rem;
 }
 
 .content h6 {
-  font-size: 0.5rem;
+  font-size: 0.875rem;
 }
 
 .content img {
@@ -54,17 +54,21 @@
   padding-left: 2rem;
 }
 
+.content ol {
+  list-style-type: decimal;
+}
+
 .content blockquote {
   padding-left: 1rem;
   border-left: 5px solid #e0e0e0;
   color: #616161;
 }
 
-.poetry {
+.poetryStanza {
   margin-bottom: 1rem;
 }
 
-.poetry p {
+.poetryStanza p {
   text-indent: -1em;
   padding-left: 1em;
   margin: 0;

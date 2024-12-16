@@ -57,6 +57,17 @@ export default function Article({ params }: PageProps) {
                     );
                   }
                   return;
+                },
+                div({ children, node, ...props }) {
+                  const updatedClassName =
+                    props.className === 'poetryStanza'
+                      ? styles.poetryStanza
+                      : props.className;
+                  return (
+                    <div {...props} className={updatedClassName}>
+                      {children}
+                    </div>
+                  );
                 }
               }}
             >
