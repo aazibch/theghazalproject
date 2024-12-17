@@ -5,8 +5,10 @@ import PageContainer from '@/components/layout/pages/page-container';
 export default function LoginPage() {
   return (
     <PageContainer>
-      <PageHeader heading="Login" />
-      <LoginForm />
+      <div className="pb-28">
+        <PageHeader heading="Login" />
+        <LoginForm />
+      </div>
     </PageContainer>
   );
 }

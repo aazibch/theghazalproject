@@ -5,8 +5,10 @@ import PageContainer from '@/components/layout/pages/page-container';
 export default function SignupPage() {
   return (
     <PageContainer>
-      <PageHeader heading="Signup" />
-      <SignupForm />
+      <div className="pb-28">
+        <PageHeader heading="Signup" />
+        <SignupForm />
+      </div>
     </PageContainer>
   );
 }

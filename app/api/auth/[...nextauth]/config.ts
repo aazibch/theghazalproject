@@ -1,12 +1,11 @@
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { JWT } from 'next-auth/jwt';
-import { AdapterUser } from 'next-auth/adapters';
-import NextAuth, { Session, User as UserType } from 'next-auth';
+import { Session } from 'next-auth';
 
 import User from '@/models/User';
 import dbConnect from '@/lib/dbConnect';
 import { signupSchema } from '@/lib/schemas';
-import { IUser, UserSession, UserToken } from '@/types';
+import { SessionUser } from '@/types';
 import catchAsync from '@/lib/catchAsync';
 import { isSignupCredentials } from '@/lib/utils';
 
@@ -80,17 +79,15 @@ const config = {
       trigger
     }: {
       token: JWT;
-      user: IUser | UserType | AdapterUser;
+      user: SessionUser;
       trigger?: string | undefined;
     }) {
       if (user) {
-        const typedUser = user as IUser;
-
-        token._id = typedUser._id;
-        token.fullName = typedUser.fullName;
-        token.username = typedUser.username;
-        token.email = typedUser.email;
-        token.profilePicture = typedUser.profilePicture;
+        token._id = user._id;
+        token.fullName = user.fullName;
+        token.username = user.username;
+        token.email = user.email;
+        token.profilePicture = user.profilePicture;
       }
 
       if (trigger === 'update') {
@@ -104,26 +101,12 @@ const config = {
 
       return token;
     },
-    async session({
-      session,
-      token
-    }: {
-      session: UserSession | Session;
-      token: JWT | UserToken;
-    }) {
-      const typedSession = session as UserSession;
-      const typedToken = token as UserToken;
-
-      if (session?.user) {
-        typedSession.user._id = typedToken._id;
-        typedSession.user.fullName = typedToken.fullName;
-        typedSession.user.username = typedToken.username;
-        typedSession.user.email = typedToken.email;
-        typedSession.user.profilePicture = typedToken.profilePicture;
-
-        delete typedSession.user.name;
-        delete typedSession.user.image;
-      }
+    async session({ session, token }: { session: Session; token: JWT }) {
+      session.user._id = token._id;
+      session.user.fullName = token.fullName;
+      session.user.username = token.username;
+      session.user.email = token.email;
+      session.user.profilePicture = token.profilePicture;
 
       return session;
     }

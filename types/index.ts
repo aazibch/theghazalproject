@@ -25,29 +25,45 @@ export interface IColGhazalEntry {
   updatedAt: string;
 }
 
-interface SessionSpecific {
-  expires: ISODateString;
+// interface SessionSpecific {
+//   expires: ISODateString;
+// }
+
+// export interface UserSession extends SessionSpecific {
+//   user: {
+//     _id: string;
+//     fullName: string;
+//     username: string;
+//     email: string;
+//     profilePicture: string;
+//     image?: string;
+//     name?: string;
+//   };
+// }
+
+export interface SessionUser {
+  _id: string;
+  fullName: string;
+  username: string;
+  email: string;
+  profilePicture: string;
 }
 
-export interface UserSession extends SessionSpecific {
-  user: {
-    _id: string;
-    fullName: string;
-    username: string;
-    email: string;
-    profilePicture: string;
-    image?: string;
-    name?: string;
-  };
-}
+// interface JwtSpecific {
+//   iat: number;
+//   exp: number;
+//   jti: string;
+// }
 
-interface JwtSpecific {
-  iat: number;
-  exp: number;
-  jti: string;
-}
+// export interface UserToken extends JwtSpecific {
+//   _id: string;
+//   fullName: string;
+//   username: string;
+//   email: string;
+//   profilePicture: string;
+// }
 
-export interface UserToken extends JwtSpecific {
+export interface TokenUser {
   _id: string;
   fullName: string;
   username: string;

@@ -11,7 +11,7 @@ export default function HeaderDropdown() {
   const router = useRouter();
   const { data: session } = useSession();
 
-  const userSession = session as UserSession | null;
+  const userSession = session;
 
   if (userSession) {
     return (
