@@ -5,7 +5,14 @@ import { Navbar, NavbarBrand, NavbarCollapse } from 'flowbite-react';
 export default async function Header() {
   return (
     <Navbar
-      theme={{ link: { active: { on: 'text-primary_blue' } } }}
+      theme={{
+        link: { active: { on: 'text-primary_blue' } },
+        root: {
+          inner: {
+            base: 'mx-auto max-w-screen-xl flex flex-wrap items-center justify-between'
+          }
+        }
+      }}
       rounded
       border
     >

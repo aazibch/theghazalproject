@@ -6,7 +6,7 @@ export default function ArticlesSection() {
 
   return (
     <div className="bg-[#edebe6] py-16">
-      <div className="container mx-auto">
+      <div className="max-w-screen-2xl mx-auto">
         <h2 className="uppercase text-center text-xl mb-8">Recent Articles</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {articlesData.map((article) => (

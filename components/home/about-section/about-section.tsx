@@ -8,7 +8,7 @@ export default function AboutSection() {
         <h2 className="uppercase text-center text-xl mb-10">
           Learn More About Us
         </h2>
-        <div className="max-w-[50rem] mx-auto text-center">
+        <div className="max-w-3xl mx-auto text-center">
           <p className="text-lg mb-8">
             The Ghazal Project was founded with the goal of promoting the rich
             artistic culture of Pakistan and the subcontinent, and to encourage

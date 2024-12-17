@@ -2,9 +2,9 @@ import Link from 'next/link';
 
 export default function ContentSection() {
   return (
-    <section className="my-12">
+    <section className="mb-12">
       <main>
-        <article className="max-w-3xl mx-auto space-y-4">
+        <article className="space-y-4">
           <p>
             <span className="font-semibold">The Ghazal Project</span> was
             founded to celebrate and share the rich artistic heritage of
@@ -20,6 +20,13 @@ export default function ContentSection() {
             poetry. By exploring variants of the ghazal form that resonate with
             contemporary voices, we aim to create a bridge between diverse
             cultures and artistic expressions.
+          </p>
+
+          <p>
+            We believe that writing ghazals is not just an artistic exercise but
+            also a contemplative and meditative practice. By engaging with the
+            form’s inherent structure and its themes, poets are encouraged to
+            explore metaphysical insights and gain deeper spiritual awareness.
           </p>
 
           <p>

@@ -22,7 +22,7 @@ export default function Article({ params }: PageProps) {
   const isoDate = new Date(articleData.date).toISOString().split('T')[0];
 
   return (
-    <div className="container mx-auto my-16">
+    <div className="px-4 mx-auto my-16">
       <div className="max-w-3xl mx-auto">
         <article>
           <header className="mb-6">

@@ -5,8 +5,8 @@ import { CONTACT_INTRO } from '@/constants';
 
 export default function ContactSection() {
   return (
-    <section className="py-24 bg-[url('/images/delhi-ceiling-bg.png')] bg-no-repeat bg-center bg-cover">
-      <div className="container mx-auto text-white">
+    <section className="py-24 px-4 bg-[url('/images/delhi-ceiling-bg.png')] bg-no-repeat bg-center bg-cover">
+      <div className="mx-auto text-white">
         <h2 className="uppercase text-center text-xl mb-10">
           Want to Get In Touch?
         </h2>

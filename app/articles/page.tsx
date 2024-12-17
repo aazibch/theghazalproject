@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import ArticlePreview from '@/components/articles/article-preview/article-preview';
 import PageHeader from '@/components/layout/pages/page-header';
 import { getArticlesData } from '@/lib/articles';
+import PageContainer from '@/components/layout/pages/page-container';
 
 export const metadata: Metadata = {
   title: 'Articles | The Ghazal Project'
@@ -11,7 +12,7 @@ export default async function ArticlesPage() {
   const articlesData = getArticlesData();
 
   return (
-    <div className="container mx-auto my-12">
+    <PageContainer>
       <PageHeader heading="Articles" />
 
       {articlesData.map((e, i) => (
@@ -26,6 +27,6 @@ export default async function ArticlesPage() {
           excerpt={e.excerpt}
         />
       ))}
-    </div>
+    </PageContainer>
   );
 }

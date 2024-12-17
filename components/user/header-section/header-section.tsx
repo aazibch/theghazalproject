@@ -15,7 +15,7 @@ export default function HeaderSection({ user }: { user: IUser }) {
 
   return (
     <header className="text-center border-gray-300 border-b py-12">
-      <div className="container mx-auto">
+      <div className="max-w-screen-xl px-4 mx-auto">
         <div className="w-7 h-1 mb-4 bg-primary_blue"></div>
 
         <AvatarWithEditButton

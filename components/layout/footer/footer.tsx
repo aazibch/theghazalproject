@@ -13,9 +13,9 @@ const customLinkTheme = {
 
 export default function FooterComponent() {
   return (
-    <Footer className="rounded-none" container bgDark>
+    <Footer container className="rounded-none px-4" bgDark>
       <div className="w-full text-center">
-        <div className="container mx-auto">
+        <div className="max-w-screen-xl mx-auto">
           <div className="w-full justify-between sm:flex sm:items-center sm:justify-between">
             <span className="block mb-2 sm:mb-0 self-center whitespace-nowrap text-xl font-semibold dark:text-white text-primary_blue font-crimson_text">
               The Ghazal Project
@@ -34,7 +34,7 @@ export default function FooterComponent() {
           </div>
         </div>
         <FooterDivider className="border-gray-700" />
-        <div className="container mx-auto">
+        <div className="max-w-screen-xl mx-auto">
           <FooterCopyright
             theme={{
               href: 'ml-1 hover:underline text-gray-500'
