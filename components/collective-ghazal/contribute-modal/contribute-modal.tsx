@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Modal } from 'flowbite-react';
 
-import ColGhazalContributeSuccess from './col-ghazal-contribute-success';
-import ColGhazalContributeForm from './col-ghazal-contribute-form';
+import ContributeSuccessScreen from './contribute-success-screen';
+import ContributeForm from './contribute-form';
 
-export default function ColGhazalContributeModal({
+export default function ContributeModal({
   openContributeModal,
   setOpenContributeModalHandler
 }: {
@@ -25,12 +25,12 @@ export default function ColGhazalContributeModal({
     >
       <Modal.Header>Contribute a Stanza to the Collective Ghazal</Modal.Header>
       {isSuccess ? (
-        <ColGhazalContributeSuccess
+        <ContributeSuccessScreen
           setIsSuccessHandler={setIsSuccessHandler}
           setOpenContributeModalHandler={setOpenContributeModalHandler}
         />
       ) : (
-        <ColGhazalContributeForm
+        <ContributeForm
           isSuccess={isSuccess}
           setIsSuccessHandler={setIsSuccessHandler}
           setOpenContributeModalHandler={setOpenContributeModalHandler}

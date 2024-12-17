@@ -1,7 +1,7 @@
 import { Button, Modal } from 'flowbite-react';
 import { HiOutlineCheck } from 'react-icons/hi';
 
-export default function ColGhazalContributeSuccess({
+export default function ContributeSuccessScreen({
   setOpenContributeModalHandler,
   setIsSuccessHandler
 }: {

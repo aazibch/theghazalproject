@@ -11,7 +11,7 @@ interface FormErrors {
   lineTwo?: string;
 }
 
-export default function ColGhazalContributeForm({
+export default function ContributeForm({
   isSuccess,
   setIsSuccessHandler,
   setOpenContributeModalHandler
