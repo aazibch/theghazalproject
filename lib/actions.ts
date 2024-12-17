@@ -4,13 +4,14 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { S3 } from '@aws-sdk/client-s3';
 import { getServerSession } from 'next-auth';
+import sharp from 'sharp';
+
 import config from '@/app/api/auth/[...nextauth]/config';
 import dbConnect from './dbConnect';
 import ColGhazalEntry from '@/models/ColGhazalEntry';
 import { colGhazalEntrySchema } from './schemas';
 import User from '@/models/User';
 import { IUser } from '@/types';
-import sharp from 'sharp';
 
 let s3: S3 | undefined;
 
@@ -148,7 +149,7 @@ export const updateProfilePicture = async (
     await s3.putObject({
       Bucket: 'theghazalproject-user-avatars',
       Key: fileName,
-      Body: Buffer.from(resizedBufferImage),
+      Body: resizedBufferImage,
       ContentType: newImage.type
     });
 
