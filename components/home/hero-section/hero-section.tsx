@@ -4,7 +4,7 @@ import heroBanner from '@/assets/images/home/hero-banner.png';
 
 export default function HeroSection() {
   return (
-    <div className="flex justify-center items-center h-[30rem] bg-[#edebe6]">
+    <section className="flex justify-center items-center h-[30rem] bg-[#edebe6]">
       <div className="basis-[30rem]">
         <Image
           src={heroBanner}
@@ -12,6 +12,6 @@ export default function HeroSection() {
 and share your own verses with the world."'
         />
       </div>
-    </div>
+    </section>
   );
 }
