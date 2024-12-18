@@ -2,7 +2,7 @@ interface BannerProps {
   size?: 'md' | 'lg';
   bgImage: string;
   heading: string;
-  contentText: string;
+  contentText: React.ReactNode;
   contentButtons: React.ReactNode;
 }
 
