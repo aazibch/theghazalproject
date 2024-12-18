@@ -2,8 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import {
+  redirect,
+  usePathname,
+  useRouter,
+  useSearchParams
+} from 'next/navigation';
 import { Button } from 'flowbite-react';
+import { useSession } from 'next-auth/react';
 
 import ContributeModal from './contribute-modal/contribute-modal';
 
@@ -12,6 +18,8 @@ export default function ColGhazalButtons() {
     useState<boolean>(false);
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const { data: session } = useSession();
 
   useEffect(() => {
     if (searchParams.get('contributing') === 'true') {
@@ -24,23 +32,28 @@ export default function ColGhazalButtons() {
   };
 
   const handleContributeButtonClick = () => {
+    if (!session) {
+      router.push('/auth/login');
+      return;
+    }
+
     setOpenContributeModal(true);
   };
 
   let contributeButton = (
-    <Link
-      className="hover:no-underline"
-      href="/collective-ghazal?contributing=true"
-    >
-      <Button color="blue">Contribute</Button>
-    </Link>
+    <Button onClick={handleContributeButtonClick} color="blue">
+      Contribute
+    </Button>
   );
 
-  if (pathname === '/collective-ghazal') {
+  if (pathname === '/' && session) {
     contributeButton = (
-      <Button onClick={handleContributeButtonClick} color="blue">
-        Contribute
-      </Button>
+      <Link
+        className="hover:no-underline"
+        href="/collective-ghazal?contributing=true"
+      >
+        <Button color="blue">Contribute</Button>
+      </Link>
     );
   }
 

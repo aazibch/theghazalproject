@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
+import { notFound } from 'next/navigation';
 
 import { getArticleData } from '@/lib/articles';
 import styles from './page.module.css';
@@ -19,6 +20,11 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default function Article({ params }: PageProps) {
   const articleData = getArticleData(params.slug);
+
+  if (!articleData) {
+    notFound();
+  }
+
   const isoDate = new Date(articleData.date).toISOString().split('T')[0];
 
   return (

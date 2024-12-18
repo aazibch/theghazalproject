@@ -1,6 +1,5 @@
 'use client';
 
-import { UserSession } from '@/types';
 import { Avatar, Button, Dropdown, Navbar } from 'flowbite-react';
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';

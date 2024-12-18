@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import { getColGhazalEntriesByUser, getUser } from '@/lib/actions';
 import ContributionsSection from '@/components/user/contributions-section/contributions-section';
 import HeaderSection from '@/components/user/header-section/header-section';
+import { getServerSession } from 'next-auth';
+import config from '@/app/api/auth/[...nextauth]/config';
 
 export default async function UserPage({
   params
