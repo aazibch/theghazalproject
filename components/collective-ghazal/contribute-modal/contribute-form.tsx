@@ -94,25 +94,28 @@ export default function ContributeForm({
             </div>
 
             <div>
-              <TextInput
-                className="mb-4"
-                type="text"
-                placeholder="Line 1"
-                name="lineOne"
-                value={formik.values.lineOne}
-                onChange={formik.handleChange}
-                color={formik.errors.lineOne && 'failure'}
-                helperText={formik.errors.lineOne}
-              />
-              <TextInput
-                type="text"
-                placeholder="Line 2"
-                name="lineTwo"
-                value={formik.values.lineTwo}
-                onChange={formik.handleChange}
-                color={formik.errors.lineTwo && 'failure'}
-                helperText={formik.errors.lineTwo}
-              />
+              <div className="mb-4">
+                <TextInput
+                  type="text"
+                  placeholder="Line 1"
+                  name="lineOne"
+                  value={formik.values.lineOne}
+                  onChange={formik.handleChange}
+                  color={formik.errors.lineOne && 'failure'}
+                  helperText={formik.errors.lineOne}
+                />
+              </div>
+              <div>
+                <TextInput
+                  type="text"
+                  placeholder="Line 2"
+                  name="lineTwo"
+                  value={formik.values.lineTwo}
+                  onChange={formik.handleChange}
+                  color={formik.errors.lineTwo && 'failure'}
+                  helperText={formik.errors.lineTwo}
+                />
+              </div>
             </div>
           </div>
         </Modal.Body>

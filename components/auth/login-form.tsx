@@ -5,8 +5,8 @@ import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { Button, Label, Spinner, TextInput } from 'flowbite-react';
 
-import { redirectAfterAuth } from '@/lib/actions';
 import styles from './form.module.css';
+import { redirectAfterAuth } from '@/lib/actions';
 
 export default function LoginForm() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
