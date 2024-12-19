@@ -21,13 +21,17 @@ export default function FooterComponent() {
               The Ghazal Project
             </span>
             <FooterLinkGroup className="flex justify-center">
-              <FooterLink as={Link} theme={customLinkTheme} href="#">
+              <FooterLink as={Link} theme={customLinkTheme} href="/about">
                 About
               </FooterLink>
-              <FooterLink as={Link} theme={customLinkTheme} href="#">
+              <FooterLink
+                as={Link}
+                theme={customLinkTheme}
+                href="/privacy/policy"
+              >
                 Privacy Policy
               </FooterLink>
-              <FooterLink as={Link} theme={customLinkTheme} href="#">
+              <FooterLink as={Link} theme={customLinkTheme} href="/contact">
                 Contact
               </FooterLink>
             </FooterLinkGroup>
