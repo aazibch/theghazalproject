@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import ColGhazalButtons from '@/components/collective-ghazal/col-ghazal-buttons';
 import ColGhazalIntro from '@/components/collective-ghazal/col-ghazal-intro';
 import GhazalCouplet from '@/components/home/ghazal-section/ghazal-couplet';
@@ -27,7 +29,9 @@ export default async function CollectiveGhazalPage() {
           />
         ))}
       </div>
-      <ColGhazalButtons />
+      <Suspense>
+        <ColGhazalButtons />
+      </Suspense>
       <ScrollToBottomButton />
     </PageContainer>
   );

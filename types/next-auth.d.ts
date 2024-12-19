@@ -7,6 +7,10 @@ declare module 'next-auth' {
   interface Session {
     user: SessionUser;
   }
+
+  interface User extends SessionUser {
+    email: string;
+  }
 }
 
 declare module 'next-auth/jwt' {

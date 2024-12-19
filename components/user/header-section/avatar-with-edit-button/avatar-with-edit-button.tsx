@@ -27,7 +27,7 @@ export default function AvatarWithEditButton({
       update();
       resetInputRef.current!.click();
     }
-  }, [state]);
+  }, [state, update]);
 
   const handleEditButtonClick = () => {
     imageInputRef.current!.click();

@@ -20,8 +20,8 @@ export default function AboutSection() {
             >
               Virsapur
             </Link>
-            , an organization dedicated to reviving Pakistan's diverse cultural
-            heritage.
+            , an organization dedicated to reviving Pakistan&apos;s diverse
+            cultural heritage.
           </>
         }
         contentButtons={

@@ -21,11 +21,13 @@ export default function ColGhazalButtons() {
   const router = useRouter();
   const { data: session } = useSession();
 
+  const contributingSearchParamValue = searchParams.get('contributing');
+
   useEffect(() => {
-    if (searchParams.get('contributing') === 'true') {
+    if (contributingSearchParamValue === 'true') {
       setOpenContributeModal(true);
     }
-  }, []);
+  }, [contributingSearchParamValue]);
 
   const setOpenContributeModalHandler = (value: boolean) => {
     setOpenContributeModal(value);

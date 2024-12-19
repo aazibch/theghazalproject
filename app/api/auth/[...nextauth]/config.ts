@@ -1,6 +1,6 @@
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { JWT } from 'next-auth/jwt';
-import { Session } from 'next-auth';
+import { Session, User as UserType } from 'next-auth';
 
 import User from '@/models/User';
 import dbConnect from '@/lib/dbConnect';
@@ -8,6 +8,7 @@ import { signupSchema } from '@/lib/schemas';
 import { SessionUser } from '@/types';
 import catchAsync from '@/lib/catchAsync';
 import { isSignupCredentials } from '@/lib/utils';
+import { AdapterUser } from 'next-auth/adapters';
 
 const config = {
   providers: [
@@ -79,7 +80,7 @@ const config = {
       trigger
     }: {
       token: JWT;
-      user: SessionUser;
+      user: UserType | AdapterUser;
       trigger?: string | undefined;
     }) {
       if (user) {

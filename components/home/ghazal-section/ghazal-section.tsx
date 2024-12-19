@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import ColGhazalButtons from '@/components/collective-ghazal/col-ghazal-buttons';
 import GhazalCouplet from './ghazal-couplet';
 import { getRecentColGhazalEntries } from '@/lib/actions';
@@ -22,7 +24,9 @@ export default async function GhazalSection() {
           />
         ))}
       </div>
-      <ColGhazalButtons />
+      <Suspense>
+        <ColGhazalButtons />
+      </Suspense>
     </section>
   );
 }
