@@ -57,7 +57,7 @@ export default function ContactForm({
         ...values
       });
 
-      fetch('/', {
+      fetch('/__forms.html', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: encodedValues

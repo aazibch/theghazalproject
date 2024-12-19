@@ -44,11 +44,6 @@ export default function RootLayout({
         <AuthProvider>
           <Layout>{children}</Layout>
         </AuthProvider>
-        <form name="contactForm" data-netlify="true" hidden>
-          <input type="text" name="fullName" />
-          <input type="email" name="email" />
-          <textarea name="message"></textarea>
-        </form>
       </body>
     </html>
   );
