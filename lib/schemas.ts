@@ -87,3 +87,39 @@ export const colGhazalEntrySchema = Joi.object({
       'any.required': generateValidationMessage('required', 'line two')
     })
 });
+
+export const contactSchema = Joi.object({
+  fullName: Joi.string()
+    .pattern(new RegExp(/^[a-zA-Z ]*$/))
+    .min(3)
+    .max(75)
+    .required()
+    .messages({
+      'string.pattern.base':
+        'The full name may only contain alphabets (letters A-Z) and spaces.',
+      'string.min': generateValidationMessage('min', 'full name', 3),
+      'string.max': generateValidationMessage('max', 'full name', 75),
+      'string.empty': generateValidationMessage('required', 'full name'),
+      'any.required': generateValidationMessage('required', 'full name')
+    }),
+  email: Joi.string()
+    .min(5)
+    .max(50)
+    .email({ tlds: { allow: false } })
+    .required()
+    .messages({
+      'string.min': generateValidationMessage('min', 'email address', 5),
+      'string.max': generateValidationMessage('max', 'email address', 50),
+      'string.email': generateValidationMessage('email'),
+      'string.empty': generateValidationMessage('required', 'email address'),
+      'any.required': generateValidationMessage('required', 'email address')
+    }),
+  message: Joi.string()
+    .min(5)
+    .required()
+    .messages({
+      'string.min': generateValidationMessage('min', 'message', 5),
+      'string.empty': generateValidationMessage('required', 'message'),
+      'any.required': generateValidationMessage('required', 'message')
+    })
+});
