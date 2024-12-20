@@ -1,5 +1,4 @@
 import Banner from '@/components/ui/banner';
-import { ABOUT_INTRO_BRIEF } from '@/constants';
 import { Button } from 'flowbite-react';
 import Link from 'next/link';
 
@@ -12,13 +11,17 @@ export default function AboutSection() {
         heading="Learn More About Us"
         contentText={
           <>
-            {ABOUT_INTRO_BRIEF} To this end, we have partnered with{' '}
+            <span className="font-semibold">The Ghazal Project</span> aims to
+            promote the rich artistic culture of Pakistan and the subcontinent
+            by encouraging cultural emalgamation through variants of the ghazal
+            form, fit for adaptation into the English language. To this end, we
+            have partnered with{' '}
             <Link
               className="text-white underline"
               href="https://www.instagram.com/virsapur/"
               target="_blank"
             >
-              Virsapur
+              <span className="font-semibold">Virsapur</span>
             </Link>
             , an organization dedicated to reviving Pakistan&apos;s diverse
             cultural heritage.
