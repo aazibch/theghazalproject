@@ -50,6 +50,8 @@ export default function ContactForm({
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: async (values) => {
+      formik.resetForm();
+
       const encodedValues = encode({
         'form-name': 'contactForm',
         ...values
