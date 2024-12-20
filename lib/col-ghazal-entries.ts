@@ -35,7 +35,7 @@ export const getAllColGhazalEntriesByUserFromDB = async (userId: string) => {
   const colGhazalEntries = await ColGhazalEntry.find({
     user: userId,
     approved: true
-  });
+  }).sort({ createdAt: -1 });
 
   return colGhazalEntries.map((e) => {
     const docObject = e.toObject();
