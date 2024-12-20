@@ -21,7 +21,7 @@ export default function ContactForm({
 }: {
   setErrorHandler: (value: boolean) => void;
 }) {
-  const [sent, setSent] = useState<boolean>(false);
+  const [sent, setSent] = useState<boolean>(true);
   const formRef = useRef<HTMLFormElement>(null);
 
   const validate = (values: FormErrors) => {
@@ -50,8 +50,6 @@ export default function ContactForm({
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: async (values) => {
-      console.log('Submitted!');
-
       const encodedValues = encode({
         'form-name': 'contactForm',
         ...values
@@ -82,6 +80,9 @@ export default function ContactForm({
       ref={formRef}
       onSubmit={formik.handleSubmit}
     >
+      <div className="text-sm">
+        <p>Fields marked with an asterisk (*) are mandatory.</p>
+      </div>
       <div>
         <div className="mb-2 block">
           <Label htmlFor="fullName" value="Full Name*" />
@@ -127,13 +128,10 @@ export default function ContactForm({
           onChange={formik.handleChange}
         />
       </div>
-      <div className="mb-2 text-sm">
-        <p>Fields marked with an asterisk (*) are mandatory.</p>
-      </div>
       <Button type="submit" color="blue">
         Send
       </Button>
-      {sent && <p className="mt-4">Your message was successfully sent!</p>}
+      {sent && <p>Your message was successfully sent!</p>}
     </form>
   );
 }

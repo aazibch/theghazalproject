@@ -12,7 +12,6 @@ export default function ContactPageContainer() {
   const [error, setError] = useState<boolean>(false);
 
   const setErrorHandler = (value: boolean) => {
-    console.log('run');
     setError(value);
   };
 
