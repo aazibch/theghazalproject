@@ -61,7 +61,7 @@ export default function HeaderDropdown() {
         </Link>
       )}
 
-      <Navbar.Toggle />
+      <Navbar.Toggle className="ml-2" />
     </div>
   );
 }

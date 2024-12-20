@@ -14,7 +14,7 @@ export default function NavLink({ href, children }: NavLinkProps) {
 
   return (
     <Navbar.Link
-      className="hover:no-underline"
+      className="hover:no-underline border-gray-100 border-b"
       as={Link}
       href={href}
       active={
