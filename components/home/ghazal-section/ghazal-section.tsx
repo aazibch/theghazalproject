@@ -10,7 +10,7 @@ export default async function GhazalSection() {
   return (
     <section className="mx-auto text-center px-4 py-16">
       <h2 className="uppercase mb-2 text-xl">The Collective Ghazal</h2>
-      <h3 className="text-lg mb-6 text-gray-500">Recent Entries</h3>
+      <h3 className="text-lg mb-8 text-gray-500">Recent Entries</h3>
       <div className="mb-8">
         {recentEntries.map((e) => (
           <GhazalCouplet

@@ -21,10 +21,10 @@ export default function GhazalCouplet({
   return (
     <div
       id={id}
-      className="flex items-center justify-center mb-6 mx-auto text-center"
+      className="flex flex-col-reverse md:flex-row items-center justify-center mb-6 mx-auto text-center"
     >
-      <div className="basis-[8rem] mr-2">
-        <Avatar rounded img={user.avatar} className="mb-1" />
+      <div className="md:basis-[8rem] md:mr-2">
+        <Avatar rounded img={user.avatar} className="hidden md:flex md:mb-1" />
 
         <span className="text-sm text-gray-600">
           <Link
@@ -35,7 +35,7 @@ export default function GhazalCouplet({
           </Link>
         </span>
       </div>
-      <div className="font-merriweather font-light basis-[26rem]">
+      <div className="font-merriweather font-light md:basis-[26rem] mb-2">
         <span className="block mb-1">{couplet[0]}</span>
         <span className="block">{couplet[1]}</span>
       </div>
