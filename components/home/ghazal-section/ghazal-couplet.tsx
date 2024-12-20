@@ -34,7 +34,7 @@ export default function GhazalCouplet({
         </div>
       </Link>
 
-      <div className="font-merriweather font-light md:basis-[26rem] mb-4">
+      <div className="font-merriweather font-light md:basis-[26rem] mb-4 text-[0.9rem] sm:text-base">
         <span className="block mb-1">{couplet[0]}</span>
         <span className="block">{couplet[1]}</span>
       </div>
