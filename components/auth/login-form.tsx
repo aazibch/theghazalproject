@@ -33,7 +33,6 @@ export default function LoginForm() {
     }
 
     if (res?.status === 200) {
-      setIsSubmitting(false);
       redirectAfterAuth();
     }
   };

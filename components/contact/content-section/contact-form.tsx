@@ -21,7 +21,7 @@ export default function ContactForm({
 }: {
   setErrorHandler: (value: boolean) => void;
 }) {
-  const [sent, setSent] = useState<boolean>(true);
+  const [sent, setSent] = useState<boolean>(false);
   const formRef = useRef<HTMLFormElement>(null);
 
   const validate = (values: FormErrors) => {
@@ -66,8 +66,6 @@ export default function ContactForm({
         .catch(() => {
           setErrorHandler(true);
         });
-
-      setSent(true);
     }
   });
 

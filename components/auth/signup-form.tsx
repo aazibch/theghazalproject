@@ -72,7 +72,6 @@ export default function SignupForm() {
       }
 
       if (res?.status === 200) {
-        setIsSubmitting(false);
         redirectAfterAuth();
       }
     }
