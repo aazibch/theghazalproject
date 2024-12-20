@@ -89,6 +89,8 @@ export default function ContactForm({
           name="fullName"
           type="text"
           required
+          color={formik.errors.fullName && 'failure'}
+          helperText={formik.errors.fullName && formik.errors.fullName}
           value={formik.values.fullName}
           onChange={formik.handleChange}
         />
@@ -102,6 +104,8 @@ export default function ContactForm({
           name="email"
           type="email"
           required
+          color={formik.errors.email && 'failure'}
+          helperText={formik.errors.email && formik.errors.email}
           value={formik.values.email}
           onChange={formik.handleChange}
         />
@@ -114,6 +118,8 @@ export default function ContactForm({
           id="message"
           name="message"
           required
+          color={formik.errors.message && 'failure'}
+          helperText={formik.errors.message && formik.errors.message}
           rows={15}
           value={formik.values.message}
           onChange={formik.handleChange}

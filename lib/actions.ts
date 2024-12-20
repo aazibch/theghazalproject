@@ -56,7 +56,7 @@ export const updateProfilePicture = async (
     session.user.username
   );
 
-  revalidatePath(`/profile/${session.user._id}`);
+  revalidatePath('/', 'layout');
 
   return { status: 'success' };
 };
@@ -101,6 +101,7 @@ export const submitColGhazalCouplet = async (couplet: {
 
   await createColGhazalEntry(couplet, session.user._id);
 
+  revalidatePath('/');
   revalidatePath('/collective-ghazal');
 
   return { status: 'success' };
