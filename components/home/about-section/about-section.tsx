@@ -1,5 +1,5 @@
 import Banner from '@/components/ui/banner';
-import { ABOUT_INFO } from '@/constants';
+import { ABOUT_INTRO_BRIEF } from '@/constants';
 import { Button } from 'flowbite-react';
 import Link from 'next/link';
 
@@ -12,7 +12,7 @@ export default function AboutSection() {
         heading="Learn More About Us"
         contentText={
           <>
-            {ABOUT_INFO} To this end, we have partnered with{' '}
+            {ABOUT_INTRO_BRIEF} To this end, we have partnered with{' '}
             <Link
               className="text-white underline"
               href="https://www.instagram.com/virsapur/"

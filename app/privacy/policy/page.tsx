@@ -2,6 +2,10 @@ import PageContainer from '@/components/layout/pages/page-container';
 import PageHeader from '@/components/layout/pages/page-header';
 import Link from 'next/link';
 
+export const metadata = {
+  title: 'Privacy Policy | The Ghazal Project'
+};
+
 export default function PrivacyPolicyPage() {
   return (
     <PageContainer>
@@ -29,7 +33,6 @@ export default function PrivacyPolicyPage() {
           and to improve user experience.
         </p>
 
-        {/* Copy Pasted */}
         <h3 className="text-xl mt-8 mb-4">2. How We Use Your Information</h3>
         <ul className="list-disc pl-5 space-y-2 mb-4">
           <li>Facilitate account creation and authentication.</li>

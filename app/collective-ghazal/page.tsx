@@ -8,6 +8,12 @@ import PageHeader from '@/components/layout/pages/page-header';
 import ScrollToBottomButton from '@/components/ui/scroll-to-bottom-button';
 import { getColGhazalEntries } from '@/lib/actions';
 
+export const metadata = {
+  title: 'Collective Ghazal | The Ghazal Project',
+  description:
+    'A collective ghazal poem written by users from all over the world. Join now and contribute your own verses.'
+};
+
 export default async function CollectiveGhazalPage() {
   const entries = await getColGhazalEntries();
 

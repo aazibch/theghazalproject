@@ -94,7 +94,6 @@ export default function SignupForm() {
           name="fullName"
           id="fullName"
           type="text"
-          placeholder="John Doe"
           required
           value={formik.values.fullName}
           onChange={formik.handleChange}
@@ -110,7 +109,6 @@ export default function SignupForm() {
           name="username"
           id="username"
           type="text"
-          placeholder="JohnTheBard"
           required
           value={formik.values.username}
           onChange={formik.handleChange}
@@ -126,7 +124,6 @@ export default function SignupForm() {
           name="email"
           id="email"
           type="email"
-          placeholder="poet@poetsdomain.com"
           required
           value={formik.values.email}
           onChange={formik.handleChange}

@@ -50,13 +50,7 @@ export default function LoginForm() {
         <div className="mb-2 block">
           <Label htmlFor="email" value="Email" />
         </div>
-        <TextInput
-          id="email"
-          type="email"
-          placeholder="poet@poetsdomain.com"
-          required
-          ref={emailRef}
-        />
+        <TextInput id="email" type="email" required ref={emailRef} />
       </div>
       <div>
         <div className="mb-2 block">

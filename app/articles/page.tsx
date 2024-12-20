@@ -1,10 +1,9 @@
-import type { Metadata } from 'next';
 import ArticlePreview from '@/components/articles/article-preview/article-preview';
 import PageHeader from '@/components/layout/pages/page-header';
 import { getArticlesData } from '@/lib/articles';
 import PageContainer from '@/components/layout/pages/page-container';
 
-export const metadata: Metadata = {
+export const metadata = {
   title: 'Articles | The Ghazal Project'
 };
 

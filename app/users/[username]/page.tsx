@@ -3,8 +3,16 @@ import { notFound } from 'next/navigation';
 import { getColGhazalEntriesByUser, getUser } from '@/lib/actions';
 import ContributionsSection from '@/components/user/contributions-section/contributions-section';
 import HeaderSection from '@/components/user/header-section/header-section';
-import { getServerSession } from 'next-auth';
-import config from '@/app/api/auth/[...nextauth]/config';
+
+type PageProps = { params: { username: string } };
+
+export async function generateMetadata({ params }: PageProps) {
+  const user = await getUser(params.username);
+
+  return {
+    title: `${user?.fullName} (${user?.username}) | The Ghazal Project`
+  };
+}
 
 export default async function UserPage({
   params

@@ -34,6 +34,13 @@ export default function FooterComponent() {
               <FooterLink as={Link} theme={customLinkTheme} href="/contact">
                 Contact
               </FooterLink>
+              <FooterLink
+                as={Link}
+                theme={customLinkTheme}
+                href="https://www.aazibch.com/"
+              >
+                Developer
+              </FooterLink>
             </FooterLinkGroup>
           </div>
         </div>
