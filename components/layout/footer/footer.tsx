@@ -16,8 +16,8 @@ export default function FooterComponent() {
     <Footer container className="rounded-none px-4" bgDark>
       <div className="w-full text-center">
         <div className="max-w-screen-xl mx-auto">
-          <div className="w-full justify-between sm:flex sm:items-center sm:justify-between">
-            <span className="block mb-2 sm:mb-0 self-center whitespace-nowrap text-xl font-semibold dark:text-white text-primary_blue font-crimson_text">
+          <div className="w-full justify-between md:flex md:items-center md:justify-between">
+            <span className="block mt-2 mb-4 md:mt-0 md:mb-0 self-center whitespace-nowrap text-xl font-semibold dark:text-white text-primary_blue font-crimson_text">
               The Ghazal Project
             </span>
             <FooterLinkGroup className="flex justify-center">
@@ -43,7 +43,7 @@ export default function FooterComponent() {
             theme={{
               href: 'ml-1 hover:underline text-gray-500'
             }}
-            href="#"
+            href="/"
             by="The Ghazal Project"
             year={2024}
           />
