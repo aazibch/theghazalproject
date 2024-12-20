@@ -24,16 +24,25 @@ export default function ArticlePreview({
   const isoDate = new Date(date).toISOString().split('T')[0];
 
   return (
-    <div className="mb-8 flex">
-      <div className="mr-5 shrink-0 basis-[25rem] hidden md:block">
+    <div className="mb-8 flex flex-col md:flex-row">
+      <div className="hidden md:block mr-5 md:basis-[20rem] lg:basis-[25rem] shrink-0">
         <Image
           width={960}
           height={540}
-          className="w-full rounded-md"
+          className="w-full h-auto rounded-md"
           src={image}
           alt={imageAlt}
         />
       </div>
+
+      <Image
+        width={960}
+        height={540}
+        className="w-full h-auto rounded-md md:hidden mb-4"
+        src={image}
+        alt={imageAlt}
+      />
+
       <div>
         <header className="mb-4">
           <h3 className="text-xl mb-1">
