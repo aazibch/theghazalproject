@@ -12,9 +12,9 @@ export default function HeaderDropdown() {
 
   const userSession = session;
 
-  if (userSession) {
-    return (
-      <div className="flex md:order-2">
+  return (
+    <div className="flex md:order-2">
+      {userSession ? (
         <Dropdown
           theme={{
             inlineWrapper: 'flex items-center mr-2 md:mr-0'
@@ -52,19 +52,16 @@ export default function HeaderDropdown() {
             Sign out
           </Dropdown.Item>
         </Dropdown>
-        <Navbar.Toggle />
-      </div>
-    );
-  } else {
-    return (
-      <div className="flex md:order-2">
+      ) : (
         <Link className="hover:no-underline" href="/auth/login">
           <Button color="blue" gradientDuoTone="purpleToBlue" outline>
             <HiOutlineUserCircle className="mr-1 h-5 w-5" />
             Login
           </Button>
         </Link>
-      </div>
-    );
-  }
+      )}
+
+      <Navbar.Toggle />
+    </div>
+  );
 }
