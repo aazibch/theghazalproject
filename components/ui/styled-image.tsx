@@ -4,6 +4,7 @@ interface StyledImageProps {
   src: string;
   width: number;
   height: number;
+  priority?: boolean;
   alt: string;
   caption?: string;
 }
@@ -12,6 +13,7 @@ export default function StyledImage({
   src,
   width,
   height,
+  priority,
   alt,
   caption
 }: StyledImageProps) {
@@ -22,6 +24,7 @@ export default function StyledImage({
         src={src}
         width={width}
         height={height}
+        priority={priority}
         alt={alt}
       />
       {caption && (

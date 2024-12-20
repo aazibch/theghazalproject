@@ -45,6 +45,7 @@ export default function Article({ params }: PageProps) {
               alt={articleData.imageAlt}
               width={960}
               height={540}
+              priority
               caption={articleData.imageAlt}
             />
           </div>
