@@ -49,15 +49,15 @@ export default function ContactForm({
     validate: validate,
     validateOnChange: false,
     validateOnBlur: false,
-    onSubmit: (values) => {
-      formik.resetForm();
+    onSubmit: async (values) => {
+      console.log('Submitted!');
 
       const encodedValues = encode({
         'form-name': 'contactForm',
         ...values
       });
 
-      fetch('/__forms.html', {
+      await fetch('/__forms.html', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: encodedValues
@@ -68,6 +68,8 @@ export default function ContactForm({
         .catch(() => {
           setErrorHandler(true);
         });
+
+      setSent(true);
     }
   });
 
@@ -131,6 +133,7 @@ export default function ContactForm({
       <Button type="submit" color="blue">
         Send
       </Button>
+      {sent && <p className="mt-4">Your message was successfully sent!</p>}
     </form>
   );
 }
