@@ -15,8 +15,8 @@ const transporter = nodemailer.createTransport({
 });
 
 const mailOptions = {
-  from: '"Admin" <admin@trial-pq3enl6o315l2vwr.mlsender.net>', // sender address
-  to: 'aazibsdreamscape@gmail.com', // list of receivers
+  from: '"James Doe" <admin@theghazalproject.com>', // sender address
+  to: process.env.EMAIL_RECIPIENT, // list of receivers
   subject: 'Welcome to The Ghazal Project', // Subject line
   text: "Hey there! Welcome to The Ghazal Project, we're happy to have you here! All you need to do is head to your account, log in and start playing. Remember to check out our guides and contact support if you need anything. Regards, The Ghazal Project", // plain text body
   html: `
