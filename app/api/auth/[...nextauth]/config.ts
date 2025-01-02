@@ -9,6 +9,7 @@ import { SessionUser } from '@/types';
 import catchAsync from '@/lib/catchAsync';
 import { isSignupCredentials } from '@/lib/utils';
 import { AdapterUser } from 'next-auth/adapters';
+import { generateJwtToken } from '@/lib/auth';
 
 const config = {
   providers: [
@@ -67,6 +68,9 @@ const config = {
 
           await dbConnect();
           const userDoc = await User.create(user);
+
+          // Create email confirmation token:
+          const token = generateJwtToken({ email: userDoc.email });
 
           return { ...userDoc.toObject(), _id: userDoc._id.toString() };
         }

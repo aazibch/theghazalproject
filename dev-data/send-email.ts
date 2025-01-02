@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' });
 
 import nodemailer from 'nodemailer';
+import pug from 'pug';
+import { convert as convertHtmlToText } from 'html-to-text';
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -14,20 +16,19 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+const html = pug.renderFile(`${__dirname}/../views/email/confirmEmail.pug`, {
+  fullName: 'John Doe',
+  siteUrl: process.env.PRODUCTION_URL,
+  confirmEmailUrl: process.env.PRODUCTION_URL,
+  subject: 'Confirm Your Email Address'
+});
+
 const mailOptions = {
   from: `"The Ghazal Project" <${process.env.SMTP_SENDER}>`, // sender address
   to: process.env.EMAIL_RECIPIENT, // list of receivers
   subject: 'Welcome to The Ghazal Project', // Subject line
-  text: "Hey there! Welcome to The Ghazal Project, we're happy to have you here! All you need to do is head to your account, log in and start playing. Remember to check out our guides and contact support if you need anything. Regards, The Ghazal Project", // plain text body
-  html: `
-    <p>Hey there!</p>
-    <p>Welcome to The Ghazal Project, we're happy to have you here!</p>
-    <p>All you need to do is head to your account, log in and start playing.</p>
-    <p>Remember to check out our guides and contact support if you need anything.</p>
-    <br>
-    <p>Regards,</p>
-    <p>The Ghazal Project</p>
-  ` // html body
+  text: convertHtmlToText(html), // plain text body
+  html: html
 };
 
 transporter.sendMail(mailOptions, (error, info) => {
