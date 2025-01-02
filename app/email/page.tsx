@@ -1,3 +1,4 @@
+import EmailSuccessScreen from '@/components/email/email-success-screen';
 import { confirmEmail } from '@/lib/auth';
 
 export default async function EmailConfirmationPage({
@@ -11,5 +12,5 @@ export default async function EmailConfirmationPage({
     await confirmEmail(token);
   }
 
-  return <p>Email Confirmation Page.</p>;
+  return <EmailSuccessScreen />;
 }

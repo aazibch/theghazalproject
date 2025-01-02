@@ -11,7 +11,7 @@ export default function ErrorPage() {
         alt="Illustration showing a rounded figure holding a disconnected cable what was supposed to be running from the server to the computer"
         priority
       />
-      <p className="text-lg text-gray-600 mb-4">
+      <p className="text-lg text-gray-500 mb-4">
         Oh, oh! Looks like the page does not exist.
       </p>
       <p className="text-lg">

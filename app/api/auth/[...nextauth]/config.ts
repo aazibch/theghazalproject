@@ -70,8 +70,8 @@ const config = {
           const userDoc = await User.create(user);
 
           // Create email confirmation token:
-          const token = generateJwtToken({ email: userDoc.email });
-          console.log('[config.ts Email Confirmation Token]', token);
+          const token = await generateJwtToken({ email: userDoc.email }, '1hr');
+          console.log('[config.ts][Email Confirmation Token]', token);
 
           return { ...userDoc.toObject(), _id: userDoc._id.toString() };
         }

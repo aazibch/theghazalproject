@@ -4,9 +4,12 @@ import User from '@/models/User';
 import jwt from 'jsonwebtoken';
 import dbConnect from './dbConnect';
 
-export const generateJwtToken = (payload: Record<string, any>) => {
+export const generateJwtToken = async (
+  payload: Record<string, any>,
+  expireTime: string
+) => {
   const token = jwt.sign(payload, process.env.JWT_SECRET!, {
-    expiresIn: '1h'
+    expiresIn: expireTime
   });
 
   return token;
