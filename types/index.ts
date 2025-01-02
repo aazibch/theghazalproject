@@ -7,6 +7,7 @@ export interface IUser {
   fullName: string;
   username: string;
   email: string;
+  emailConfirmed: boolean;
   profilePicture: string;
   password: string;
   passwordChangeDate?: Date;

@@ -50,6 +50,10 @@ const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
     maxlength: [50, generateValidationMessage('max', 'email address', 50)],
     minlength: [5, generateValidationMessage('min', 'email address', 5)]
   },
+  emailConfirmed: {
+    type: Boolean,
+    default: false
+  },
   profilePicture: {
     type: String,
     default:

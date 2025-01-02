@@ -71,6 +71,7 @@ const config = {
 
           // Create email confirmation token:
           const token = generateJwtToken({ email: userDoc.email });
+          console.log('[config.ts Email Confirmation Token]', token);
 
           return { ...userDoc.toObject(), _id: userDoc._id.toString() };
         }
