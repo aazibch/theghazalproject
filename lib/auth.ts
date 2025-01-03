@@ -20,7 +20,7 @@ export const confirmEmail = async (token: string) => {
 
   if (typeof decoded === 'object' && 'email' in decoded) {
     await dbConnect();
-    const user = await User.findOneAndUpdate(
+    await User.findOneAndUpdate(
       { email: decoded.email },
       { emailConfirmed: true },
       { new: true }

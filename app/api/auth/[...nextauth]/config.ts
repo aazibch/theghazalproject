@@ -5,7 +5,6 @@ import { Session, User as UserType } from 'next-auth';
 import User from '@/models/User';
 import dbConnect from '@/lib/dbConnect';
 import { signupSchema } from '@/lib/schemas';
-import { SessionUser } from '@/types';
 import catchAsync from '@/lib/catchAsync';
 import { isSignupCredentials } from '@/lib/utils';
 import { AdapterUser } from 'next-auth/adapters';
@@ -70,7 +69,10 @@ const config = {
           const userDoc = await User.create(user);
 
           // Create email confirmation token:
-          const token = await generateJwtToken({ email: userDoc.email }, '1hr');
+          const token = await generateJwtToken(
+            { email: userDoc.email },
+            '24hr'
+          );
           console.log('[config.ts][Email Confirmation Token]', token);
 
           return { ...userDoc.toObject(), _id: userDoc._id.toString() };
@@ -94,14 +96,17 @@ const config = {
         token.username = user.username;
         token.email = user.email;
         token.profilePicture = user.profilePicture;
+        token.emailConfirmed = user.emailConfirmed;
       }
 
       if (trigger === 'update') {
+        await dbConnect();
         const user = await User.findById(token._id);
 
         token.fullName = user.fullName;
         token.username = user.username;
         token.email = user.email;
+        token.emailConfirmed = user.emailConfirmed;
         token.profilePicture = user.profilePicture;
       }
 
@@ -112,6 +117,7 @@ const config = {
       session.user.fullName = token.fullName;
       session.user.username = token.username;
       session.user.email = token.email;
+      session.user.emailConfirmed = token.emailConfirmed;
       session.user.profilePicture = token.profilePicture;
 
       return session;
