@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Awaitable, RequestInternal, User } from 'next-auth';
+import { Awaitable, User } from 'next-auth';
 
 import { ERROR_MESSAGES } from '@/constants';
 import { AuthCredentials, AuthRequest } from '@/types';
@@ -19,16 +19,14 @@ const catchAsync = (
           Object.keys(err.keyPattern)[0] === 'username'
         ) {
           throw new Error(ERROR_MESSAGES.nonUniqueUsername);
-        } else {
-          if (err.keyPattern) {
-            const key = Object.keys(err.keyPattern)[0];
-            const message = `Duplicate value for "${key}".`;
-            throw new Error(message);
-          }
+        } else if (err.keyPattern) {
+          const key = Object.keys(err.keyPattern)[0];
+          const message = `Duplicate value for "${key}".`;
+          throw new Error(message);
         }
       }
 
-      throw err;
+      throw new Error(ERROR_MESSAGES.generic);
     }
   };
 };
