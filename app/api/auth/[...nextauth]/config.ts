@@ -9,6 +9,7 @@ import catchAsync from '@/lib/catchAsync';
 import { isSignupCredentials } from '@/lib/utils';
 import { AdapterUser } from 'next-auth/adapters';
 import { generateJwtToken } from '@/lib/auth';
+import Email from '@/lib/email';
 
 const config = {
   providers: [
@@ -70,7 +71,14 @@ const config = {
 
           // Create email confirmation token:
           const token = await generateJwtToken({ email: userDoc.email }, '1hr');
-          console.log('[config.ts][Email Confirmation Token]', token);
+
+          // Send email:
+          const email = new Email(
+            { fullName: userDoc.fullName, email: userDoc.email },
+            `${process.env.PRODUCTION_URL}email?token=${token}`
+          );
+
+          await email.sendEmailConfirmation();
 
           return { ...userDoc.toObject(), _id: userDoc._id.toString() };
         }
