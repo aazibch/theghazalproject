@@ -19,7 +19,7 @@ const transporter = nodemailer.createTransport({
 const html = pug.renderFile(`${__dirname}/../views/email/confirmEmail.pug`, {
   fullName: 'John Doe',
   siteUrl: process.env.PRODUCTION_URL,
-  confirmEmailUrl: process.env.PRODUCTION_URL,
+  url: process.env.PRODUCTION_URL,
   subject: 'Confirm Your Email Address'
 });
 
