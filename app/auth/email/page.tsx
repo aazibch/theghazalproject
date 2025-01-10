@@ -8,9 +8,7 @@ export default async function EmailConfirmationPage({
 }) {
   const { token } = searchParams;
 
-  if (token) {
-    await confirmEmail(token);
-  }
+  await confirmEmail(token);
 
   return <EmailSuccessScreen />;
 }

@@ -75,7 +75,7 @@ const config = {
           // Send email:
           const email = new Email(
             { fullName: userDoc.fullName, email: userDoc.email },
-            `${process.env.PRODUCTION_URL}email?token=${token}`
+            `${process.env.PRODUCTION_URL}auth/email?token=${token}`
           );
 
           await email.sendEmailConfirmation();
