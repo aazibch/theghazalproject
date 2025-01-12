@@ -1,6 +1,8 @@
+import React, { ReactNode } from 'react';
 import nodemailer from 'nodemailer';
-import pug from 'pug';
-import { convert as convertHtmlToText } from 'html-to-text';
+import { render } from '@react-email/components';
+
+import ConfirmationEmail from '@/views/emails/confirmation-email';
 
 export default class Email {
   private recipientEmail: string;
@@ -27,16 +29,10 @@ export default class Email {
     });
   }
 
-  private async send(template: any, subject: any) {
-    // 1) Render HTML based on a pug template
-    const html = pug.renderFile(
-      `${process.cwd()}/views/email/${template}.pug`,
-      {
-        fullName: this.recipientFullName,
-        siteUrl: process.env.PRODUCTION_URL,
-        url: this.url,
-        subject
-      }
+  private async send(template: ReactNode, subject: string) {
+    // 1) Render HTML from JSX
+    const html = await render(
+      <ConfirmationEmail fullName={this.recipientFullName} url={this.url} />
     );
 
     // 2) Define email options
@@ -44,8 +40,7 @@ export default class Email {
       from: this.sender,
       to: this.recipientEmail,
       subject,
-      html,
-      text: convertHtmlToText(html)
+      html
     };
 
     await this.newTransport().sendMail(mailOptions);

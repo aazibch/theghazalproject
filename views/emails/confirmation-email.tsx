@@ -31,7 +31,7 @@ export const ConfirmationEmail = ({
         rel="stylesheet"
       />
     </Head>
-    <Preview>Confirm your email to enjoy all the features!</Preview>
+    <Preview>Confirm your email to enjoy all the features.</Preview>
     <Tailwind>
       <Body style={main}>
         <Container style={container}>
