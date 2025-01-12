@@ -4,8 +4,6 @@ import './globals.css';
 import Layout from '@/components/layout/layout';
 import AuthProvider from '@/components/auth/auth-provider';
 
-// Testing branch deploys
-
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
