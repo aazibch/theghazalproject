@@ -15,13 +15,15 @@ import * as React from 'react';
 
 interface ConfirmationEmailProps {
   fullName: string;
+  url: string;
 }
 
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : '';
+const baseUrl = process.env.PRODUCTION_URL;
 
-export const ConfirmationEmail = ({ fullName }: ConfirmationEmailProps) => (
+export const ConfirmationEmail = ({
+  fullName,
+  url
+}: ConfirmationEmailProps) => (
   <Html>
     <Head>
       <Link
@@ -49,7 +51,7 @@ export const ConfirmationEmail = ({ fullName }: ConfirmationEmailProps) => (
             address.
           </Text>
           <Section style={btnContainer}>
-            <Button style={button} href="https://getkoala.com">
+            <Button style={button} href={url}>
               Confirm Email
             </Button>
           </Section>
@@ -72,7 +74,7 @@ ConfirmationEmail.PreviewProps = {
   fullName: 'Alan Deschowitz'
 } as ConfirmationEmailProps;
 
-export default ConfirmationEmailProps;
+export default ConfirmationEmail;
 
 const main = {
   backgroundColor: '#ffffff',
