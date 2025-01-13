@@ -12,7 +12,7 @@ export default function AboutSection() {
           <>
             <span className="font-semibold">The Ghazal Project</span> aims to
             promote the rich artistic culture of Pakistan and the subcontinent
-            by encouraging cultural emalgamation through variants of the ghazal
+            by encouraging cultural amalgamation through variants of the ghazal
             form, fit for adaptation into the English language.
           </>
         }
