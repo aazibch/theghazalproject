@@ -107,6 +107,14 @@ export const submitColGhazalCouplet = async (couplet: {
   return { status: 'success' };
 };
 
+export async function submitEmailForPasswordReset(
+  prevState: any,
+  formData: FormData
+): Promise<{ status: string }> {
+  console.log('[submitEmailForPasswordReset]', formData.get('email'));
+  return { status: 'success' };
+}
+
 export async function redirectAfterAuth() {
   revalidatePath('/', 'layout');
   redirect('/');
