@@ -5,7 +5,8 @@ export default function PasswordResetEmailForm() {
     <div>
       <form method="post" className="flex max-w-md flex-col gap-4 mx-auto">
         <p className="text-sm">
-          Please enter the email address associated with your account.
+          Please enter the email address associated with your account, and we'll
+          send you an email.
         </p>
         <div>
           <div className="mb-2 block">
