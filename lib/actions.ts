@@ -110,8 +110,23 @@ export const submitColGhazalCouplet = async (couplet: {
 export async function submitEmailForPasswordReset(
   prevState: any,
   formData: FormData
-): Promise<{ status: string }> {
+): Promise<{ status: string | null }> {
   console.log('[submitEmailForPasswordReset]', formData.get('email'));
+  return { status: 'success' };
+}
+
+export async function submitPinForPasswordReset(
+  prevState: any,
+  formData: FormData
+): Promise<{ status: string | null }> {
+  let pin = '';
+
+  for (const digit of formData.values()) {
+    pin += digit;
+  }
+
+  console.log('[submitPinForPasswordReset]', pin);
+
   return { status: 'success' };
 }
 

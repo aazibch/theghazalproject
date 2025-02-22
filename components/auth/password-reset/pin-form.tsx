@@ -1,9 +1,29 @@
 'use client';
 
-import { useRef } from 'react';
-import { Button } from 'flowbite-react';
+import { useEffect, useRef } from 'react';
+import { useFormState } from 'react-dom';
 
-export default function PinForm() {
+import FormSubmitButton from '@/components/ui/form-submit-button';
+import { submitPinForPasswordReset } from '@/lib/actions';
+import { PasswordResetStage } from '@/types';
+
+export default function PinForm({
+  setStageHandler
+}: {
+  setStageHandler: (value: PasswordResetStage) => void;
+}) {
+  const [formState, formAction] = useFormState(submitPinForPasswordReset, {
+    status: null
+  });
+
+  const { status } = formState;
+
+  useEffect(() => {
+    if (status === 'success') {
+      setStageHandler('password');
+    }
+  }, [status]);
+
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
   const handleChange = (
@@ -22,7 +42,7 @@ export default function PinForm() {
   };
 
   return (
-    <form className="flex max-w-md flex-col gap-4 mx-auto">
+    <form action={formAction} className="flex max-w-md flex-col gap-4 mx-auto">
       <p className="text-sm">
         Please enter the 6-digit code we sent to your email address to recover
         your account.
@@ -30,6 +50,7 @@ export default function PinForm() {
       <div className="mb-2 flex space-x-2 rtl:space-x-reverse justify-center">
         {Array.from({ length: 6 }).map((_, index) => (
           <input
+            name={`pin-${index}`}
             key={index}
             ref={(el) => {
               inputRefs.current[index] = el;
@@ -44,9 +65,7 @@ export default function PinForm() {
           />
         ))}
       </div>
-      <div className="flex flex-row-reverse">
-        <Button color="blue">Submit</Button>
-      </div>
+      <FormSubmitButton />
     </form>
   );
 }

@@ -6,23 +6,24 @@ import { Label, TextInput } from 'flowbite-react';
 
 import { submitEmailForPasswordReset } from '@/lib/actions';
 import FormSubmitButton from '../../ui/form-submit-button';
-import { Stage } from '@/types';
+import { PasswordResetStage } from '@/types';
 
 export default function EmailForm({
   setStageHandler
 }: {
-  setStageHandler: (value: Stage) => void;
+  setStageHandler: (value: PasswordResetStage) => void;
 }) {
-  const [formState, formAction] = useFormState(
-    submitEmailForPasswordReset,
-    null
-  );
+  const [formState, formAction] = useFormState(submitEmailForPasswordReset, {
+    status: null
+  });
+
+  const { status } = formState;
 
   useEffect(() => {
-    if (formState && formState.status === 'success') {
+    if (status === 'success') {
       setStageHandler('pin');
     }
-  }, [formState]);
+  }, [status]);
 
   return (
     <div>
