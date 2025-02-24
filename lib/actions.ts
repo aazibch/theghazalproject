@@ -15,6 +15,8 @@ import {
   getAllColGhazalEntriesFromDB,
   getRecentColGhazalEntriesFromDB
 } from './col-ghazal-entries';
+import dbConnect from './dbConnect';
+import User from '@/models/User';
 
 let s3: S3 | undefined;
 
@@ -110,8 +112,20 @@ export const submitColGhazalCouplet = async (couplet: {
 export async function submitEmailForPasswordReset(
   prevState: any,
   formData: FormData
-): Promise<{ status: string | null }> {
-  console.log('[submitEmailForPasswordReset]', formData.get('email'));
+): Promise<{ status: string | null; message?: string }> {
+  const email = formData.get('email');
+
+  await dbConnect();
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return {
+      status: 'failure',
+      message: 'No user with that email address exists.'
+    };
+  }
+
   return { status: 'success' };
 }
 

@@ -11,6 +11,8 @@ export interface IUser {
   profilePicture: string;
   password: string;
   passwordChangeDate?: Date;
+  passwordResetToken: string;
+  passwordResetTokenExpirationDate: Date;
   bio?: string;
   laureateTitle?: string;
   couplets: ObjectId[];

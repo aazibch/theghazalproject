@@ -11,7 +11,7 @@ export default function EmailForm() {
     status: null
   });
 
-  const { status } = formState;
+  const { status, message } = formState;
 
   return (
     <div>
@@ -19,10 +19,15 @@ export default function EmailForm() {
         action={formAction}
         className="flex max-w-md flex-col gap-4 mx-auto"
       >
+        {status === 'failure' && (
+          <p className="text-red-600 text-center mb-6">{message}</p>
+        )}
+
         <p className="text-sm">
           Please enter the email address associated with your account, and we'll
           send you an email.
         </p>
+
         <div>
           <div className="mb-2 block">
             <Label htmlFor="email" value="Email" />
