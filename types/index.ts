@@ -57,5 +57,3 @@ type SignupCredentials = Record<
 >;
 
 export type AuthCredentials = LoginCredentials | SignupCredentials | undefined;
-
-export type PasswordResetStage = 'email' | 'pin' | 'password';

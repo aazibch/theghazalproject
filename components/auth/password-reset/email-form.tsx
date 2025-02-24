@@ -1,29 +1,17 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useFormState } from 'react-dom';
 import { Label, TextInput } from 'flowbite-react';
 
 import { submitEmailForPasswordReset } from '@/lib/actions';
 import FormSubmitButton from '../../ui/form-submit-button';
-import { PasswordResetStage } from '@/types';
 
-export default function EmailForm({
-  setStageHandler
-}: {
-  setStageHandler: (value: PasswordResetStage) => void;
-}) {
+export default function EmailForm() {
   const [formState, formAction] = useFormState(submitEmailForPasswordReset, {
     status: null
   });
 
   const { status } = formState;
-
-  useEffect(() => {
-    if (status === 'success') {
-      setStageHandler('pin');
-    }
-  }, [status]);
 
   return (
     <div>
