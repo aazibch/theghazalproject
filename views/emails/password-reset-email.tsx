@@ -30,7 +30,8 @@ export const PasswordResetEmail = ({
       />
     </Head>
     <Preview>
-      Trouble accessing your account? No problem, we're here to help.
+      Trouble accessing your account? No problem, we're here to help you reset
+      your password.
     </Preview>
     <Tailwind>
       <Body style={main}>
