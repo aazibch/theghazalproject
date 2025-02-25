@@ -17,6 +17,8 @@ import {
 } from './col-ghazal-entries';
 import dbConnect from './dbConnect';
 import User from '@/models/User';
+import Email from './email';
+import { ERROR_MESSAGES } from '@/constants';
 
 let s3: S3 | undefined;
 
@@ -124,6 +126,25 @@ export async function submitEmailForPasswordReset(
       status: 'failure',
       message: 'No user with that email address exists.'
     };
+  }
+
+  const passwordResetToken = user.createPasswordResetToken();
+  await user.save({ validateBeforeSave: false });
+
+  // Send email:
+  try {
+    const emailInstance = new Email(
+      { fullName: user.fullName, email: user.email },
+      `${process.env.PRODUCTION_URL}auth/password-reset?token=${passwordResetToken}`
+    );
+
+    await emailInstance.sendPasswordReset();
+  } catch (error) {
+    user.passwordResetToken = undefined;
+    user.passwordResetTokenExpirationDate = undefined;
+    await user.save({ validateBeforeSave: false });
+
+    return { status: 'failure', message: ERROR_MESSAGES.generic };
   }
 
   return { status: 'success' };

@@ -13,17 +13,15 @@ import {
 } from '@react-email/components';
 import * as React from 'react';
 
-interface ConfirmationEmailProps {
+interface PasswordResetEmailProps {
   fullName: string;
   url: string;
 }
 
-const baseUrl = process.env.PRODUCTION_URL;
-
-export const ConfirmationEmail = ({
+export const PasswordResetEmail = ({
   fullName,
   url
-}: ConfirmationEmailProps) => (
+}: PasswordResetEmailProps) => (
   <Html>
     <Head>
       <Link
@@ -31,7 +29,9 @@ export const ConfirmationEmail = ({
         rel="stylesheet"
       />
     </Head>
-    <Preview>Confirm your email to enjoy all the features.</Preview>
+    <Preview>
+      Trouble accessing your account? No problem, we're here to help.
+    </Preview>
     <Tailwind>
       <Body style={main}>
         <Container style={container}>
@@ -43,16 +43,13 @@ export const ConfirmationEmail = ({
           </Text>
           <Text style={paragraph}>Hi {fullName},</Text>
           <Text style={paragraph}>
-            Welcome to <Link href={baseUrl}>The Ghazal Project</Link>. We're
-            glad to be joined by you.
-          </Text>
-          <Text style={paragraph}>
-            To enjoy all the features on the platform, please confirm your email
-            address.
+            Trouble accessing your account? No problem, we're here to help.
+            Please select the button below to reset your password. The link is
+            valid for 10 minutes.
           </Text>
           <Section style={btnContainer}>
             <Button style={button} href={url}>
-              Confirm Email
+              Reset Password
             </Button>
           </Section>
           <Text style={paragraph}>
@@ -70,11 +67,11 @@ export const ConfirmationEmail = ({
   </Html>
 );
 
-ConfirmationEmail.PreviewProps = {
+PasswordResetEmail.PreviewProps = {
   fullName: 'John Doe'
-} as ConfirmationEmailProps;
+} as PasswordResetEmailProps;
 
-export default ConfirmationEmail;
+export default PasswordResetEmail;
 
 const main = {
   backgroundColor: '#ffffff',

@@ -1,8 +1,9 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import nodemailer from 'nodemailer';
 import { render } from '@react-email/components';
 
 import ConfirmationEmail from '@/views/emails/confirmation-email';
+import PasswordResetEmail from '@/views/emails/password-reset-email';
 
 export default class Email {
   private recipientEmail: string;
@@ -29,10 +30,13 @@ export default class Email {
     });
   }
 
-  private async send(template: ReactNode, subject: string) {
+  private async send(
+    Template: React.FC<{ fullName: string; url: string }>,
+    subject: string
+  ) {
     // 1) Render HTML from JSX
     const html = await render(
-      <ConfirmationEmail fullName={this.recipientFullName} url={this.url} />
+      <Template fullName={this.recipientFullName} url={this.url} />
     );
 
     // 2) Define email options
@@ -47,6 +51,10 @@ export default class Email {
   }
 
   async sendEmailConfirmation() {
-    await this.send('confirmEmail', 'Confirm Your Email Address');
+    await this.send(ConfirmationEmail, 'Confirm Your Email Address');
+  }
+
+  async sendPasswordReset() {
+    await this.send(PasswordResetEmail, 'Reset Your Password');
   }
 }
