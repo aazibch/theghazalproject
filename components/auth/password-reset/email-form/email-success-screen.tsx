@@ -5,7 +5,7 @@ export default function EmailSuccessScreen() {
   return (
     <div className="flex flex-col gap-4">
       <p>
-        We've sent you an email. Please follow the instructions given in it to
+        We have sent you an email. Please follow the instructions given in it to
         recover your account.
       </p>
       <div className="flex justify-end">

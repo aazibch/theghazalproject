@@ -25,8 +25,8 @@ export default function EmailForm() {
           )}
 
           <p>
-            Enter the email address associated with your account, and we'll send
-            you an email.
+            Enter the email address associated with your account, and we will
+            send you an email.
           </p>
 
           <div>
