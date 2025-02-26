@@ -1,16 +1,16 @@
-import { Button } from 'flowbite-react';
 import Link from 'next/link';
+import { Button } from 'flowbite-react';
 
-export default function EmailSuccessScreen() {
+export default function PasswordSuccessScreen() {
   return (
     <div className="flex flex-col gap-4">
       <p>
-        We've sent you an email. Please follow the instructions given in it to
-        recover your account.
+        Your password was successfully reset! You may now login with your new
+        password.
       </p>
       <div className="flex justify-end">
         <Link className="hover:no-underline" href="/auth/login">
-          <Button color="blue">Back to Login</Button>
+          <Button>Back to Login</Button>
         </Link>
       </div>
     </div>

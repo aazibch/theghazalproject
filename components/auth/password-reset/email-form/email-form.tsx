@@ -21,12 +21,12 @@ export default function EmailForm() {
       ) : (
         <form action={formAction} className="flex flex-col gap-4">
           {status === 'failure' && (
-            <p className="text-red-600 text-center mb-6 text-sm">{message}</p>
+            <p className="text-red-600 text-center">{message}</p>
           )}
 
-          <p className="text-sm">
-            Please enter the email address associated with your account, and
-            we'll send you an email.
+          <p>
+            Enter the email address associated with your account, and we'll send
+            you an email.
           </p>
 
           <div>

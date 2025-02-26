@@ -65,6 +65,31 @@ export const signupSchema = Joi.object({
     })
 });
 
+export const newPasswordSchema = Joi.object({
+  password: Joi.string()
+    .min(8)
+    .required()
+    .messages({
+      'string.min': generateValidationMessage('min', 'password', 8),
+      'string.empty': generateValidationMessage('required', 'password'),
+      'any.required': generateValidationMessage('required', 'password')
+    }),
+  passwordConfirmation: Joi.string()
+    .valid(Joi.ref('password'))
+    .required()
+    .messages({
+      'string.empty': generateValidationMessage(
+        'required',
+        'password confirmation'
+      ),
+      'any.required': generateValidationMessage(
+        'required',
+        'password confirmation'
+      ),
+      'any.only': generateValidationMessage('passwordConfirmation')
+    })
+});
+
 export const colGhazalEntrySchema = Joi.object({
   lineOne: Joi.string()
     .min(30)

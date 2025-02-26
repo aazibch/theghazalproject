@@ -1,12 +1,13 @@
 'use server';
 
+import crypto from 'crypto';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { S3 } from '@aws-sdk/client-s3';
 import { getServerSession } from 'next-auth';
 
 import config from '@/app/api/auth/[...nextauth]/config';
-import { colGhazalEntrySchema } from './schemas';
+import { colGhazalEntrySchema, newPasswordSchema } from './schemas';
 import { IUser } from '@/types';
 import { getUserFromDB, updateProfilePictureInDb } from './users';
 import {
@@ -119,12 +120,13 @@ export async function submitEmailForPasswordReset(
 
   await dbConnect();
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email, emailConfirmed: true });
 
   if (!user) {
     return {
       status: 'failure',
-      message: 'No user with that email address exists.'
+      message:
+        "No user with that email address exists or they didn't confirm their email address."
     };
   }
 
@@ -135,7 +137,7 @@ export async function submitEmailForPasswordReset(
   try {
     const emailInstance = new Email(
       { fullName: user.fullName, email: user.email },
-      `${process.env.PRODUCTION_URL}auth/password-reset?token=${passwordResetToken}`
+      `${process.env.PRODUCTION_URL}auth/password-reset/complete?token=${passwordResetToken}`
     );
 
     await emailInstance.sendPasswordReset();
@@ -150,19 +152,45 @@ export async function submitEmailForPasswordReset(
   return { status: 'success' };
 }
 
-export async function submitPinForPasswordReset(
-  prevState: any,
-  formData: FormData
-): Promise<{ status: string | null }> {
-  let pin = '';
+export async function resetPassword(
+  token: string | null,
+  password: string,
+  passwordConfirmation: string
+) {
+  const tokenError = {
+    status: 'failure',
+    message: 'Oh, oh! The password reset token has expired or is invalid.'
+  };
 
-  for (const digit of formData.values()) {
-    pin += digit;
+  if (!token) {
+    return tokenError;
   }
 
-  console.log('[submitPinForPasswordReset]', pin);
+  const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
 
-  return { status: 'success' };
+  await dbConnect();
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetTokenExpirationDate: { $gt: Date.now() }
+  });
+
+  if (!user) return tokenError;
+
+  const { error } = newPasswordSchema.validate({
+    password,
+    passwordConfirmation
+  });
+
+  if (error) throw error;
+
+  user.password = password;
+  user.passwordResetToken = undefined;
+  user.passwordResetTokenExpirationDate = undefined;
+  await user.save();
+
+  return {
+    status: 'success'
+  };
 }
 
 export async function redirectAfterAuth() {

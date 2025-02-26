@@ -5,7 +5,7 @@ export default function FormSubmitButton() {
   const { pending } = useFormStatus();
 
   return (
-    <div className="flex flex-row-reverse">
+    <div className="flex justify-end">
       <Button type="submit" disabled={pending} color="blue">
         {pending ? (
           <Spinner size="sm" aria-label="loading spinner" />
