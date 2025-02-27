@@ -66,6 +66,9 @@ export default function LoginForm() {
           <span>Submit</span>
         )}
       </Button>
+      <p className="text-center text-sm">
+        <Link href="/auth/password-reset">Forgot your password?</Link>
+      </p>
       <div className="mt-5">
         <p
           className={`${styles.authAlternativeMessage} text-gray-500 text-sm mb-5`}

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import isEmail from 'validator/lib/isEmail';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 
 import { generateValidationMessage } from '@/lib/generateValidationMessage';
 import { IUser } from '@/types';
@@ -66,6 +67,8 @@ const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
     select: false
   },
   passwordChangeDate: Date,
+  passwordResetToken: String,
+  passwordResetTokenExpirationDate: Date,
   bio: {
     type: String,
     maxlength: [50, generateValidationMessage('max', 'bio', 150)]
@@ -116,6 +119,20 @@ userSchema.methods.changedPasswordAfterToken = function (
   }
 
   return false;
+};
+
+userSchema.methods.createPasswordResetToken = function () {
+  const token = crypto.randomBytes(32).toString('hex');
+
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(token)
+    .digest('hex');
+
+  // Reset token expires in ten minutes.
+  this.passwordResetTokenExpirationDate = Date.now() + 10 * 60 * 1000;
+
+  return token;
 };
 
 const User =

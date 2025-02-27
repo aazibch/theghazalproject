@@ -22,12 +22,14 @@ export default function AvatarWithEditButton({
 
   const { update } = useSession();
 
+  const status = state ? state.status : null;
+
   useEffect(() => {
-    if (state && state.status === 'success') {
+    if (status === 'success') {
       update();
       resetInputRef.current!.click();
     }
-  }, [state, update]);
+  }, [status, update]);
 
   const handleEditButtonClick = () => {
     imageInputRef.current!.click();
