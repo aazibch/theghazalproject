@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { Awaitable, User } from 'next-auth';
+import AppError from './utils';
 
 import { ERROR_MESSAGES } from '@/constants';
 import { AuthCredentials, AuthRequest } from '@/types';
@@ -10,7 +11,7 @@ const catchAsync = (
   return async (credentials: AuthCredentials, req: AuthRequest) => {
     try {
       return await fn(credentials, req);
-    } catch (err) {
+    } catch (err: any) {
       if (err instanceof mongoose.mongo.MongoError && 'keyPattern' in err) {
         if (err.keyPattern && Object.keys(err.keyPattern)[0] === 'email') {
           throw new Error(ERROR_MESSAGES.nonUniqueEmail);
@@ -24,6 +25,10 @@ const catchAsync = (
           const message = `Duplicate value for "${key}".`;
           throw new Error(message);
         }
+      }
+
+      if (err.isOperational) {
+        throw err;
       }
 
       throw new Error(ERROR_MESSAGES.generic);

@@ -14,3 +14,20 @@ export const scrollToPageBottom = () => {
     behavior: 'smooth'
   });
 };
+
+class AppError extends Error {
+  public statusCode: number;
+  public status: string;
+  public isOperational: boolean;
+
+  constructor(message: string, statusCode: number) {
+    super(message);
+    this.statusCode = statusCode;
+    this.status = statusCode.toString().startsWith('4') ? 'failure' : 'error';
+    this.isOperational = true;
+
+    Object.setPrototypeOf(this, AppError.prototype);
+  }
+}
+
+export default AppError;

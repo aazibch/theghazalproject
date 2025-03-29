@@ -6,7 +6,7 @@ import User from '@/models/User';
 import dbConnect from '@/lib/dbConnect';
 import { signupSchema } from '@/lib/schemas';
 import catchAsync from '@/lib/catchAsync';
-import { isSignupCredentials } from '@/lib/utils';
+import AppError, { isSignupCredentials } from '@/lib/utils';
 import { AdapterUser } from 'next-auth/adapters';
 import { generateJwtToken } from '@/lib/auth';
 import Email from '@/lib/email';
@@ -22,7 +22,10 @@ const config = {
       },
       authorize: catchAsync(async (credentials, req) => {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error('Please provide an email address and password.');
+          throw new AppError(
+            'Please provide an email address and password.',
+            400
+          );
         }
 
         await dbConnect();
@@ -34,7 +37,7 @@ const config = {
           !user ||
           !(await user.isPasswordCorrect(credentials.password, user.password))
         ) {
-          throw new Error('Incorrect email address or password.');
+          throw new AppError('Incorrect email address or password.', 401);
         }
 
         return { ...user.toObject(), id: user._id.toString() }; // Ensure id is a string
@@ -63,7 +66,7 @@ const config = {
           const { error } = signupSchema.validate(user);
 
           if (error) {
-            throw new Error(`Joi Validation: ${error.message}`);
+            throw new AppError(error.message, 400);
           }
 
           await dbConnect();
