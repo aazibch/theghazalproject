@@ -104,7 +104,6 @@ const config = {
         token.username = user.username;
         token.email = user.email;
         token.profilePicture = user.profilePicture;
-        token.emailConfirmed = user.emailConfirmed;
       }
 
       if (trigger === 'update') {
@@ -114,7 +113,6 @@ const config = {
         token.fullName = user.fullName;
         token.username = user.username;
         token.email = user.email;
-        token.emailConfirmed = user.emailConfirmed;
         token.profilePicture = user.profilePicture;
       }
 
@@ -125,7 +123,6 @@ const config = {
       session.user.fullName = token.fullName;
       session.user.username = token.username;
       session.user.email = token.email;
-      session.user.emailConfirmed = token.emailConfirmed;
       session.user.profilePicture = token.profilePicture;
 
       return session;

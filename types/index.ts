@@ -34,7 +34,6 @@ export interface SessionUser {
   username: string;
   email: string;
   profilePicture: string;
-  emailConfirmed: boolean;
 }
 
 export interface TokenUser {
@@ -42,7 +41,6 @@ export interface TokenUser {
   fullName: string;
   username: string;
   email: string;
-  emailConfirmed: boolean;
   profilePicture: string;
 }
 
