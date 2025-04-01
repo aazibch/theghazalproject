@@ -11,7 +11,7 @@ export default function HeroSection() {
       className="p-4 flex justify-center items-center h-[40rem] bg-no-repeat bg-center bg-cover bg-[#edebe6] text-white"
       style={{ backgroundImage: 'url(/images/turkish-ceiling-bg.png)' }}
     >
-      <div className="text-center max-w-3xl mx-auto">
+      <div className="text-center max-w-4xl mx-auto">
         <h1 className="text-4xl mb-10">Learn. Create. Share.</h1>
         <p className="text-2xl mb-8">
           At <span className="font-semibold">The Ghazal Project</span>, we want
