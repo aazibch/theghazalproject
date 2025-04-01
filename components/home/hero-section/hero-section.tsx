@@ -37,15 +37,6 @@ export default function HeroSection() {
           </Link>
         </div>
       </div>
-
-      {/* <div className="basis-[30rem]">
-            <Image
-              priority
-              src={heroBanner}
-              alt='Hero banner with the text, "Where you can learn about the ghazal
-    and share your own verses with the world."'
-            />
-          </div> */}
     </section>
   );
 }
