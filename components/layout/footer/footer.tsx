@@ -15,6 +15,8 @@ const customLinkTheme = {
 };
 
 export default function FooterComponent() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <Footer container className="rounded-none px-4" bgDark>
       <div className="w-full text-center">
@@ -57,7 +59,7 @@ export default function FooterComponent() {
             }}
             href="/"
             by="The Ghazal Project"
-            year={2024}
+            year={currentYear}
           />
         </div>
       </div>
