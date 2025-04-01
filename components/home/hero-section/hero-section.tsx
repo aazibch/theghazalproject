@@ -8,7 +8,7 @@ import Banner from '@/components/ui/banner';
 export default function HeroSection() {
   return (
     <section
-      className="p-4 flex justify-center items-center h-[40rem] bg-no-repeat bg-center bg-cover bg-[#edebe6] text-white"
+      className="p-4 flex justify-center items-center h-[40rem] bg-no-repeat bg-[50%_45%] bg-cover bg-[#edebe6] text-white"
       style={{ backgroundImage: 'url(/images/turkish-ceiling-bg.png)' }}
     >
       <div className="text-center max-w-4xl mx-auto">
