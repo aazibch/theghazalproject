@@ -18,7 +18,7 @@ export default function Banner({
   let contentTextClassNames = 'mb-8';
 
   if (size === 'lg') {
-    parentClassNames = 'py-28 px-4 bg-no-repeat bg-center bg-cover text-white';
+    parentClassNames = 'py-32 px-4 bg-no-repeat bg-center bg-cover text-white';
     contentTextClassNames = 'mb-8 text-lg';
   }
 
