@@ -24,7 +24,7 @@ export default async function Header() {
         <Image
           src={Logo}
           alt="The Ghazal Project Logo"
-          className="w-44 mt-2"
+          className="w-44"
           priority
         />
       </NavbarBrand>
