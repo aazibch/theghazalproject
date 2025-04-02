@@ -25,8 +25,9 @@ export default function FooterComponent() {
             <Image
               src={Logo}
               alt="The Ghazal Project Logo"
-              className="w-44 mt-2"
+              className="w-44 mt-2 mb-4 md:mt-0 md:mb-0 block mx-auto md:mx-0"
             />
+
             <FooterLinkGroup className="flex justify-center">
               <FooterLink as={Link} theme={customLinkTheme} href="/about">
                 About
