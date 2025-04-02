@@ -35,12 +35,21 @@ export const ConfirmationEmail = ({
     <Tailwind>
       <Body style={main}>
         <Container style={container}>
-          <Text
+          <div className="text-center">
+            <img
+              src={`${baseUrl}/images/logo.png`}
+              width={200}
+              height="auto"
+              alt="The Ghazal Project Logo"
+            />
+          </div>
+
+          {/* <Text
             style={logo}
             className="text-xl font-semibold text-[#0F52BA] font-['Crimson Text']"
           >
             The Ghazal Project
-          </Text>
+          </Text> */}
           <Text style={paragraph}>Hi {fullName},</Text>
           <Text style={paragraph}>
             Welcome to <Link href={baseUrl}>The Ghazal Project</Link>. We're

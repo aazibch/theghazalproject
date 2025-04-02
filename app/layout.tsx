@@ -26,9 +26,13 @@ export const merriweather = Merriweather({
 });
 
 export const metadata: Metadata = {
-  title: 'The Ghazal Project - Learn to write the English ghazal',
+  title:
+    'The Ghazal Project - Learn to write the English ghazal and share your own verses',
   description:
-    'Learn about the ghazal, its rich history, and share your own verses with the world.'
+    'Learn about the ghazal, its rich history, and share your own verses with the world.',
+  appleWebApp: {
+    title: 'The Ghazal Project'
+  }
 };
 
 export default function RootLayout({

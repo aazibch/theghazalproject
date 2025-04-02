@@ -15,11 +15,11 @@ export default function Banner({
 }: BannerProps) {
   let parentClassNames =
     'py-24 px-4 bg-no-repeat bg-center bg-cover text-white';
-  let contentTextClassNames = 'mb-8';
+  let contentTextClassNames = 'mb-6';
 
   if (size === 'lg') {
-    parentClassNames = 'py-28 px-4 bg-no-repeat bg-center bg-cover text-white';
-    contentTextClassNames = 'mb-8 text-lg';
+    parentClassNames = 'py-32 px-4 bg-no-repeat bg-center bg-cover text-white';
+    contentTextClassNames = 'mb-6 text-lg';
   }
 
   return (
@@ -27,7 +27,7 @@ export default function Banner({
       className={parentClassNames}
       style={{ backgroundImage: `url(${bgImage})` }}
     >
-      <h2 className="uppercase text-center text-xl mb-10">{heading}</h2>
+      <h2 className="uppercase text-center text-xl mb-8">{heading}</h2>
       <div className="max-w-3xl mx-auto text-center">
         <p className={contentTextClassNames}>{contentText}</p>
 

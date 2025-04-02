@@ -1,6 +1,10 @@
+import { Navbar, NavbarBrand, NavbarCollapse } from 'flowbite-react';
+import Image from 'next/image';
+
 import NavLink from './nav-link';
 import HeaderDropdown from './header-dropdown';
-import { Navbar, NavbarBrand, NavbarCollapse } from 'flowbite-react';
+
+import Logo from '@/assets/logo.png';
 
 export default async function Header() {
   return (
@@ -17,9 +21,12 @@ export default async function Header() {
       border
     >
       <NavbarBrand className="hover:no-underline" href="/">
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white text-primary_blue font-crimson_text">
-          The Ghazal Project
-        </span>
+        <Image
+          src={Logo}
+          alt="The Ghazal Project Logo"
+          className="w-44 mt-2"
+          priority
+        />
       </NavbarBrand>
       <HeaderDropdown />
 

@@ -5,21 +5,28 @@ import {
   FooterDivider,
   FooterCopyright
 } from 'flowbite-react';
+import Image from 'next/image';
 import Link from 'next/link';
+
+import Logo from '@/assets/logo.png';
 
 const customLinkTheme = {
   href: 'text-gray-500'
 };
 
 export default function FooterComponent() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <Footer container className="rounded-none px-4" bgDark>
       <div className="w-full text-center">
         <div className="max-w-screen-xl mx-auto">
           <div className="w-full justify-between md:flex md:items-center md:justify-between">
-            <span className="block mt-2 mb-4 md:mt-0 md:mb-0 self-center whitespace-nowrap text-xl font-semibold dark:text-white text-primary_blue font-crimson_text">
-              The Ghazal Project
-            </span>
+            <Image
+              src={Logo}
+              alt="The Ghazal Project Logo"
+              className="w-44 mt-2"
+            />
             <FooterLinkGroup className="flex justify-center">
               <FooterLink as={Link} theme={customLinkTheme} href="/about">
                 About
@@ -52,7 +59,7 @@ export default function FooterComponent() {
             }}
             href="/"
             by="The Ghazal Project"
-            year={2024}
+            year={currentYear}
           />
         </div>
       </div>

@@ -18,6 +18,8 @@ interface PasswordResetEmailProps {
   url: string;
 }
 
+const baseUrl = process.env.PRODUCTION_URL;
+
 export const PasswordResetEmail = ({
   fullName,
   url
@@ -36,12 +38,14 @@ export const PasswordResetEmail = ({
     <Tailwind>
       <Body style={main}>
         <Container style={container}>
-          <Text
-            style={logo}
-            className="text-xl font-semibold text-[#0F52BA] font-['Crimson Text']"
-          >
-            The Ghazal Project
-          </Text>
+          <div className="text-center">
+            <img
+              src={`${baseUrl}/images/logo.png`}
+              width={200}
+              height="auto"
+              alt="The Ghazal Project Logo"
+            />
+          </div>
           <Text style={paragraph}>Hi {fullName},</Text>
           <Text style={paragraph}>
             Trouble accessing your account? No problem, we're here to help.

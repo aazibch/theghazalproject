@@ -8,7 +8,7 @@ export default function AboutSection() {
       <Banner
         bgImage="/images/shahi-hammam-main-dome-bg.png"
         size="lg"
-        heading="Learn More About Us"
+        heading="Get to Know Us"
         contentText={
           <>
             <span className="font-semibold">The Ghazal Project</span> aims to
@@ -29,7 +29,7 @@ export default function AboutSection() {
         }
         contentButtons={
           <Link className="hover:no-underline" href="/about">
-            <Button color="blue" gradientDuoTone="purpleToBlue" size="lg" pill>
+            <Button color="blue" gradientDuoTone="purpleToBlue" pill>
               Learn More
             </Button>
           </Link>
