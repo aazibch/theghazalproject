@@ -11,18 +11,17 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.705.0",
-    "@react-email/components": "0.0.32",
+    "@react-email/components": "^0.0.36",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "flowbite": "^2.4.1",
     "flowbite-react": "^0.10.1",
     "formik": "^2.4.6",
     "gray-matter": "^4.0.3",
-    "html-to-text": "^9.0.5",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.6.4",
-    "next": "14.2.5",
+    "next": "^15.2.4",
     "next-auth": "^4.24.8",
     "nodemailer": "^6.9.16",
     "react": "^18",
@@ -34,7 +33,6 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
-    "@types/html-to-text": "^9.0.4",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.17",
@@ -45,7 +43,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "postcss": "^8",
-    "react-email": "3.0.6",
+    "react-email": "^4.0.7",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
