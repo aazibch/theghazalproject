@@ -33,7 +33,8 @@ export const PasswordResetEmail = ({
     </Head>
     <Preview>
       Trouble accessing your account? No problem, we will help you reset your
-      password.
+      password. Please select the button below to reset your password. The link
+      is valid for 10 minutes.
     </Preview>
     <Tailwind>
       <Body style={main}>

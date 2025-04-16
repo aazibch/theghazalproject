@@ -31,7 +31,10 @@ export const ConfirmationEmail = ({
         rel="stylesheet"
       />
     </Head>
-    <Preview>Confirm your email to enjoy all the features.</Preview>
+    <Preview>
+      Welcome to The Ghazal Project. We're glad to be joined by you. To enjoy
+      all the features on the platform, please confirm your email address.
+    </Preview>
     <Tailwind>
       <Body style={main}>
         <Container style={container}>
@@ -44,12 +47,6 @@ export const ConfirmationEmail = ({
             />
           </div>
 
-          {/* <Text
-            style={logo}
-            className="text-xl font-semibold text-[#0F52BA] font-['Crimson Text']"
-          >
-            The Ghazal Project
-          </Text> */}
           <Text style={paragraph}>Hi {fullName},</Text>
           <Text style={paragraph}>
             Welcome to <Link href={baseUrl}>The Ghazal Project</Link>. We're

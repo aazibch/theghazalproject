@@ -1,9 +1,5 @@
-import Image from 'next/image';
-
-import heroBanner from '@/assets/images/home/hero-banner.png';
 import Link from 'next/link';
 import { Button } from 'flowbite-react';
-import Banner from '@/components/ui/banner';
 
 export default function HeroSection() {
   return (

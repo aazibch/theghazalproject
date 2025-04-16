@@ -1,6 +1,7 @@
 import React from 'react';
 import nodemailer from 'nodemailer';
 import { render } from '@react-email/components';
+import { htmlToText } from 'html-to-text';
 
 import ConfirmationEmail from '@/views/emails/confirmation-email';
 import PasswordResetEmail from '@/views/emails/password-reset-email';
@@ -44,7 +45,8 @@ export default class Email {
       from: this.sender,
       to: this.recipientEmail,
       subject,
-      html
+      html,
+      text: htmlToText(html)
     };
 
     await this.newTransport().sendMail(mailOptions);
