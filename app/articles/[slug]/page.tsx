@@ -7,10 +7,12 @@ import { getArticleData } from '@/lib/articles';
 import styles from './page.module.css';
 import StyledImage from '@/components/ui/styled-image';
 
-type PageProps = { params: { slug: string } };
+type PageProps = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: PageProps) {
-  const articleData = getArticleData(params.slug);
+  const { slug } = await params;
+
+  const articleData = getArticleData(slug);
 
   return {
     title: `${articleData.title} by ${articleData.author} | The Ghazal Project`,
@@ -18,8 +20,10 @@ export async function generateMetadata({ params }: PageProps) {
   };
 }
 
-export default function Article({ params }: PageProps) {
-  const articleData = getArticleData(params.slug);
+export default async function Article({ params }: PageProps) {
+  const { slug } = await params;
+
+  const articleData = getArticleData(slug);
 
   if (!articleData) {
     notFound();

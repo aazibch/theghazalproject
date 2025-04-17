@@ -1,11 +1,10 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useActionState } from 'react';
 import { Avatar, Button } from 'flowbite-react';
 import { FiEdit } from 'react-icons/fi';
 import { updateProfilePicture } from '@/lib/actions';
 import { useSession } from 'next-auth/react';
-import { useFormState } from 'react-dom';
 import LoadingOverlayAndEditButton from './loading-overlay-and-edit-button';
 
 export default function AvatarWithEditButton({
@@ -18,7 +17,7 @@ export default function AvatarWithEditButton({
   const imageInputRef = useRef<HTMLInputElement>(null);
   const resetInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const [state, formAction] = useFormState(updateProfilePicture, null);
+  const [state, formAction] = useActionState(updateProfilePicture, null);
 
   const { update } = useSession();
 
