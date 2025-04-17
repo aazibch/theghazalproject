@@ -81,8 +81,6 @@ const config = {
             `${process.env.PRODUCTION_URL}auth/email?token=${token}`
           );
 
-          console.log('token', token);
-
           await email.sendEmailConfirmation();
 
           return { ...userDoc.toObject(), _id: userDoc._id.toString() };
