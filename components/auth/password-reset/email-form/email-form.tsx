@@ -1,6 +1,6 @@
 'use client';
 
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 import { Label, TextInput } from 'flowbite-react';
 
 import { submitEmailForPasswordReset } from '@/lib/actions';
@@ -8,7 +8,7 @@ import FormSubmitButton from '../../../ui/form-submit-button';
 import EmailSuccessScreen from './email-success-screen';
 
 export default function EmailForm() {
-  const [formState, formAction] = useFormState(submitEmailForPasswordReset, {
+  const [formState, formAction] = useActionState(submitEmailForPasswordReset, {
     status: null
   });
 

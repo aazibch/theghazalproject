@@ -4,9 +4,9 @@ import { confirmEmail } from '@/lib/auth';
 export default async function EmailConfirmationPage({
   searchParams
 }: {
-  searchParams: Record<string, any>;
+  searchParams: Promise<Record<string, any>>;
 }) {
-  const { token } = searchParams;
+  const token = (await searchParams).token;
 
   await confirmEmail(token);
 

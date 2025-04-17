@@ -4,10 +4,12 @@ import { getColGhazalEntriesByUser, getUser } from '@/lib/actions';
 import ContributionsSection from '@/components/user/contributions-section/contributions-section';
 import HeaderSection from '@/components/user/header-section/header-section';
 
-type PageProps = { params: { username: string } };
+type PageProps = { params: Promise<{ username: string }> };
 
 export async function generateMetadata({ params }: PageProps) {
-  const user = await getUser(params.username);
+  const { username } = await params;
+
+  const user = await getUser(username);
 
   return {
     title: `${user?.fullName} (${user?.username}) | The Ghazal Project`
@@ -17,9 +19,11 @@ export async function generateMetadata({ params }: PageProps) {
 export default async function UserPage({
   params
 }: {
-  params: { username: string };
+  params: Promise<{ username: string }>;
 }) {
-  const user = await getUser(params.username);
+  const { username } = await params;
+
+  const user = await getUser(username);
 
   if (!user) {
     notFound();
