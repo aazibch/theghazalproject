@@ -8,11 +8,6 @@ import {
   SidebarItems
 } from 'flowbite-react';
 
-// import { HiOutlineUserCircle } from 'react-icons/hi';
-import { GoGear } from 'react-icons/go';
-import { IoSettingsOutline } from 'react-icons/io5';
-import { BsGear } from 'react-icons/bs';
-import { HiOutlineCog } from 'react-icons/hi';
 import { HiOutlineCog6Tooth } from 'react-icons/hi2';
 import { HiOutlineUserCircle } from 'react-icons/hi2';
 
