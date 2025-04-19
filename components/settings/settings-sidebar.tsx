@@ -15,7 +15,7 @@ export default function SettingsSideBar() {
   return (
     <Sidebar
       aria-label="Settings sidebar"
-      className="border-r"
+      className="border-r shrink-0"
       // theme={{
       //   root: {
       //     base: 'h-full',
