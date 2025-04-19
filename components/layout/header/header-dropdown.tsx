@@ -4,7 +4,7 @@ import { Avatar, Button, Dropdown, Navbar } from 'flowbite-react';
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { HiOutlineUserCircle } from 'react-icons/hi';
+import { HiOutlineUserCircle } from 'react-icons/hi2';
 
 export default function HeaderDropdown() {
   const router = useRouter();

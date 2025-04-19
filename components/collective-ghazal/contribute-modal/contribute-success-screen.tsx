@@ -1,5 +1,5 @@
 import { Button, Modal } from 'flowbite-react';
-import { HiOutlineCheck } from 'react-icons/hi';
+import { HiOutlineCheck } from 'react-icons/hi2';
 
 export default function ContributeSuccessScreen({
   setOpenContributeModalHandler,

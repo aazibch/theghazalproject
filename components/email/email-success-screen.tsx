@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { HiOutlineCheck } from 'react-icons/hi';
+import { HiOutlineCheck } from 'react-icons/hi2';
 
 export default function EmailSuccessScreen() {
   const { push } = useRouter();
