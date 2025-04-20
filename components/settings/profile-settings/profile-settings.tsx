@@ -1,5 +1,4 @@
 import { Avatar, Button, FileInput, Label, TextInput } from 'flowbite-react';
-import Link from 'next/link';
 
 export default function ProfileSettings() {
   return (
@@ -11,7 +10,7 @@ export default function ProfileSettings() {
           </div>
           <TextInput name="fullName" id="fullName" type="text" required />
         </div>
-        <div>
+        <div className="mb-1">
           <div className="mb-2 block">
             <Label htmlFor="username" value="Username" />
           </div>
@@ -20,7 +19,7 @@ export default function ProfileSettings() {
         <div className="flex">
           <div className="shrink-0 flex flex-col mr-4">
             <Avatar
-              img="https://i0.wp.com/florrycreativecare.com/wp-content/uploads/2020/08/blank-profile-picture-mystery-man-avatar-973460.jpg"
+              img="https://theghazalproject-user-avatars.s3.ap-southeast-2.amazonaws.com/default.jpg"
               rounded
               size="lg"
               className="mb-2"
