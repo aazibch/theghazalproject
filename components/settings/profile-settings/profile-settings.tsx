@@ -1,6 +1,12 @@
+import config from '@/app/api/auth/[...nextauth]/config';
+import { getUser } from '@/lib/actions';
 import { Avatar, Button, FileInput, Label, TextInput } from 'flowbite-react';
+import { getServerSession } from 'next-auth';
 
-export default function ProfileSettings() {
+export default async function ProfileSettings() {
+  // const session = await getServerSession(config);
+  // const user = session?.user;
+
   return (
     <div className="basis-full p-10">
       <form className="flex max-w-md flex-col gap-4 mx-auto">
@@ -14,7 +20,7 @@ export default function ProfileSettings() {
           <div className="mb-2 block">
             <Label htmlFor="username" value="Username" />
           </div>
-          <TextInput name="username" id="username" type="text" required />
+          <TextInput name="username" id="username" type="text" disabled />
         </div>
         <div className="flex">
           <div className="shrink-0 flex flex-col mr-4">

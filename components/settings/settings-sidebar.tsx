@@ -18,14 +18,11 @@ export default function SettingsSideBar() {
     <Sidebar
       aria-label="Settings sidebar"
       className="border-r shrink-0"
-      // theme={{
-      //   root: {
-      //     base: 'h-full',
-      //     collapsed: {
-      //       off: 'w-full'
-      //     }
-      //   }
-      // }}
+      theme={{
+        root: {
+          base: 'w-64'
+        }
+      }}
     >
       <SidebarItems className="w-full">
         <SidebarItemGroup>
