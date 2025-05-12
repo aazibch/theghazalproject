@@ -1,4 +1,3 @@
-import { Avatar, Button, FileInput, Label, TextInput } from 'flowbite-react';
 import ProfileSettingsForm from './profile-settings-form';
 
 export default async function ProfileSettings() {
