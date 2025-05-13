@@ -11,7 +11,7 @@ import {
 import { HiOutlineCog6Tooth } from 'react-icons/hi2';
 import { HiOutlineUserCircle } from 'react-icons/hi2';
 
-export default function SettingsSideBar() {
+export default function SettingsSidebar() {
   const path = usePathname();
 
   return (
@@ -29,7 +29,7 @@ export default function SettingsSideBar() {
           <SidebarItem
             active={path === '/settings/profile'}
             className="hover:no-underline"
-            href="/"
+            href="/settings/profile"
             icon={HiOutlineUserCircle}
             as={Link}
           >
@@ -38,7 +38,7 @@ export default function SettingsSideBar() {
           <SidebarItem
             active={path === '/settings/account'}
             className="hover:no-underline"
-            href="#"
+            href="/settings/account"
             icon={HiOutlineCog6Tooth}
             as={Link}
           >
