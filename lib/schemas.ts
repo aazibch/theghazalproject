@@ -65,6 +65,35 @@ export const signupSchema = Joi.object({
     })
 });
 
+export const updateProfileSettingsSchema = Joi.object({
+  fullName: Joi.string()
+    .pattern(new RegExp(/^[a-zA-Z ]*$/))
+    .min(3)
+    .max(75)
+    .required()
+    .messages({
+      'string.pattern.base':
+        'The full name may only contain alphabets (letters A-Z) and spaces.',
+      'string.min': generateValidationMessage('min', 'full name', 3),
+      'string.max': generateValidationMessage('max', 'full name', 75),
+      'string.empty': generateValidationMessage('required', 'full name'),
+      'any.required': generateValidationMessage('required', 'full name')
+    }),
+  username: Joi.string()
+    .pattern(new RegExp(/^[a-zA-Z0-9_]*$/))
+    .min(3)
+    .max(50)
+    .required()
+    .messages({
+      'string.pattern.base':
+        'The username may only contain alphanumeric characters (letters A-Z, numbers 0-9) and underscores (_).',
+      'string.min': generateValidationMessage('min', 'username', 3),
+      'string.max': generateValidationMessage('max', 'username', 50),
+      'string.empty': generateValidationMessage('required', 'username'),
+      'any.required': generateValidationMessage('required', 'username')
+    })
+});
+
 export const newPasswordSchema = Joi.object({
   password: Joi.string()
     .min(8)

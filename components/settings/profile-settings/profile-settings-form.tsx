@@ -1,24 +1,98 @@
-import { Avatar, Button, FileInput, Label, TextInput } from 'flowbite-react';
+'use client';
 
-export default function ProfileSettingsForm() {
+import { Avatar, Button, FileInput, Label, TextInput } from 'flowbite-react';
+import { useFormik } from 'formik';
+
+import { SessionUser } from '@/types';
+import { updateProfileSettingsSchema } from '@/lib/schemas';
+
+interface ProfileSettingsFormProps {
+  user: {
+    fullName?: SessionUser['fullName'];
+    username?: SessionUser['username'];
+    profilePicture?: SessionUser['profilePicture'];
+  };
+}
+
+interface FormErrors {
+  fullName?: string;
+  username?: string;
+}
+
+export default function ProfileSettingsForm({
+  user
+}: ProfileSettingsFormProps) {
+  const validate = (values: FormErrors) => {
+    const validationErrors: FormErrors = {};
+
+    const { error } = updateProfileSettingsSchema.validate(values, {
+      abortEarly: false
+    });
+
+    if (error) {
+      for (let x of error.details) {
+        if (x.context?.label) {
+          validationErrors[x.context.label as keyof FormErrors] = x.message;
+        }
+      }
+    }
+
+    return validationErrors;
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      fullName: user.fullName,
+      username: user.username
+    },
+    validate,
+    validateOnChange: false,
+    validateOnBlur: false,
+    onSubmit: async (values) => {
+      console.log(values);
+    }
+  });
+
   return (
-    <form className="flex max-w-md flex-col gap-4 mx-auto">
+    <form
+      method="post"
+      onSubmit={formik.handleSubmit}
+      className="flex max-w-md flex-col gap-4 mx-auto"
+    >
       <div>
         <div className="mb-2 block">
           <Label htmlFor="fullName" value="Full Name" />
         </div>
-        <TextInput name="fullName" id="fullName" type="text" required />
+        <TextInput
+          name="fullName"
+          id="fullName"
+          type="text"
+          required
+          value={formik.values.fullName}
+          onChange={formik.handleChange}
+          color={formik.errors.fullName && 'failure'}
+          helperText={formik.errors.fullName && formik.errors.fullName}
+        />
       </div>
       <div className="mb-1">
         <div className="mb-2 block">
           <Label htmlFor="username" value="Username" />
         </div>
-        <TextInput name="username" id="username" type="text" disabled />
+        <TextInput
+          name="username"
+          id="username"
+          type="text"
+          disabled
+          value={formik.values.username}
+          onChange={formik.handleChange}
+          color={formik.errors.username && 'failure'}
+          helperText={formik.errors.username && formik.errors.username}
+        />
       </div>
       <div className="flex">
         <div className="shrink-0 flex flex-col mr-4">
           <Avatar
-            img="https://theghazalproject-user-avatars.s3.ap-southeast-2.amazonaws.com/default.jpg"
+            img={user.profilePicture}
             rounded
             size="lg"
             className="mb-2"
