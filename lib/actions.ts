@@ -66,6 +66,24 @@ export const updateProfilePicture = async (
   return { status: 'success' };
 };
 
+export const updateProfileSettings = async (fullName: string) => {
+  //TODO: Move to separate function.
+  const session = await getServerSession(config);
+
+  if (!session) {
+    throw new Error('Session not found.');
+  }
+
+  await dbConnect();
+  await User.findByIdAndUpdate(
+    session.user._id,
+    {
+      fullName
+    },
+    { runValidators: true }
+  );
+};
+
 export const getColGhazalEntriesByUser = async (userId: string) => {
   const allEntriesByUser = await getAllColGhazalEntriesByUserFromDB(userId);
 

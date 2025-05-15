@@ -1,16 +1,27 @@
 'use client';
 
-import { Avatar, Button, FileInput, Label, TextInput } from 'flowbite-react';
+import { useState } from 'react';
+import {
+  Avatar,
+  Button,
+  FileInput,
+  Label,
+  Spinner,
+  TextInput
+} from 'flowbite-react';
 import { useFormik } from 'formik';
 
 import { SessionUser } from '@/types';
 import { updateProfileSettingsSchema } from '@/lib/schemas';
+import { updateProfileSettings } from '@/lib/actions';
+import { useSession } from 'next-auth/react';
+import AvatarFileInput from './avatar-file-input';
 
 interface ProfileSettingsFormProps {
   user: {
-    fullName?: SessionUser['fullName'];
-    username?: SessionUser['username'];
-    profilePicture?: SessionUser['profilePicture'];
+    fullName: SessionUser['fullName'];
+    username: SessionUser['username'];
+    profilePicture: SessionUser['profilePicture'];
   };
 }
 
@@ -22,6 +33,10 @@ interface FormErrors {
 export default function ProfileSettingsForm({
   user
 }: ProfileSettingsFormProps) {
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const { update } = useSession();
+
   const validate = (values: FormErrors) => {
     const validationErrors: FormErrors = {};
 
@@ -42,14 +57,20 @@ export default function ProfileSettingsForm({
 
   const formik = useFormik({
     initialValues: {
-      fullName: user.fullName,
-      username: user.username
+      fullName: user.fullName
     },
     validate,
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: async (values) => {
-      console.log(values);
+      const { fullName } = values;
+
+      if (fullName) {
+        setIsSubmitting(true);
+        await updateProfileSettings(fullName);
+        update();
+        setIsSubmitting(false);
+      }
     }
   });
 
@@ -83,39 +104,22 @@ export default function ProfileSettingsForm({
           id="username"
           type="text"
           disabled
-          value={formik.values.username}
-          onChange={formik.handleChange}
-          color={formik.errors.username && 'failure'}
-          helperText={formik.errors.username && formik.errors.username}
+          value={user.username}
         />
       </div>
-      <div className="flex">
-        <div className="shrink-0 flex flex-col mr-4">
-          <Avatar
-            img={user.profilePicture}
-            rounded
-            size="lg"
-            className="mb-2"
-          />
-          <button className="mx-auto text-xs font-semibold text-gray-600 hover:text-gray-500">
-            Remove
-          </button>
-        </div>
-
-        <div className="flex basis-full items-center">
-          <FileInput
-            id="file-upload"
-            theme={{
-              root: {
-                base: 'w-full'
-              }
-            }}
-          />
-        </div>
-      </div>
+      <AvatarFileInput img={user.profilePicture} />
       <div>
-        <Button className="float-end px-5" color="blue" type="submit">
-          <span>Save</span>
+        <Button
+          disabled={isSubmitting}
+          className="float-end px-5"
+          color="blue"
+          type="submit"
+        >
+          {isSubmitting ? (
+            <Spinner size="sm" aria-label="loading spinner" />
+          ) : (
+            'Save'
+          )}
         </Button>
       </div>
     </form>

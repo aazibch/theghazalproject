@@ -78,19 +78,6 @@ export const updateProfileSettingsSchema = Joi.object({
       'string.max': generateValidationMessage('max', 'full name', 75),
       'string.empty': generateValidationMessage('required', 'full name'),
       'any.required': generateValidationMessage('required', 'full name')
-    }),
-  username: Joi.string()
-    .pattern(new RegExp(/^[a-zA-Z0-9_]*$/))
-    .min(3)
-    .max(50)
-    .required()
-    .messages({
-      'string.pattern.base':
-        'The username may only contain alphanumeric characters (letters A-Z, numbers 0-9) and underscores (_).',
-      'string.min': generateValidationMessage('min', 'username', 3),
-      'string.max': generateValidationMessage('max', 'username', 50),
-      'string.empty': generateValidationMessage('required', 'username'),
-      'any.required': generateValidationMessage('required', 'username')
     })
 });
 
