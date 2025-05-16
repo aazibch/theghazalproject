@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Avatar, FileInput } from 'flowbite-react';
 
-export default function AvatarFileInput({ img }: { img: string }) {
+export default function AvatarFileInput({
+  img,
+  avatarInputRef
+}: {
+  img: string;
+  avatarInputRef: React.RefObject<HTMLInputElement>;
+}) {
   const [profileImage, setProfileImage] = useState<string>();
 
   useEffect(() => {
@@ -39,11 +45,20 @@ export default function AvatarFileInput({ img }: { img: string }) {
     }
   };
 
+  const handleRemoveButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    avatarInputRef.current!.value = '';
+  };
+
   return (
     <div className="flex">
       <div className="shrink-0 flex flex-col mr-4">
         <Avatar img={profileImage} rounded size="lg" className="mb-2" />
-        <button className="mx-auto text-xs font-semibold text-gray-600 hover:text-gray-500">
+        <button
+          onClick={handleRemoveButtonClick}
+          className="mx-auto text-xs font-semibold text-gray-600 hover:text-gray-500"
+        >
           Remove
         </button>
       </div>
@@ -51,6 +66,7 @@ export default function AvatarFileInput({ img }: { img: string }) {
       <div className="flex basis-full items-center">
         <FileInput
           id="file-upload"
+          ref={avatarInputRef}
           onChange={fileInputChangeHandler}
           theme={{
             root: {

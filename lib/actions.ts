@@ -66,12 +66,23 @@ export const updateProfilePicture = async (
   return { status: 'success' };
 };
 
-export const updateProfileSettings = async (fullName: string) => {
+export const updateProfileSettings = async (
+  fullName: string,
+  profileImage?: File
+) => {
   //TODO: Move to separate function.
   const session = await getServerSession(config);
 
   if (!session) {
     throw new Error('Session not found.');
+  }
+
+  if (profileImage) {
+    await updateProfilePictureInDb(
+      profileImage,
+      session.user._id,
+      session.user.username
+    );
   }
 
   await dbConnect();

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   Avatar,
   Button,
@@ -36,6 +36,7 @@ export default function ProfileSettingsForm({
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const { update } = useSession();
+  const avatarInputRef = useRef<HTMLInputElement>(null);
 
   const validate = (values: FormErrors) => {
     const validationErrors: FormErrors = {};
@@ -64,13 +65,19 @@ export default function ProfileSettingsForm({
     validateOnBlur: false,
     onSubmit: async (values) => {
       const { fullName } = values;
+      const profileImage = avatarInputRef.current!.files?.[0];
 
-      if (fullName) {
-        setIsSubmitting(true);
+      setIsSubmitting(true);
+
+      if (fullName && profileImage) {
+        await updateProfileSettings(fullName, profileImage);
+      } else if (fullName) {
         await updateProfileSettings(fullName);
-        update();
-        setIsSubmitting(false);
       }
+
+      update();
+
+      setIsSubmitting(false);
     }
   });
 
@@ -107,7 +114,10 @@ export default function ProfileSettingsForm({
           value={user.username}
         />
       </div>
-      <AvatarFileInput img={user.profilePicture} />
+      <AvatarFileInput
+        avatarInputRef={avatarInputRef}
+        img={user.profilePicture}
+      />
       <div>
         <Button
           disabled={isSubmitting}
