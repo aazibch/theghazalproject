@@ -1,25 +1,33 @@
 import { useEffect, useState } from 'react';
 import { Avatar, FileInput } from 'flowbite-react';
 
+import { DEFAULT_PROFILE_PICTURE } from '@/constants';
+
 export default function AvatarFileInput({
-  img,
-  avatarInputRef
+  avatarInputRef,
+  userProfilePicture,
+  setIsProfilePictureRemovedHandler
 }: {
-  img: string;
   avatarInputRef: React.RefObject<HTMLInputElement>;
+  userProfilePicture: string;
+  setIsProfilePictureRemovedHandler: (value: boolean) => void;
 }) {
-  const [profileImage, setProfileImage] = useState<string>();
+  const [avatarPreview, setAvatarPreview] = useState<string>(
+    DEFAULT_PROFILE_PICTURE
+  );
 
   useEffect(() => {
-    if (img) {
-      setProfileImage(img);
+    if (userProfilePicture) {
+      setAvatarPreview(userProfilePicture);
     }
-  }, [img]);
+  }, [userProfilePicture]);
 
   const fileInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const profileImage = e.target.files?.[0];
+    const profilePicture = e.target.files?.[0];
 
-    if (profileImage) {
+    if (profilePicture) {
+      setIsProfilePictureRemovedHandler(false);
+
       const reader = new FileReader();
 
       reader.onload = (e: ProgressEvent<FileReader>) => {
@@ -34,33 +42,36 @@ export default function AvatarFileInput({
           const img = new Image();
           img.onload = () => {
             // save to state.
-            setProfileImage(imageUrl);
+            setAvatarPreview(imageUrl);
           };
 
           img.src = imageUrl;
         }
       };
 
-      reader.readAsDataURL(profileImage);
+      reader.readAsDataURL(profilePicture);
     }
   };
 
   const handleRemoveButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    avatarInputRef.current!.value = '';
+    setIsProfilePictureRemovedHandler(true);
+    setAvatarPreview(DEFAULT_PROFILE_PICTURE);
   };
 
   return (
     <div className="flex">
       <div className="shrink-0 flex flex-col mr-4">
-        <Avatar img={profileImage} rounded size="lg" className="mb-2" />
-        <button
-          onClick={handleRemoveButtonClick}
-          className="mx-auto text-xs font-semibold text-gray-600 hover:text-gray-500"
-        >
-          Remove
-        </button>
+        <Avatar img={avatarPreview} rounded size="lg" className="mb-2" />
+        {avatarPreview === userProfilePicture && (
+          <button
+            onClick={handleRemoveButtonClick}
+            className="mx-auto text-xs font-semibold text-gray-600 hover:text-gray-500"
+          >
+            Remove
+          </button>
+        )}
       </div>
 
       <div className="flex basis-full items-center">

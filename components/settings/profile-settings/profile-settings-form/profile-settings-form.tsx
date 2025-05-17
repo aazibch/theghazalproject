@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Avatar,
   Button,
@@ -34,9 +34,14 @@ export default function ProfileSettingsForm({
   user
 }: ProfileSettingsFormProps) {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [isProfilePictureRemoved, setIsProfilePictureRemoved] =
+    useState<boolean>(false);
   const { update } = useSession();
   const avatarInputRef = useRef<HTMLInputElement>(null);
+
+  const setIsProfilePictureRemovedHandler = (value: boolean) => {
+    setIsProfilePictureRemoved(value);
+  };
 
   const validate = (values: FormErrors) => {
     const validationErrors: FormErrors = {};
@@ -56,6 +61,11 @@ export default function ProfileSettingsForm({
     return validationErrors;
   };
 
+  interface UpdatesObj {
+    fullName?: string;
+    profilePicture?: File;
+  }
+
   const formik = useFormik({
     initialValues: {
       fullName: user.fullName
@@ -65,14 +75,24 @@ export default function ProfileSettingsForm({
     validateOnBlur: false,
     onSubmit: async (values) => {
       const { fullName } = values;
-      const profileImage = avatarInputRef.current!.files?.[0];
+      const newProfilePicture = avatarInputRef.current!.files?.[0];
+
+      const updates: UpdatesObj = {};
+
+      if (fullName !== user.fullName) {
+        updates['fullName'] = fullName;
+      }
+
+      if (newProfilePicture) {
+        updates['profilePicture'] = newProfilePicture;
+      }
 
       setIsSubmitting(true);
 
-      if (fullName && profileImage) {
-        await updateProfileSettings(fullName, profileImage);
-      } else if (fullName) {
-        await updateProfileSettings(fullName);
+      if (isProfilePictureRemoved) {
+        await updateProfileSettings(updates, true);
+      } else {
+        await updateProfileSettings(updates);
       }
 
       update();
@@ -115,8 +135,9 @@ export default function ProfileSettingsForm({
         />
       </div>
       <AvatarFileInput
+        setIsProfilePictureRemovedHandler={setIsProfilePictureRemovedHandler}
         avatarInputRef={avatarInputRef}
-        img={user.profilePicture}
+        userProfilePicture={user.profilePicture}
       />
       <div>
         <Button

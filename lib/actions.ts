@@ -66,9 +66,14 @@ export const updateProfilePicture = async (
   return { status: 'success' };
 };
 
+interface UpdatesObj {
+  fullName?: string;
+  profilePicture?: File;
+}
+
 export const updateProfileSettings = async (
-  fullName: string,
-  profileImage?: File
+  updates: UpdatesObj,
+  profilePictureRemoved?: boolean
 ) => {
   //TODO: Move to separate function.
   const session = await getServerSession(config);
@@ -77,22 +82,25 @@ export const updateProfileSettings = async (
     throw new Error('Session not found.');
   }
 
-  if (profileImage) {
-    await updateProfilePictureInDb(
-      profileImage,
-      session.user._id,
-      session.user.username
-    );
-  }
+  console.log('updates', updates);
+  console.log('profilePictureRemoved', profilePictureRemoved);
 
-  await dbConnect();
-  await User.findByIdAndUpdate(
-    session.user._id,
-    {
-      fullName
-    },
-    { runValidators: true }
-  );
+  // if (profilePicture) {
+  //   await updateProfilePictureInDb(
+  //     profilePicture,
+  //     session.user._id,
+  //     session.user.username
+  //   );
+  // }
+
+  // await dbConnect();
+  // await User.findByIdAndUpdate(
+  //   session.user._id,
+  //   {
+  //     fullName
+  //   },
+  //   { runValidators: true }
+  // );
 };
 
 export const getColGhazalEntriesByUser = async (userId: string) => {
