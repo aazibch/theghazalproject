@@ -1,14 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import {
-  Avatar,
-  Button,
-  FileInput,
-  Label,
-  Spinner,
-  TextInput
-} from 'flowbite-react';
+import { Button, Label, Spinner, TextInput } from 'flowbite-react';
 import { useFormik } from 'formik';
 
 import { SessionUser } from '@/types';
@@ -16,6 +9,7 @@ import { updateProfileSettingsSchema } from '@/lib/schemas';
 import { updateProfileSettings } from '@/lib/actions';
 import { useSession } from 'next-auth/react';
 import AvatarFileInput from './avatar-file-input';
+import { DEFAULT_PROFILE_PICTURE } from '@/constants';
 
 interface ProfileSettingsFormProps {
   user: {
@@ -36,11 +30,63 @@ export default function ProfileSettingsForm({
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isProfilePictureRemoved, setIsProfilePictureRemoved] =
     useState<boolean>(false);
-  const { update } = useSession();
+  const [avatarPreview, setAvatarPreview] = useState<string>(
+    DEFAULT_PROFILE_PICTURE
+  );
+
+  const { update, data: session } = useSession();
   const avatarInputRef = useRef<HTMLInputElement>(null);
+
+  const { profilePicture: userProfilePicture } = user;
+
+  useEffect(() => {
+    if (userProfilePicture) {
+      setAvatarPreview(userProfilePicture);
+    }
+  }, [userProfilePicture]);
+
+  const setAvatarPreviewHandler = (value: string) => {
+    setAvatarPreview(value);
+  };
 
   const setIsProfilePictureRemovedHandler = (value: boolean) => {
     setIsProfilePictureRemoved(value);
+  };
+
+  const fileInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const profilePicture = e.target.files?.[0];
+
+    if (profilePicture) {
+      setIsProfilePictureRemovedHandler(false);
+
+      const reader = new FileReader();
+
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        if (
+          e.target &&
+          e.target.result &&
+          typeof e.target.result === 'string'
+        ) {
+          const imageUrl: string = e.target.result;
+
+          // Create an Image element to get image dimensions
+          const img = new Image();
+          img.onload = () => {
+            // save to state.
+            setAvatarPreview(imageUrl);
+          };
+
+          img.src = imageUrl;
+        }
+      };
+
+      reader.readAsDataURL(profilePicture);
+    }
+  };
+
+  const resetAvatarFileInput = (updatedAvatarPreview: string) => {
+    avatarInputRef.current!.value = '';
+    setAvatarPreview(updatedAvatarPreview);
   };
 
   const validate = (values: FormErrors) => {
@@ -95,7 +141,8 @@ export default function ProfileSettingsForm({
         await updateProfileSettings(updates);
       }
 
-      update();
+      const updatedSession = await update();
+      resetAvatarFileInput(updatedSession!.user.profilePicture);
 
       setIsSubmitting(false);
     }
@@ -132,12 +179,16 @@ export default function ProfileSettingsForm({
           type="text"
           disabled
           value={user.username}
+          helperText="You cannot change the username."
         />
       </div>
       <AvatarFileInput
-        setIsProfilePictureRemovedHandler={setIsProfilePictureRemovedHandler}
+        fileInputChangeHandler={fileInputChangeHandler}
         avatarInputRef={avatarInputRef}
-        userProfilePicture={user.profilePicture}
+        userProfilePicture={session?.user.profilePicture || user.profilePicture}
+        avatarPreview={avatarPreview}
+        setIsProfilePictureRemovedHandler={setIsProfilePictureRemovedHandler}
+        setAvatarPreviewHandler={setAvatarPreviewHandler}
       />
       <div>
         <Button

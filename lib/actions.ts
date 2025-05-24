@@ -19,7 +19,7 @@ import {
 import dbConnect from './dbConnect';
 import User from '@/models/User';
 import Email from './email';
-import { ERROR_MESSAGES } from '@/constants';
+import { DEFAULT_PROFILE_PICTURE, ERROR_MESSAGES } from '@/constants';
 
 let s3: S3 | undefined;
 
@@ -76,31 +76,35 @@ export const updateProfileSettings = async (
   profilePictureRemoved?: boolean
 ) => {
   //TODO: Move to separate function.
+
+  console.log('[updateProfileSettings] updates', updates);
+
   const session = await getServerSession(config);
 
   if (!session) {
     throw new Error('Session not found.');
   }
 
-  console.log('updates', updates);
-  console.log('profilePictureRemoved', profilePictureRemoved);
+  const { fullName, profilePicture } = updates;
 
-  // if (profilePicture) {
-  //   await updateProfilePictureInDb(
-  //     profilePicture,
-  //     session.user._id,
-  //     session.user.username
-  //   );
-  // }
+  const docUpdates: any = {};
 
-  // await dbConnect();
-  // await User.findByIdAndUpdate(
-  //   session.user._id,
-  //   {
-  //     fullName
-  //   },
-  //   { runValidators: true }
-  // );
+  if (profilePictureRemoved) {
+    docUpdates.profilePicture = DEFAULT_PROFILE_PICTURE;
+  } else if (profilePicture) {
+    await updateProfilePictureInDb(
+      profilePicture,
+      session.user._id,
+      session.user.username
+    );
+  }
+
+  if (fullName) {
+    docUpdates.fullName = fullName;
+  }
+
+  await dbConnect();
+  await User.findByIdAndUpdate(session.user._id, docUpdates);
 };
 
 export const getColGhazalEntriesByUser = async (userId: string) => {
