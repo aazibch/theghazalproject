@@ -125,7 +125,7 @@ export default function ProfileSettingsForm({
 
       const updates: UpdatesObj = {};
 
-      if (fullName !== user.fullName) {
+      if (fullName !== session!.user.fullName) {
         updates['fullName'] = fullName;
       }
 
@@ -133,18 +133,19 @@ export default function ProfileSettingsForm({
         updates['profilePicture'] = newProfilePicture;
       }
 
-      setIsSubmitting(true);
+      if (Object.keys(updates).length !== 0 || isProfilePictureRemoved) {
+        setIsSubmitting(true);
 
-      if (isProfilePictureRemoved) {
-        await updateProfileSettings(updates, true);
-      } else {
-        await updateProfileSettings(updates);
+        if (isProfilePictureRemoved) {
+          await updateProfileSettings(updates, true);
+        } else {
+          await updateProfileSettings(updates);
+        }
+
+        const updatedSession = await update();
+        resetAvatarFileInput(updatedSession!.user.profilePicture);
+        setIsSubmitting(false);
       }
-
-      const updatedSession = await update();
-      resetAvatarFileInput(updatedSession!.user.profilePicture);
-
-      setIsSubmitting(false);
     }
   });
 
