@@ -9,14 +9,14 @@ export default function AvatarFileInput({
   avatarPreview,
   setIsProfilePictureRemovedHandler,
   setAvatarPreviewHandler,
-  fileInputChangeHandler
+  handleFileInputChange
 }: {
   avatarInputRef: React.RefObject<HTMLInputElement>;
   userProfilePicture: string;
   avatarPreview: string;
   setIsProfilePictureRemovedHandler: (value: boolean) => void;
   setAvatarPreviewHandler: (value: string) => void;
-  fileInputChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleFileInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   const handleRemoveButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -45,7 +45,7 @@ export default function AvatarFileInput({
         <FileInput
           id="file-upload"
           ref={avatarInputRef}
-          onChange={fileInputChangeHandler}
+          onChange={handleFileInputChange}
           theme={{
             root: {
               base: 'w-full'

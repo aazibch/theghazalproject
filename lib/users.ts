@@ -27,10 +27,23 @@ export const getUserFromDB = async (username: string) => {
   };
 };
 
-export const updateProfilePictureInDb = async (
-  image: File,
+export const updateUserInDB = async (
   userId: string,
-  username: string
+  updates: Record<string, any>
+) => {
+  await dbConnect();
+
+  const user = await User.findByIdAndUpdate(userId, updates, {
+    runValidators: true,
+    new: true
+  });
+
+  return user;
+};
+
+export const updateProfilePictureInCloud = async (
+  userId: string,
+  image: File
 ) => {
   if (!s3) {
     throw new Error('Could not connect to cloud storage.');
@@ -50,12 +63,5 @@ export const updateProfilePictureInDb = async (
     ContentType: image.type
   });
 
-  await dbConnect();
-  await User.findByIdAndUpdate(
-    userId,
-    {
-      profilePicture: `https://theghazalproject-user-avatars.s3.ap-southeast-2.amazonaws.com/${fileName}`
-    },
-    { runValidators: true }
-  );
+  return `https://theghazalproject-user-avatars.s3.ap-southeast-2.amazonaws.com/${fileName}`;
 };

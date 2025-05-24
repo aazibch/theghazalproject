@@ -9,7 +9,11 @@ import { getServerSession } from 'next-auth';
 import config from '@/app/api/auth/[...nextauth]/config';
 import { colGhazalEntrySchema, newPasswordSchema } from './schemas';
 import { IUser } from '@/types';
-import { getUserFromDB, updateProfilePictureInDb } from './users';
+import {
+  getUserFromDB,
+  updateProfilePictureInCloud,
+  updateUserInDB
+} from './users';
 import {
   createColGhazalEntry,
   getAllColGhazalEntriesByUserFromDB,
@@ -55,11 +59,12 @@ export const updateProfilePicture = async (
     throw new Error('Invalid session.');
   }
 
-  await updateProfilePictureInDb(
-    newImage,
+  const profilePictureUrl = await updateProfilePictureInCloud(
     session.user._id,
-    session.user.username
+    newImage
   );
+
+  await updateUserInDB(session.user._id, { profilePicture: profilePictureUrl });
 
   revalidatePath('/', 'layout');
 
@@ -75,10 +80,6 @@ export const updateProfileSettings = async (
   updates: UpdatesObj,
   profilePictureRemoved?: boolean
 ) => {
-  //TODO: Move to separate function.
-
-  console.log('[updateProfileSettings] updates', updates);
-
   const session = await getServerSession(config);
 
   if (!session) {
@@ -87,24 +88,23 @@ export const updateProfileSettings = async (
 
   const { fullName, profilePicture } = updates;
 
-  const docUpdates: any = {};
+  const docUpdates: Record<string, any> = {};
 
   if (profilePictureRemoved) {
     docUpdates.profilePicture = DEFAULT_PROFILE_PICTURE;
   } else if (profilePicture) {
-    await updateProfilePictureInDb(
-      profilePicture,
+    const profilePictureUrl = await updateProfilePictureInCloud(
       session.user._id,
-      session.user.username
+      profilePicture
     );
+    docUpdates.profilePicture = profilePictureUrl;
   }
 
   if (fullName) {
     docUpdates.fullName = fullName;
   }
 
-  await dbConnect();
-  await User.findByIdAndUpdate(session.user._id, docUpdates);
+  await updateUserInDB(session.user._id, docUpdates);
 };
 
 export const getColGhazalEntriesByUser = async (userId: string) => {

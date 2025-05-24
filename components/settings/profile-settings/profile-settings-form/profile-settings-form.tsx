@@ -53,7 +53,7 @@ export default function ProfileSettingsForm({
     setIsProfilePictureRemoved(value);
   };
 
-  const fileInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const profilePicture = e.target.files?.[0];
 
     if (profilePicture) {
@@ -183,7 +183,7 @@ export default function ProfileSettingsForm({
         />
       </div>
       <AvatarFileInput
-        fileInputChangeHandler={fileInputChangeHandler}
+        handleFileInputChange={handleFileInputChange}
         avatarInputRef={avatarInputRef}
         userProfilePicture={session?.user.profilePicture || user.profilePicture}
         avatarPreview={avatarPreview}
