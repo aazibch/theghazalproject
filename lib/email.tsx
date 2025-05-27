@@ -2,16 +2,17 @@ import React from 'react';
 import nodemailer from 'nodemailer';
 import { render } from '@react-email/components';
 
+import WelcomeEmail from '@/views/emails/welcome-email';
 import ConfirmationEmail from '@/views/emails/confirmation-email';
 import PasswordResetEmail from '@/views/emails/password-reset-email';
 
 export default class Email {
   private recipientEmail: string;
   private recipientFullName: string;
-  private url: string;
+  private url?: string;
   private sender: string;
 
-  constructor(user: { email: string; fullName: string }, url: string) {
+  constructor(user: { email: string; fullName: string }, url?: string) {
     this.recipientEmail = user.email;
     this.recipientFullName = user.fullName;
     this.url = url;
@@ -33,16 +34,23 @@ export default class Email {
   private async send(
     Template: React.FC<{ fullName: string; url: string }>,
     subject: string
-  ) {
-    // 1) Render HTML from JSX
-    const html = await render(
-      <Template fullName={this.recipientFullName} url={this.url} />
-    );
+  ): Promise<void>;
 
-    const text = await render(
-      <Template fullName={this.recipientFullName} url={this.url} />,
-      { plainText: true }
-    );
+  private async send(
+    Template: React.FC<{ fullName: string }>,
+    subject: string
+  ): Promise<void>;
+
+  private async send(Template: React.FC<any>, subject: string) {
+    const props = {
+      fullName: this.recipientFullName,
+      ...(this.url && { url: this.url })
+    };
+
+    // 1) Render HTML from JSX
+    const html = await render(<Template {...props} />);
+
+    const text = await render(<Template {...props} />, { plainText: true });
 
     // 2) Define email options
     const mailOptions = {
@@ -54,6 +62,10 @@ export default class Email {
     };
 
     await this.newTransport().sendMail(mailOptions);
+  }
+
+  async sendWelcome() {
+    await this.send(WelcomeEmail, 'Welcome to The Ghazal Project');
   }
 
   async sendEmailConfirmation() {

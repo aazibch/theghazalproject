@@ -75,9 +75,18 @@ const config = {
           // Create email confirmation token:
           const token = await generateJwtToken({ email: userDoc.email }, '1hr');
 
-          // Send email:
-          const email = new Email(
-            { fullName: userDoc.fullName, email: userDoc.email },
+          // Send welcome email:
+          const emailConfig = {
+            fullName: userDoc.fullName,
+            email: userDoc.email
+          };
+
+          let email = new Email(emailConfig);
+          await email.sendWelcome();
+
+          // Send confirmation email:
+          email = new Email(
+            emailConfig,
             `${process.env.PRODUCTION_URL}auth/email?token=${token}`
           );
 

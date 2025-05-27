@@ -43,15 +43,15 @@ export const WelcomeEmail = ({ fullName }: WelcomeEmailProps) => (
             />
           </div>
 
-          <Text style={paragraph}>Hi {fullName},</Text>
-          <Text style={paragraph}>
+          <Text style={text}>Hi {fullName},</Text>
+          <Text style={text}>
             We're glad to have you join us. At{' '}
             <Link href={baseUrl}>The Ghazal Project</Link>, you can learn about
             the art of ghazal-writing, meet fellow poets, and share your own
             verses with the community.
           </Text>
-          <Text style={paragraph}>Here's what you can do next:</Text>
-          <ul className="list-disc">
+          <Text style={text}>Here's what you can do next:</Text>
+          <ul className="list-disc" style={text}>
             <li>
               <Link href={`${baseUrl}articles/how-to-write-english-ghazal`}>
                 Learn to write the English Ghazal in three different variants
@@ -68,7 +68,7 @@ export const WelcomeEmail = ({ fullName }: WelcomeEmailProps) => (
               </Link>
             </li>
           </ul>
-          <Text style={paragraph}>
+          <Text style={text}>
             Best,
             <br />
             The Team at The Ghazal Project
@@ -100,28 +100,9 @@ const container = {
   padding: '20px 0 48px'
 };
 
-const logo = {
-  fontFamily: '"Crimson Text", serif'
-};
-
-const paragraph = {
+const text = {
   fontSize: '16px',
   lineHeight: '26px'
-};
-
-const btnContainer = {
-  textAlign: 'center' as const
-};
-
-const button = {
-  backgroundColor: '#1a56db',
-  borderRadius: '3px',
-  color: '#fff',
-  fontSize: '16px',
-  textDecoration: 'none',
-  textAlign: 'center' as const,
-  display: 'block',
-  padding: '12px'
 };
 
 const hr = {
