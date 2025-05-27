@@ -32,9 +32,9 @@ export const ConfirmationEmail = ({
       />
     </Head>
     <Preview>
-      You either created a new account or changed your email address at The
-      Ghazal Project. To enjoy all the features on the platform, please confirm
-      your email.
+      We're glad to have you join us. At The Ghazal Project, you can learn about
+      the art of ghazal-writing, meet fellow poets, and share your own verses
+      with the community.
     </Preview>
     <Tailwind>
       <Body style={main}>
@@ -50,18 +50,29 @@ export const ConfirmationEmail = ({
 
           <Text style={paragraph}>Hi {fullName},</Text>
           <Text style={paragraph}>
-            You either created a new account or changed your email address at{' '}
-            <Link href={baseUrl}>The Ghazal Project</Link>.
+            We're glad to have you join us. At{' '}
+            <Link href={baseUrl}>The Ghazal Project</Link>, you can learn about
+            the art of ghazal-writing, meet fellow poets, and share your own
+            verses with the community.
           </Text>
-          <Text style={paragraph}>
-            To enjoy all the features on the platform, please confirm your
-            email.
-          </Text>
-          <Section style={btnContainer}>
-            <Button style={button} href={url}>
-              Confirm Email
-            </Button>
-          </Section>
+          <Text style={paragraph}>Here's what you can do next:</Text>
+          <ul className="list-disc">
+            <li>
+              <Link href={`${baseUrl}articles/how-to-write-english-ghazal`}>
+                Learn to write the English Ghazal in three different variants
+              </Link>
+            </li>
+            <li>
+              <Link href={`${baseUrl}collective-ghazal`}>
+                Contribute to the Collective Ghazal
+              </Link>
+            </li>
+            <li>
+              <Link href={`${baseUrl}articles/brief-history-ghazal`}>
+                Explore the rich history of the ghazal form
+              </Link>
+            </li>
+          </ul>
           <Text style={paragraph}>
             Best,
             <br />

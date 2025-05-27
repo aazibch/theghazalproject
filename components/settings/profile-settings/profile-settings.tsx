@@ -6,9 +6,9 @@ export default async function ProfileSettings() {
   const session = await getServerSession(config);
 
   let user = {
-    username: session?.user.username,
-    fullName: session?.user.fullName,
-    profilePicture: session?.user.profilePicture
+    username: session!.user.username,
+    fullName: session!.user.fullName,
+    profilePicture: session!.user.profilePicture
   };
 
   return (

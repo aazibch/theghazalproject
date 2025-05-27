@@ -81,6 +81,21 @@ export const updateProfileSettingsSchema = Joi.object({
     })
 });
 
+export const updateAccountEmailSettingsSchema = Joi.object({
+  email: Joi.string()
+    .min(5)
+    .max(50)
+    .email({ tlds: { allow: false } })
+    .required()
+    .messages({
+      'string.min': generateValidationMessage('min', 'email address', 5),
+      'string.max': generateValidationMessage('max', 'email address', 50),
+      'string.email': generateValidationMessage('email'),
+      'string.empty': generateValidationMessage('required', 'email address'),
+      'any.required': generateValidationMessage('required', 'email address')
+    })
+});
+
 export const newPasswordSchema = Joi.object({
   password: Joi.string()
     .min(8)
@@ -164,3 +179,5 @@ export const contactSchema = Joi.object({
       'any.required': generateValidationMessage('required', 'message')
     })
 });
+
+// TODO: Refactor common field schemas into reusable variables.
