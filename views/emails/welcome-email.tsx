@@ -6,24 +6,19 @@ import {
   Hr,
   Html,
   Preview,
-  Section,
   Tailwind,
   Text,
   Link
 } from '@react-email/components';
 import * as React from 'react';
 
-interface ConfirmationEmailProps {
+interface WelcomeEmailProps {
   fullName: string;
-  url: string;
 }
 
 const baseUrl = process.env.PRODUCTION_URL;
 
-export const ConfirmationEmail = ({
-  fullName,
-  url
-}: ConfirmationEmailProps) => (
+export const WelcomeEmail = ({ fullName }: WelcomeEmailProps) => (
   <Html>
     <Head>
       <Link
@@ -88,11 +83,11 @@ export const ConfirmationEmail = ({
   </Html>
 );
 
-ConfirmationEmail.PreviewProps = {
+WelcomeEmail.PreviewProps = {
   fullName: 'John Doe'
-} as ConfirmationEmailProps;
+} as WelcomeEmailProps;
 
-export default ConfirmationEmail;
+export default WelcomeEmail;
 
 const main = {
   backgroundColor: '#ffffff',
