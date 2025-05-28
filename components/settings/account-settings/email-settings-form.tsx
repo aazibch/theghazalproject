@@ -6,6 +6,7 @@ import { useFormik } from 'formik';
 
 import { SessionUser } from '@/types';
 import { updateAccountEmailSettingsSchema } from '@/lib/schemas';
+import { generateValidator } from '@/lib/utils';
 
 interface EmailSettingsFormProps {
   user: {
@@ -13,47 +14,35 @@ interface EmailSettingsFormProps {
   };
 }
 
-interface FormErrors {
-  email?: string;
-}
-
 export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-
-  const validate = (values: FormErrors) => {
-    const validationErrors: FormErrors = {};
-    const { error } = updateAccountEmailSettingsSchema.validate(values, {
-      abortEarly: false
-    });
-    if (error) {
-      for (let x of error.details) {
-        if (x.context?.label) {
-          validationErrors[x.context.label as keyof FormErrors] = x.message;
-        }
-      }
-    }
-    return validationErrors;
-  };
 
   const formik = useFormik({
     initialValues: {
       email: user.email
     },
-    validate,
+    validate: generateValidator(updateAccountEmailSettingsSchema, false),
     validateOnChange: false,
     validateOnBlur: false,
-    onSubmit: async () => {}
+    onSubmit: async (values) => {
+      setIsSubmitting(true);
+      console.log('[onSubmit] values', values);
+      setIsSubmitting(false);
+    }
   });
 
   return (
-    <form className="flex max-w-md flex-col gap-4 mx-auto">
+    <form
+      className="flex max-w-md flex-col gap-4 mx-auto"
+      onSubmit={formik.handleSubmit}
+    >
       <h2 className="text-xl font-semibold mb-2">Email Address</h2>
       <div>
         <div className="mb-2 block">
           <Label htmlFor="email" value="Email" />
         </div>
         <TextInput
-          name="Email"
+          name="email"
           id="email"
           type="email"
           required
@@ -64,7 +53,12 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
         />
       </div>
       <div>
-        <Button className="float-end px-5" color="blue" type="submit">
+        <Button
+          disabled={isSubmitting}
+          className="float-end px-5"
+          color="blue"
+          type="submit"
+        >
           {isSubmitting ? (
             <Spinner size="sm" aria-label="loading spinner" />
           ) : (
@@ -75,5 +69,3 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
     </form>
   );
 }
-
-// TODO: Consider creating a factory function that generates reusable validate() functions based on the required schema.

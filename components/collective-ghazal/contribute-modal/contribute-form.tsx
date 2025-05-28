@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import { submitColGhazalCouplet } from '@/lib/actions';
 import { colGhazalEntrySchema } from '@/lib/schemas';
 import Link from 'next/link';
+import { generateValidator } from '@/lib/utils';
 
 interface FormErrors {
   lineOne?: string;
@@ -22,30 +23,12 @@ export default function ContributeForm({
 }) {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const validate = (values: FormErrors) => {
-    const validationErrors: FormErrors = {};
-
-    const { error } = colGhazalEntrySchema.validate(values, {
-      abortEarly: false
-    });
-
-    if (error) {
-      for (let x of error.details) {
-        if (x.context?.label) {
-          validationErrors[x.context.label as keyof FormErrors] = x.message;
-        }
-      }
-    }
-
-    return validationErrors;
-  };
-
   const formik = useFormik({
     initialValues: {
       lineOne: '',
       lineTwo: ''
     },
-    validate: validate,
+    validate: generateValidator(colGhazalEntrySchema, false),
     validateOnChange: false,
     onSubmit: async (values) => {
       setIsSubmitting(true);

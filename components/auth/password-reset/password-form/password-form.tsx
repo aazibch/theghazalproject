@@ -9,27 +9,7 @@ import { newPasswordSchema } from '@/lib/schemas';
 import { resetPassword } from '@/lib/actions';
 import PasswordFailureScreen from './password-failure-screen';
 import PasswordSuccessScreen from './password-success-screen';
-
-interface FormErrors {
-  password?: string;
-  passwordConfirmation?: string;
-}
-
-const validate = (values: FormErrors) => {
-  const validationErrors: FormErrors = {};
-
-  const { error } = newPasswordSchema.validate(values, { abortEarly: false });
-
-  if (error) {
-    for (let x of error.details) {
-      if (x.context?.label) {
-        validationErrors[x.context.label as keyof FormErrors] = x.message;
-      }
-    }
-  }
-
-  return validationErrors;
-};
+import { generateValidator } from '@/lib/utils';
 
 export default function PasswordForm() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -46,7 +26,7 @@ export default function PasswordForm() {
       password: '',
       passwordConfirmation: ''
     },
-    validate: validate,
+    validate: generateValidator(newPasswordSchema, false),
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: async (values) => {
