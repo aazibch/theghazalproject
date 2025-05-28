@@ -1,4 +1,5 @@
 import { getServerSession } from 'next-auth';
+
 import ProfileSettingsForm from './profile-settings-form/profile-settings-form';
 import config from '@/app/api/auth/[...nextauth]/config';
 
