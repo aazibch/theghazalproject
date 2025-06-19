@@ -7,6 +7,8 @@ import { S3 } from '@aws-sdk/client-s3';
 import { getServerSession } from 'next-auth';
 
 import config from '@/app/api/auth/[...nextauth]/config';
+import User from '@/models/User';
+import { DEFAULT_PROFILE_PICTURE, ERROR_MESSAGES } from '@/constants';
 import { colGhazalEntrySchema, newPasswordSchema } from './schemas';
 import { IUser } from '@/types';
 import {
@@ -21,9 +23,8 @@ import {
   getRecentColGhazalEntriesFromDB
 } from './col-ghazal-entries';
 import dbConnect from './dbConnect';
-import User from '@/models/User';
 import Email from './email';
-import { DEFAULT_PROFILE_PICTURE, ERROR_MESSAGES } from '@/constants';
+import { generateJwtToken } from './auth';
 
 let s3: S3 | undefined;
 
@@ -105,6 +106,30 @@ export const updateProfileSettings = async (
   }
 
   await updateUserInDB(session.user._id, docUpdates);
+};
+
+export const updateAccountEmailSettings = async (newEmail: string) => {
+  const session = await getServerSession(config);
+
+  if (!session) {
+    throw new Error('Session not found.');
+  }
+
+  // Generate confirmation email token
+  const token = await generateJwtToken({ email: newEmail }, '1hr');
+
+  // Send confirmation email:
+  const email = new Email(
+    {
+      fullName: session.user.fullName,
+      email: newEmail
+    },
+    `${process.env.PRODUCTION_URL}auth/email?token=${token}`
+  );
+
+  await email.sendEmailConfirmation();
+
+  await updateUserInDB(session.user._id, { email: newEmail });
 };
 
 export const getColGhazalEntriesByUser = async (userId: string) => {

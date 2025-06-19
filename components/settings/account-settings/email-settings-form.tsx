@@ -7,6 +7,7 @@ import { useFormik } from 'formik';
 import { SessionUser } from '@/types';
 import { updateAccountEmailSettingsSchema } from '@/lib/schemas';
 import { generateValidator } from '@/lib/utils';
+import { updateAccountEmailSettings } from '@/lib/actions';
 
 interface EmailSettingsFormProps {
   user: {
@@ -16,6 +17,7 @@ interface EmailSettingsFormProps {
 
 export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>();
 
   const formik = useFormik({
     initialValues: {
@@ -26,7 +28,10 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
     validateOnBlur: false,
     onSubmit: async (values) => {
       setIsSubmitting(true);
-      console.log('[onSubmit] values', values);
+
+      await updateAccountEmailSettings(values.email);
+      setIsSuccess(true);
+
       setIsSubmitting(false);
     }
   });
@@ -49,7 +54,11 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
           value={formik.values.email}
           onChange={formik.handleChange}
           color={formik.errors.email && 'failure'}
-          helperText={formik.errors.email && formik.errors.email}
+          helperText={
+            (isSuccess &&
+              'We have sent a confirmation link to your new email.') ||
+            (formik.errors.email && formik.errors.email)
+          }
         />
       </div>
       <div>
@@ -65,6 +74,7 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
             'Save'
           )}
         </Button>
+        {/* <Button onClick={}>Test Button</Button> */}
       </div>
     </form>
   );
