@@ -74,7 +74,6 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
             'Save'
           )}
         </Button>
-        {/* <Button onClick={}>Test Button</Button> */}
       </div>
     </form>
   );
