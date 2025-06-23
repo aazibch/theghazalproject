@@ -1,7 +1,8 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useEffect } from 'react';
 import { Button, Label, Spinner, TextInput } from 'flowbite-react';
+import { useSession } from 'next-auth/react';
 
 import { SessionUser } from '@/types';
 import { updateAccountEmailSettings } from '@/lib/actions';
@@ -22,6 +23,16 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
       }
     }
   );
+
+  const { update } = useSession();
+
+  const { isSuccess } = state;
+
+  useEffect(() => {
+    if (isSuccess) {
+      update();
+    }
+  }, [isSuccess, update]);
 
   return (
     <form action={formAction} className="flex max-w-md flex-col gap-4 mx-auto">

@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Avatar, FileInput } from 'flowbite-react';
 
 import { DEFAULT_PROFILE_PICTURE } from '@/constants';

@@ -11,6 +11,8 @@ export default async function AccountSettings() {
     email: session!.user.email
   };
 
+  console.log('[AccountSettings] user', user);
+
   return (
     <div className="basis-full p-10">
       <EmailSettingsForm user={user} />
