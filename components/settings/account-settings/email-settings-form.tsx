@@ -1,12 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useActionState } from 'react';
 import { Button, Label, Spinner, TextInput } from 'flowbite-react';
-import { useFormik } from 'formik';
 
 import { SessionUser } from '@/types';
-import { updateAccountEmailSettingsSchema } from '@/lib/schemas';
-import { generateValidator } from '@/lib/utils';
 import { updateAccountEmailSettings } from '@/lib/actions';
 
 interface EmailSettingsFormProps {
@@ -16,31 +13,18 @@ interface EmailSettingsFormProps {
 }
 
 export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [isSuccess, setIsSuccess] = useState<boolean>();
-
-  const formik = useFormik({
-    initialValues: {
-      email: user.email
-    },
-    validate: generateValidator(updateAccountEmailSettingsSchema, false),
-    validateOnChange: false,
-    validateOnBlur: false,
-    onSubmit: async (values) => {
-      setIsSubmitting(true);
-
-      await updateAccountEmailSettings(values.email);
-      setIsSuccess(true);
-
-      setIsSubmitting(false);
+  const [state, formAction, pending] = useActionState(
+    updateAccountEmailSettings,
+    {
+      isSuccess: null,
+      formFields: {
+        email: user.email
+      }
     }
-  });
+  );
 
   return (
-    <form
-      className="flex max-w-md flex-col gap-4 mx-auto"
-      onSubmit={formik.handleSubmit}
-    >
+    <form action={formAction} className="flex max-w-md flex-col gap-4 mx-auto">
       <h2 className="text-xl font-semibold mb-2">Email Address</h2>
       <div>
         <div className="mb-2 block">
@@ -49,26 +33,25 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
         <TextInput
           name="email"
           id="email"
-          type="email"
+          type="text"
+          defaultValue={state.formFields.email}
           required
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          color={formik.errors.email && 'failure'}
+          color={state.validationErrors?.email && 'failure'}
           helperText={
-            (isSuccess &&
+            (state.isSuccess &&
               'We have sent a confirmation link to your new email.') ||
-            (formik.errors.email && formik.errors.email)
+            (state.validationErrors?.email && state.validationErrors?.email)
           }
         />
       </div>
       <div>
         <Button
-          disabled={isSubmitting}
+          disabled={pending}
           className="float-end px-5"
           color="blue"
           type="submit"
         >
-          {isSubmitting ? (
+          {pending ? (
             <Spinner size="sm" aria-label="loading spinner" />
           ) : (
             'Save'

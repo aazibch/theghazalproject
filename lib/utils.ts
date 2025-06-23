@@ -53,3 +53,17 @@ export const generateValidator = (
     return validationErrors;
   };
 };
+
+export const formatValidationErrors = (errors: Joi.ValidationError) => {
+  const validationErrors: Record<string, string> = {};
+
+  if (errors) {
+    for (let x of errors.details) {
+      if (x.context?.label) {
+        validationErrors[x.context.label] = x.message;
+      }
+    }
+  }
+
+  return validationErrors;
+};

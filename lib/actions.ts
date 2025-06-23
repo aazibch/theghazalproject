@@ -1,6 +1,7 @@
 'use server';
 
 import crypto from 'crypto';
+import Joi from 'joi';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { S3 } from '@aws-sdk/client-s3';
@@ -9,7 +10,11 @@ import { getServerSession } from 'next-auth';
 import config from '@/app/api/auth/[...nextauth]/config';
 import User from '@/models/User';
 import { DEFAULT_PROFILE_PICTURE, ERROR_MESSAGES } from '@/constants';
-import { colGhazalEntrySchema, newPasswordSchema } from './schemas';
+import {
+  colGhazalEntrySchema,
+  newPasswordSchema,
+  updateAccountEmailSettingsSchema
+} from './schemas';
 import { IUser } from '@/types';
 import {
   getUserFromDB,
@@ -25,6 +30,7 @@ import {
 import dbConnect from './dbConnect';
 import Email from './email';
 import { generateJwtToken } from './auth';
+import { formatValidationErrors } from './utils';
 
 let s3: S3 | undefined;
 
@@ -108,28 +114,56 @@ export const updateProfileSettings = async (
   await updateUserInDB(session.user._id, docUpdates);
 };
 
-export const updateAccountEmailSettings = async (newEmail: string) => {
+export const updateAccountEmailSettings = async (
+  prevState: any,
+  formData: FormData
+): Promise<{
+  isSuccess: boolean | null;
+  validationErrors?: Record<string, string>;
+  formFields: Record<string, string>;
+}> => {
   const session = await getServerSession(config);
 
   if (!session) {
     throw new Error('Session not found.');
   }
 
+  const formFields = { email: formData.get('email') as string };
+
+  const { error } = updateAccountEmailSettingsSchema.validate(formFields, {
+    abortEarly: true
+  });
+
+  if (error) {
+    const validationErrors = formatValidationErrors(error);
+
+    return {
+      isSuccess: false,
+      validationErrors,
+      formFields
+    };
+  }
+
   // Generate confirmation email token
-  const token = await generateJwtToken({ email: newEmail }, '1hr');
+  const token = await generateJwtToken({ email: formFields.email }, '1hr');
 
   // Send confirmation email:
   const email = new Email(
     {
       fullName: session.user.fullName,
-      email: newEmail
+      email: formFields.email
     },
     `${process.env.PRODUCTION_URL}auth/email?token=${token}`
   );
 
   await email.sendEmailConfirmation();
 
-  await updateUserInDB(session.user._id, { email: newEmail });
+  await updateUserInDB(session.user._id, {
+    email: formFields.email,
+    emailConfirmed: false
+  });
+
+  return { isSuccess: true, formFields };
 };
 
 export const getColGhazalEntriesByUser = async (userId: string) => {
@@ -263,3 +297,5 @@ export async function redirectAfterAuth() {
   revalidatePath('/', 'layout');
   redirect('/');
 }
+
+// TODO: Change "status" property in returned objects to "isSuccess".

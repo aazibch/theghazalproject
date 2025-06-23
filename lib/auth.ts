@@ -22,8 +22,7 @@ export const confirmEmail = async (token: string) => {
     await dbConnect();
     await User.findOneAndUpdate(
       { email: decoded.email },
-      { emailConfirmed: true },
-      { new: true }
+      { emailConfirmed: true }
     );
   } else {
     throw new Error('Invalid token payload.');
