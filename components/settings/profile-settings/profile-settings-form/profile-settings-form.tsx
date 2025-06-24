@@ -25,6 +25,7 @@ export default function ProfileSettingsForm({
   const [avatarPreview, setAvatarPreview] = useState<string>(
     DEFAULT_PROFILE_PICTURE
   );
+  const [enableSubmitButton, setEnableSubmitButton] = useState<boolean>(false);
 
   const [state, formAction, pending] = useActionState(
     updateProfileSettings.bind(null, isProfilePictureRemoved),
@@ -66,10 +67,13 @@ export default function ProfileSettingsForm({
 
   const setIsProfilePictureRemovedHandler = (value: boolean) => {
     setIsProfilePictureRemoved(value);
+    setEnableSubmitButton(true);
   };
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const profilePicture = e.target.files?.[0];
+
+    setEnableSubmitButton(true);
 
     if (profilePicture) {
       setIsProfilePictureRemovedHandler(false);
@@ -99,6 +103,16 @@ export default function ProfileSettingsForm({
     }
   };
 
+  const handleTextInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!state.isSuccess) {
+      if (e.target.value !== state.formFields.fullName) {
+        setEnableSubmitButton(true);
+      } else {
+        setEnableSubmitButton(false);
+      }
+    }
+  };
+
   return (
     <form action={formAction} className="flex max-w-md flex-col gap-4 mx-auto">
       <div>
@@ -106,6 +120,7 @@ export default function ProfileSettingsForm({
           <Label htmlFor="fullName" value="Full Name" />
         </div>
         <TextInput
+          onChange={handleTextInputChange}
           name="fullName"
           id="fullName"
           type="text"
@@ -138,7 +153,7 @@ export default function ProfileSettingsForm({
       />
       <div>
         <Button
-          disabled={pending}
+          disabled={pending || !enableSubmitButton}
           className="float-end px-5"
           color="blue"
           type="submit"

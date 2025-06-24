@@ -85,8 +85,6 @@ interface UpdatesObj {
 }
 
 export const updateProfileSettings = async (
-  // updates: UpdatesObj,
-  // profilePictureRemoved?: boolean,
   profilePictureRemoved: boolean,
   prevState: any,
   formData: FormData
