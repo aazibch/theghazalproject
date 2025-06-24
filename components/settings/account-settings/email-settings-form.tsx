@@ -44,7 +44,7 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
         <TextInput
           name="email"
           id="email"
-          type="text"
+          type="email"
           defaultValue={state.formFields.email}
           required
           color={state.validationErrors?.email && 'failure'}

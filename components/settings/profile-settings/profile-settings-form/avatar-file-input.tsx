@@ -42,6 +42,7 @@ export default function AvatarFileInput({
 
       <div className="flex basis-full items-center">
         <FileInput
+          name="avatar"
           id="file-upload"
           ref={avatarInputRef}
           onChange={handleFileInputChange}

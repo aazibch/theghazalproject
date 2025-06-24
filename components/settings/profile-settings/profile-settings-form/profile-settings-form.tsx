@@ -1,15 +1,11 @@
-'use client';
-
-import { useEffect, useRef, useState } from 'react';
+import { useActionState, useEffect, useRef, useState } from 'react';
 import { Button, Label, Spinner, TextInput } from 'flowbite-react';
-import { useFormik } from 'formik';
 
 import { SessionUser } from '@/types';
-import { updateProfileSettingsSchema } from '@/lib/schemas';
 import { updateProfileSettings } from '@/lib/actions';
 import { useSession } from 'next-auth/react';
-import AvatarFileInput from './avatar-file-input';
 import { DEFAULT_PROFILE_PICTURE } from '@/constants';
+import AvatarFileInput from './avatar-file-input';
 
 interface ProfileSettingsFormProps {
   user: {
@@ -17,21 +13,27 @@ interface ProfileSettingsFormProps {
     username: SessionUser['username'];
     profilePicture: SessionUser['profilePicture'];
   };
-}
-
-interface FormErrors {
-  fullName?: string;
-  username?: string;
+  resetFormHandler: () => void;
 }
 
 export default function ProfileSettingsForm({
-  user
+  user,
+  resetFormHandler
 }: ProfileSettingsFormProps) {
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isProfilePictureRemoved, setIsProfilePictureRemoved] =
     useState<boolean>(false);
   const [avatarPreview, setAvatarPreview] = useState<string>(
     DEFAULT_PROFILE_PICTURE
+  );
+
+  const [state, formAction, pending] = useActionState(
+    updateProfileSettings.bind(null, isProfilePictureRemoved),
+    {
+      isSuccess: null,
+      formFields: {
+        fullName: user.fullName
+      }
+    }
   );
 
   const { update, data: session } = useSession();
@@ -44,6 +46,19 @@ export default function ProfileSettingsForm({
       setAvatarPreview(userProfilePicture);
     }
   }, [userProfilePicture]);
+
+  const { isSuccess } = state;
+
+  const updateSessionAndResetForm = async () => {
+    await update();
+    resetFormHandler();
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      updateSessionAndResetForm();
+    }
+  }, [isSuccess]);
 
   const setAvatarPreviewHandler = (value: string) => {
     setAvatarPreview(value);
@@ -84,77 +99,8 @@ export default function ProfileSettingsForm({
     }
   };
 
-  const resetAvatarFileInput = (updatedAvatarPreview: string) => {
-    avatarInputRef.current!.value = '';
-    setAvatarPreview(updatedAvatarPreview);
-  };
-
-  const validate = (values: FormErrors) => {
-    const validationErrors: FormErrors = {};
-
-    const { error } = updateProfileSettingsSchema.validate(values, {
-      abortEarly: false
-    });
-
-    if (error) {
-      for (let x of error.details) {
-        if (x.context?.label) {
-          validationErrors[x.context.label as keyof FormErrors] = x.message;
-        }
-      }
-    }
-
-    return validationErrors;
-  };
-
-  interface UpdatesObj {
-    fullName?: string;
-    profilePicture?: File;
-  }
-
-  const formik = useFormik({
-    initialValues: {
-      fullName: user.fullName
-    },
-    validate,
-    validateOnChange: false,
-    validateOnBlur: false,
-    onSubmit: async (values) => {
-      const { fullName } = values;
-      const newProfilePicture = avatarInputRef.current!.files?.[0];
-
-      const updates: UpdatesObj = {};
-
-      if (fullName !== session!.user.fullName) {
-        updates['fullName'] = fullName;
-      }
-
-      if (newProfilePicture) {
-        updates['profilePicture'] = newProfilePicture;
-      }
-
-      if (Object.keys(updates).length !== 0 || isProfilePictureRemoved) {
-        setIsSubmitting(true);
-
-        if (isProfilePictureRemoved) {
-          await updateProfileSettings(updates, true);
-        } else {
-          await updateProfileSettings(updates);
-        }
-
-        const updatedSession = await update();
-        resetAvatarFileInput(updatedSession!.user.profilePicture);
-        setIsSubmitting(false);
-      }
-    }
-  });
-
   return (
-    <form
-      method="post"
-      onSubmit={formik.handleSubmit}
-      className="flex max-w-md flex-col gap-4 mx-auto"
-    >
+    <form action={formAction} className="flex max-w-md flex-col gap-4 mx-auto">
       <div>
         <div className="mb-2 block">
           <Label htmlFor="fullName" value="Full Name" />
@@ -164,10 +110,9 @@ export default function ProfileSettingsForm({
           id="fullName"
           type="text"
           required
-          value={formik.values.fullName}
-          onChange={formik.handleChange}
-          color={formik.errors.fullName && 'failure'}
-          helperText={formik.errors.fullName && formik.errors.fullName}
+          defaultValue={state.formFields.fullName}
+          color={state.validationErrors?.fullName && 'failure'}
+          helperText={state.validationErrors?.email}
         />
       </div>
       <div className="mb-1">
@@ -193,12 +138,12 @@ export default function ProfileSettingsForm({
       />
       <div>
         <Button
-          disabled={isSubmitting}
+          disabled={pending}
           className="float-end px-5"
           color="blue"
           type="submit"
         >
-          {isSubmitting ? (
+          {pending ? (
             <Spinner size="sm" aria-label="loading spinner" />
           ) : (
             'Save'

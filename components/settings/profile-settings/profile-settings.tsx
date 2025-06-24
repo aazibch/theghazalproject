@@ -1,20 +1,33 @@
-import { getServerSession } from 'next-auth';
+'use client';
 
+import { useState } from 'react';
+
+import { SessionUser } from '@/types';
 import ProfileSettingsForm from './profile-settings-form/profile-settings-form';
-import config from '@/app/api/auth/[...nextauth]/config';
 
-export default async function ProfileSettings() {
-  const session = await getServerSession(config);
+interface ProfileSettingsProps {
+  user: {
+    fullName: SessionUser['fullName'];
+    username: SessionUser['username'];
+    profilePicture: SessionUser['profilePicture'];
+  };
+}
 
-  let user = {
-    username: session!.user.username,
-    fullName: session!.user.fullName,
-    profilePicture: session!.user.profilePicture
+export default function ProfileSettings({ user }: ProfileSettingsProps) {
+  const [profileSettingsFormKey, setProfileSettingsFormKey] =
+    useState<number>(0);
+
+  const updateProfileSettingsFormKey = () => {
+    setProfileSettingsFormKey((prevState) => prevState + 1);
   };
 
   return (
     <div className="basis-full p-10">
-      <ProfileSettingsForm user={user} />
+      <ProfileSettingsForm
+        user={user}
+        resetFormHandler={updateProfileSettingsFormKey}
+        key={profileSettingsFormKey}
+      />
     </div>
   );
 }

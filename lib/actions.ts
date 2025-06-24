@@ -13,7 +13,8 @@ import { DEFAULT_PROFILE_PICTURE, ERROR_MESSAGES } from '@/constants';
 import {
   colGhazalEntrySchema,
   newPasswordSchema,
-  updateAccountEmailSettingsSchema
+  updateAccountEmailSettingsSchema,
+  updateProfileSettingsSchema
 } from './schemas';
 import { IUser } from '@/types';
 import {
@@ -84,22 +85,47 @@ interface UpdatesObj {
 }
 
 export const updateProfileSettings = async (
-  updates: UpdatesObj,
-  profilePictureRemoved?: boolean
-) => {
+  // updates: UpdatesObj,
+  // profilePictureRemoved?: boolean,
+  profilePictureRemoved: boolean,
+  prevState: any,
+  formData: FormData
+): Promise<{
+  isSuccess: boolean | null;
+  validationErrors?: Record<string, string>;
+  formFields: Record<string, string>;
+}> => {
   const session = await getServerSession(config);
 
   if (!session) {
     throw new Error('Session not found.');
   }
 
-  const { fullName, profilePicture } = updates;
+  const formFields = {
+    fullName: formData.get('fullName') as string
+  };
 
-  const docUpdates: Record<string, any> = {};
+  const profilePicture = formData.get('avatar') as File;
+
+  const { error } = updateProfileSettingsSchema.validate(formFields, {
+    abortEarly: true
+  });
+
+  if (error) {
+    const validationErrors = formatValidationErrors(error);
+
+    return {
+      isSuccess: false,
+      validationErrors,
+      formFields
+    };
+  }
+
+  const docUpdates: Record<string, any> = formFields;
 
   if (profilePictureRemoved) {
     docUpdates.profilePicture = DEFAULT_PROFILE_PICTURE;
-  } else if (profilePicture) {
+  } else if (profilePicture.size !== 0) {
     const profilePictureUrl = await updateProfilePictureInCloud(
       session.user._id,
       profilePicture
@@ -107,11 +133,13 @@ export const updateProfileSettings = async (
     docUpdates.profilePicture = profilePictureUrl;
   }
 
-  if (fullName) {
-    docUpdates.fullName = fullName;
-  }
-
   await updateUserInDB(session.user._id, docUpdates);
+  revalidatePath('/', 'layout');
+
+  return {
+    isSuccess: true,
+    formFields
+  };
 };
 
 export const updateAccountEmailSettings = async (
@@ -299,3 +327,4 @@ export async function redirectAfterAuth() {
 }
 
 // TODO: Change "status" property in returned objects to "isSuccess".
+// TODO: Update database values only if new values are different from previous values.
