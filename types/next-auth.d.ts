@@ -9,7 +9,7 @@ declare module 'next-auth' {
   }
 
   interface User extends SessionUser {
-    email: string;
+    // email: string;
   }
 }
 

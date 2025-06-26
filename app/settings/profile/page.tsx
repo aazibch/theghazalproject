@@ -1,7 +1,8 @@
+import { getServerSession } from 'next-auth';
+
 import SettingsLayout from '@/components/settings/settings-layout/settings-layout';
 import ProfileSettings from '@/components/settings/profile-settings/profile-settings';
 import { getUser } from '@/lib/actions';
-import { getServerSession } from 'next-auth';
 import config from '@/app/api/auth/[...nextauth]/config';
 
 export default async function ProfileSettingsPage() {

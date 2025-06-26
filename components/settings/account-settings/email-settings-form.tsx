@@ -11,6 +11,7 @@ interface EmailSettingsFormProps {
   user: {
     email: SessionUser['email'];
   };
+  resetFormHandler: () => void;
 }
 
 export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {

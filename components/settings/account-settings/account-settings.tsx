@@ -1,21 +1,29 @@
-import { getServerSession } from 'next-auth';
+'use client';
 
+import { useState } from 'react';
 import EmailSettingsForm from './email-settings-form';
 import PasswordSettingsForm from './password-settings-form';
-import config from '@/app/api/auth/[...nextauth]/config';
+import { SessionUser } from '@/types';
 
-export default async function AccountSettings() {
-  const session = await getServerSession(config);
-
-  let user = {
-    email: session!.user.email
+interface AccountSettingsProps {
+  user: {
+    email: SessionUser['email'];
   };
+}
 
-  console.log('[AccountSettings] user', user);
+export default function AccountSettings({ user }: AccountSettingsProps) {
+  const [EmailSettingsFormKey, setEmailSettingsFormKey] = useState<number>(0);
+
+  const updateEmailSettingsFormKey = () => {
+    setEmailSettingsFormKey((prevState) => prevState + 1);
+  };
 
   return (
     <div className="basis-full p-10">
-      <EmailSettingsForm user={user} />
+      <EmailSettingsForm
+        user={user}
+        resetFormHandler={updateEmailSettingsFormKey}
+      />
       <PasswordSettingsForm />
     </div>
   );

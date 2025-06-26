@@ -109,30 +109,30 @@ const config = {
     }) {
       if (user) {
         token._id = user._id;
-        token.fullName = user.fullName;
+        // token.fullName = user.fullName;
         token.username = user.username;
-        token.email = user.email;
-        token.profilePicture = user.profilePicture;
+        // token.email = user.email;
+        // token.profilePicture = user.profilePicture;
       }
 
       if (trigger === 'update') {
         await dbConnect();
         const user = await User.findById(token._id);
 
-        token.fullName = user.fullName;
+        // token.fullName = user.fullName;
         token.username = user.username;
-        token.email = user.email;
-        token.profilePicture = user.profilePicture;
+        // token.email = user.email;
+        // token.profilePicture = user.profilePicture;
       }
 
       return token;
     },
     async session({ session, token }: { session: Session; token: JWT }) {
       session.user._id = token._id;
-      session.user.fullName = token.fullName;
+      // session.user.fullName = token.fullName;
       session.user.username = token.username;
-      session.user.email = token.email;
-      session.user.profilePicture = token.profilePicture;
+      // session.user.email = token.email;
+      // session.user.profilePicture = token.profilePicture;
 
       return session;
     }

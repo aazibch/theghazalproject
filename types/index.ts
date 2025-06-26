@@ -30,18 +30,18 @@ export interface IColGhazalEntry {
 
 export interface SessionUser {
   _id: string;
-  fullName: string;
+  // fullName: string;
   username: string;
-  email: string;
-  profilePicture: string;
+  // email: string;
+  // profilePicture: string;
 }
 
 export interface TokenUser {
   _id: string;
-  fullName: string;
+  // fullName: string;
   username: string;
-  email: string;
-  profilePicture: string;
+  // email: string;
+  // profilePicture: string;
 }
 
 export type AuthRequest = Pick<
