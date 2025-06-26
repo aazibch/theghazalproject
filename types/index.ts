@@ -9,10 +9,10 @@ export interface IUser {
   email: string;
   emailConfirmed: boolean;
   profilePicture: string;
-  password: string;
+  password?: string;
   passwordChangeDate?: Date;
-  passwordResetToken: string;
-  passwordResetTokenExpirationDate: Date;
+  passwordResetToken?: string;
+  passwordResetTokenExpirationDate?: Date;
   bio?: string;
   laureateTitle?: string;
   couplets: ObjectId[];

@@ -1,20 +1,22 @@
 'use client';
 
+import { IUser, SessionUser } from '@/types';
 import { Avatar, Button, Dropdown, Navbar } from 'flowbite-react';
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { HiOutlineUserCircle } from 'react-icons/hi2';
 
-export default function HeaderDropdown() {
+export default function HeaderDropdown({
+  sessionUser
+}: {
+  sessionUser: IUser | undefined;
+}) {
   const router = useRouter();
-  const { data: session } = useSession();
-
-  const userSession = session;
 
   return (
     <div className="flex md:order-2">
-      {userSession ? (
+      {sessionUser ? (
         <Dropdown
           theme={{
             inlineWrapper: 'flex items-center mr-2 md:mr-0'
@@ -24,7 +26,7 @@ export default function HeaderDropdown() {
           inline
           label={
             <Avatar
-              img={userSession.user.profilePicture}
+              img={sessionUser.profilePicture}
               alt="User settings"
               rounded
             />
@@ -33,16 +35,14 @@ export default function HeaderDropdown() {
         >
           <Dropdown.Header>
             <span className="block text-sm font-semibold">
-              {userSession.user.fullName}
+              {sessionUser.fullName}
             </span>
             <span className="block truncate text-sm font-medium">
-              <a href={`mailto:${userSession.user.email}`}>
-                {userSession.user.email}
-              </a>
+              <a href={`mailto:${sessionUser.email}`}>{sessionUser.email}</a>
             </span>
           </Dropdown.Header>
           <Dropdown.Item
-            onClick={() => router.push(`/users/${userSession.user.username}`)}
+            onClick={() => router.push(`/users/${sessionUser.username}`)}
           >
             Profile
           </Dropdown.Item>

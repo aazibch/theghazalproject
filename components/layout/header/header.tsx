@@ -1,12 +1,23 @@
 import { Navbar, NavbarBrand, NavbarCollapse } from 'flowbite-react';
 import Image from 'next/image';
+import { getServerSession } from 'next-auth';
 
 import NavLink from './nav-link';
 import HeaderDropdown from './header-dropdown';
 
 import Logo from '@/assets/logo.png';
+import { getUser } from '@/lib/actions';
+import config from '@/app/api/auth/[...nextauth]/config';
+import { IUser } from '@/types';
 
 export default async function Header() {
+  const session = await getServerSession(config);
+  let user: IUser | undefined;
+
+  if (session) {
+    user = await getUser(session.user.username);
+  }
+
   return (
     <Navbar
       theme={{
@@ -28,7 +39,7 @@ export default async function Header() {
           priority
         />
       </NavbarBrand>
-      <HeaderDropdown />
+      <HeaderDropdown sessionUser={user} />
 
       <NavbarCollapse>
         <NavLink href="/">Home</NavLink>

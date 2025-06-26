@@ -170,13 +170,15 @@ export const updateAccountEmailSettings = async (
     };
   }
 
+  const user = await User.findById(session.user._id).select('fullName');
+
   // Generate confirmation email token
   const token = await generateJwtToken({ email: formFields.email }, '1hr');
 
   // Send confirmation email:
   const email = new Email(
     {
-      fullName: session.user.fullName,
+      fullName: user.fullName,
       email: formFields.email
     },
     `${process.env.PRODUCTION_URL}auth/email?token=${token}`
@@ -326,3 +328,4 @@ export async function redirectAfterAuth() {
 
 // TODO: Change "status" property in returned objects to "isSuccess".
 // TODO: Update database values only if new values are different from previous values.
+// TODO: Test password functionality since changes have been made to typescript definitions and user schema.

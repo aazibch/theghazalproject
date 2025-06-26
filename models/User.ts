@@ -66,9 +66,12 @@ const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
     minlength: [8, generateValidationMessage('min', 'password', 8)],
     select: false
   },
-  passwordChangeDate: Date,
-  passwordResetToken: String,
-  passwordResetTokenExpirationDate: Date,
+  passwordChangeDate: {
+    type: Date,
+    select: false
+  },
+  passwordResetToken: { type: String, select: false },
+  passwordResetTokenExpirationDate: { type: Date, select: false },
   bio: {
     type: String,
     maxlength: [50, generateValidationMessage('max', 'bio', 150)]
@@ -90,7 +93,9 @@ userSchema.pre('save', async function (next) {
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
 
-  this.password = await bcrypt.hash(this.password, 12);
+  if (this.password) {
+    this.password = await bcrypt.hash(this.password, 12);
+  }
 
   next();
 });
