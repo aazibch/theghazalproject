@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useState } from 'react';
 import { Button, Label, Spinner, TextInput } from 'flowbite-react';
 
 import { IUser } from '@/types';
@@ -23,6 +23,24 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
     }
   );
 
+  const [enableSaveButton, setEnableSaveButton] = useState<boolean>(false);
+
+  const formFieldsChanged: Record<string, boolean> = {
+    email: false
+  };
+
+  const handleTextInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value !== state.formFields[e.target.name]) {
+      formFieldsChanged[e.target.name] = true;
+    } else {
+      formFieldsChanged[e.target.name] = false;
+    }
+
+    const shouldEnableSaveButton =
+      Object.values(formFieldsChanged).some(Boolean);
+    setEnableSaveButton(shouldEnableSaveButton);
+  };
+
   return (
     <form action={formAction} className="flex max-w-md flex-col gap-4 mx-auto">
       <h2 className="text-xl font-semibold mb-2">Email Address</h2>
@@ -31,6 +49,7 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
           <Label htmlFor="email" value="Email" />
         </div>
         <TextInput
+          onChange={handleTextInputChange}
           name="email"
           id="email"
           type="email"
@@ -46,7 +65,7 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
       </div>
       <div>
         <Button
-          disabled={pending}
+          disabled={pending || !enableSaveButton}
           className="float-end px-5"
           color="blue"
           type="submit"
@@ -61,3 +80,5 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
     </form>
   );
 }
+
+// TODO: Look into creating a hook to move the functionality for disabling or enabling Save button on changes to the input field.

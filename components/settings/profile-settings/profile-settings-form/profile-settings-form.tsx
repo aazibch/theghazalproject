@@ -24,7 +24,7 @@ export default function ProfileSettingsForm({
   const [avatarPreview, setAvatarPreview] = useState<string>(
     DEFAULT_PROFILE_PICTURE
   );
-  const [enableSubmitButton, setEnableSubmitButton] = useState<boolean>(false);
+  const [enableSaveButton, setEnableSaveButton] = useState<boolean>(false);
 
   const [state, formAction, pending] = useActionState(
     updateProfileSettings.bind(null, isProfilePictureRemoved),
@@ -52,13 +52,13 @@ export default function ProfileSettingsForm({
 
   const setIsProfilePictureRemovedHandler = (value: boolean) => {
     setIsProfilePictureRemoved(value);
-    setEnableSubmitButton(true);
+    setEnableSaveButton(true);
   };
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const profilePicture = e.target.files?.[0];
 
-    setEnableSubmitButton(true);
+    setEnableSaveButton(true);
 
     if (profilePicture) {
       setIsProfilePictureRemovedHandler(false);
@@ -91,9 +91,9 @@ export default function ProfileSettingsForm({
   const handleTextInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!state.isSuccess) {
       if (e.target.value !== state.formFields.fullName) {
-        setEnableSubmitButton(true);
+        setEnableSaveButton(true);
       } else {
-        setEnableSubmitButton(false);
+        setEnableSaveButton(false);
       }
     }
   };
@@ -138,7 +138,7 @@ export default function ProfileSettingsForm({
       />
       <div>
         <Button
-          disabled={pending || !enableSubmitButton}
+          disabled={pending || !enableSaveButton}
           className="float-end px-5"
           color="blue"
           type="submit"
