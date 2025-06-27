@@ -91,7 +91,7 @@ export const updateProfileSettings = async (
 ): Promise<{
   isSuccess: boolean | null;
   validationErrors?: Record<string, string>;
-  formFields: Record<string, string>;
+  formFields: Record<string, any>;
 }> => {
   const session = await getServerSession(config);
 

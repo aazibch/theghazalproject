@@ -5,7 +5,7 @@ import { Button, Label, Spinner, TextInput } from 'flowbite-react';
 
 import { IUser } from '@/types';
 import { updateAccountEmailSettings } from '@/lib/actions';
-import { useFormChangeTracker } from '@/hooks/field-change-tracker';
+import { useFormChangeTracker } from '@/hooks/use-field-change-tracker';
 
 interface EmailSettingsFormProps {
   user: {
@@ -67,5 +67,3 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
     </form>
   );
 }
-
-// TODO: Look into creating a hook to move the functionality for disabling or enabling Save button on changes to the input field.

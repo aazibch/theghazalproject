@@ -7,6 +7,7 @@ import { IUser } from '@/types';
 import { updateProfileSettings } from '@/lib/actions';
 import { DEFAULT_PROFILE_PICTURE } from '@/constants';
 import AvatarFileInput from './avatar-file-input';
+import { useFormChangeTracker } from '@/hooks/use-field-change-tracker';
 
 interface ProfileSettingsFormProps {
   user: {
@@ -24,17 +25,20 @@ export default function ProfileSettingsForm({
   const [avatarPreview, setAvatarPreview] = useState<string>(
     DEFAULT_PROFILE_PICTURE
   );
-  const [enableSaveButton, setEnableSaveButton] = useState<boolean>(false);
 
   const [state, formAction, pending] = useActionState(
     updateProfileSettings.bind(null, isProfilePictureRemoved),
     {
       isSuccess: null,
       formFields: {
-        fullName: user.fullName
+        fullName: user.fullName,
+        avatar: null
       }
     }
   );
+
+  const { enableSave, handleInputChange, markFieldAsChanged } =
+    useFormChangeTracker(state.formFields);
 
   const avatarInputRef = useRef<HTMLInputElement>(null);
 
@@ -52,13 +56,13 @@ export default function ProfileSettingsForm({
 
   const setIsProfilePictureRemovedHandler = (value: boolean) => {
     setIsProfilePictureRemoved(value);
-    setEnableSaveButton(true);
+    markFieldAsChanged('avatar');
   };
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const profilePicture = e.target.files?.[0];
 
-    setEnableSaveButton(true);
+    markFieldAsChanged('avatar');
 
     if (profilePicture) {
       setIsProfilePictureRemovedHandler(false);
@@ -88,68 +92,63 @@ export default function ProfileSettingsForm({
     }
   };
 
-  const handleTextInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!state.isSuccess) {
-      if (e.target.value !== state.formFields.fullName) {
-        setEnableSaveButton(true);
-      } else {
-        setEnableSaveButton(false);
-      }
-    }
-  };
-
   return (
-    <form action={formAction} className="flex max-w-md flex-col gap-4 mx-auto">
-      <div>
-        <div className="mb-2 block">
-          <Label htmlFor="fullName" value="Full Name" />
+    <>
+      <form
+        action={formAction}
+        className="flex max-w-md flex-col gap-4 mx-auto"
+      >
+        <div>
+          <div className="mb-2 block">
+            <Label htmlFor="fullName" value="Full Name" />
+          </div>
+          <TextInput
+            onChange={handleInputChange}
+            name="fullName"
+            id="fullName"
+            type="text"
+            required
+            defaultValue={state.formFields.fullName}
+            color={state.validationErrors?.fullName && 'failure'}
+            helperText={state.validationErrors?.email}
+          />
         </div>
-        <TextInput
-          onChange={handleTextInputChange}
-          name="fullName"
-          id="fullName"
-          type="text"
-          required
-          defaultValue={state.formFields.fullName}
-          color={state.validationErrors?.fullName && 'failure'}
-          helperText={state.validationErrors?.email}
-        />
-      </div>
-      <div className="mb-1">
-        <div className="mb-2 block">
-          <Label htmlFor="username" value="Username" />
+        <div className="mb-1">
+          <div className="mb-2 block">
+            <Label htmlFor="username" value="Username" />
+          </div>
+          <TextInput
+            name="username"
+            id="username"
+            type="text"
+            disabled
+            value={user.username}
+            helperText="You cannot change the username."
+          />
         </div>
-        <TextInput
-          name="username"
-          id="username"
-          type="text"
-          disabled
-          value={user.username}
-          helperText="You cannot change the username."
+        <AvatarFileInput
+          handleFileInputChange={handleFileInputChange}
+          avatarInputRef={avatarInputRef}
+          userProfilePicture={user.profilePicture}
+          avatarPreview={avatarPreview}
+          setIsProfilePictureRemovedHandler={setIsProfilePictureRemovedHandler}
+          setAvatarPreviewHandler={setAvatarPreviewHandler}
         />
-      </div>
-      <AvatarFileInput
-        handleFileInputChange={handleFileInputChange}
-        avatarInputRef={avatarInputRef}
-        userProfilePicture={user.profilePicture}
-        avatarPreview={avatarPreview}
-        setIsProfilePictureRemovedHandler={setIsProfilePictureRemovedHandler}
-        setAvatarPreviewHandler={setAvatarPreviewHandler}
-      />
-      <div>
-        <Button
-          disabled={pending || !enableSaveButton}
-          className="float-end px-5"
-          color="blue"
-          type="submit"
-        >
-          {pending ? (
-            <Spinner size="sm" aria-label="loading spinner" />
-          ) : (
-            'Save'
-          )}
-        </Button>
-      </div>
-    </form>
+        <div>
+          <Button
+            disabled={pending || !enableSave}
+            className="float-end px-5"
+            color="blue"
+            type="submit"
+          >
+            {pending ? (
+              <Spinner size="sm" aria-label="loading spinner" />
+            ) : (
+              'Save'
+            )}
+          </Button>
+        </div>
+      </form>
+    </>
   );
 }
