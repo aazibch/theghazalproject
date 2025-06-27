@@ -5,6 +5,7 @@ import { Button, Label, Spinner, TextInput } from 'flowbite-react';
 
 import { IUser } from '@/types';
 import { updateAccountEmailSettings } from '@/lib/actions';
+import { useFormChangeTracker } from '@/hooks/field-change-tracker';
 
 interface EmailSettingsFormProps {
   user: {
@@ -23,23 +24,9 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
     }
   );
 
-  const [enableSaveButton, setEnableSaveButton] = useState<boolean>(false);
-
-  const formFieldsChanged: Record<string, boolean> = {
-    email: false
-  };
-
-  const handleTextInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value !== state.formFields[e.target.name]) {
-      formFieldsChanged[e.target.name] = true;
-    } else {
-      formFieldsChanged[e.target.name] = false;
-    }
-
-    const shouldEnableSaveButton =
-      Object.values(formFieldsChanged).some(Boolean);
-    setEnableSaveButton(shouldEnableSaveButton);
-  };
+  const { enableSave, handleInputChange } = useFormChangeTracker(
+    state.formFields
+  );
 
   return (
     <form action={formAction} className="flex max-w-md flex-col gap-4 mx-auto">
@@ -49,7 +36,7 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
           <Label htmlFor="email" value="Email" />
         </div>
         <TextInput
-          onChange={handleTextInputChange}
+          onChange={handleInputChange}
           name="email"
           id="email"
           type="email"
@@ -65,7 +52,7 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
       </div>
       <div>
         <Button
-          disabled={pending || !enableSaveButton}
+          disabled={pending || !enableSave}
           className="float-end px-5"
           color="blue"
           type="submit"
