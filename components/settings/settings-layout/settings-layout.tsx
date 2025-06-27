@@ -10,7 +10,7 @@ export default function SettingsLayout({
   return (
     <PageContainer>
       <PageHeader heading="Settings" />
-      <div className="flex border min-h-[40rem] rounded-md">
+      <div className="flex border min-h-[40rem] rounded-md mt-[-1rem]">
         <SettingsSidebar />
         {children}
       </div>

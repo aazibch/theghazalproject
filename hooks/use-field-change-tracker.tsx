@@ -51,11 +51,6 @@ export function useFormChangeTracker(initialValues: Record<string, any>) {
     updateEnableSaveStatus();
   };
 
-  console.log(
-    '[useFormChangeTracker] changeMapRef.current',
-    changeMapRef.current
-  );
-
   return {
     enableSave,
     markFieldAsChanged,
