@@ -1,24 +1,23 @@
+'use client';
+
 import { useActionState, useEffect, useRef, useState } from 'react';
 import { Button, Label, Spinner, TextInput } from 'flowbite-react';
 
-import { SessionUser } from '@/types';
+import { IUser } from '@/types';
 import { updateProfileSettings } from '@/lib/actions';
-import { useSession } from 'next-auth/react';
 import { DEFAULT_PROFILE_PICTURE } from '@/constants';
 import AvatarFileInput from './avatar-file-input';
 
 interface ProfileSettingsFormProps {
   user: {
-    fullName: SessionUser['fullName'];
-    username: SessionUser['username'];
-    profilePicture: SessionUser['profilePicture'];
+    fullName: IUser['fullName'];
+    username: IUser['username'];
+    profilePicture: IUser['profilePicture'];
   };
-  resetFormHandler: () => void;
 }
 
 export default function ProfileSettingsForm({
-  user,
-  resetFormHandler
+  user
 }: ProfileSettingsFormProps) {
   const [isProfilePictureRemoved, setIsProfilePictureRemoved] =
     useState<boolean>(false);
@@ -37,7 +36,6 @@ export default function ProfileSettingsForm({
     }
   );
 
-  const { update, data: session } = useSession();
   const avatarInputRef = useRef<HTMLInputElement>(null);
 
   const { profilePicture: userProfilePicture } = user;
@@ -47,19 +45,6 @@ export default function ProfileSettingsForm({
       setAvatarPreview(userProfilePicture);
     }
   }, [userProfilePicture]);
-
-  const { isSuccess } = state;
-
-  const updateSessionAndResetForm = async () => {
-    await update();
-    resetFormHandler();
-  };
-
-  useEffect(() => {
-    if (isSuccess) {
-      updateSessionAndResetForm();
-    }
-  }, [isSuccess]);
 
   const setAvatarPreviewHandler = (value: string) => {
     setAvatarPreview(value);
@@ -146,7 +131,7 @@ export default function ProfileSettingsForm({
       <AvatarFileInput
         handleFileInputChange={handleFileInputChange}
         avatarInputRef={avatarInputRef}
-        userProfilePicture={session?.user.profilePicture || user.profilePicture}
+        userProfilePicture={user.profilePicture}
         avatarPreview={avatarPreview}
         setIsProfilePictureRemovedHandler={setIsProfilePictureRemovedHandler}
         setAvatarPreviewHandler={setAvatarPreviewHandler}
