@@ -34,7 +34,7 @@ export default function ContributeForm({
       setIsSubmitting(true);
       const res = await submitColGhazalCouplet(values);
 
-      if (res.status === 'success') {
+      if (res.isSuccess) {
         setIsSuccessHandler(true);
       }
 

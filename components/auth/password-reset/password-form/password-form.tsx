@@ -36,11 +36,11 @@ export default function PasswordForm() {
 
       const res = await resetPassword(token, password, passwordConfirmation);
 
-      if (res.status === 'failure' && 'message' in res) {
+      if (!res.isSuccess && 'message' in res) {
         setBackendErrorMessage(res.message);
       }
 
-      if (res.status === 'success') {
+      if (res.isSuccess) {
         setIsSuccess(true);
       }
 

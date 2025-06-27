@@ -9,20 +9,18 @@ import EmailSuccessScreen from './email-success-screen';
 
 export default function EmailForm() {
   const [formState, formAction] = useActionState(submitEmailForPasswordReset, {
-    status: null
+    isSuccess: null
   });
 
-  const { status, message } = formState;
+  const { isSuccess, message } = formState;
 
   return (
     <div className="max-w-md mx-auto">
-      {status === 'success' ? (
+      {isSuccess ? (
         <EmailSuccessScreen />
       ) : (
         <form action={formAction} className="flex flex-col gap-4">
-          {status === 'failure' && (
-            <p className="text-red-600 text-center">{message}</p>
-          )}
+          {isSuccess && <p className="text-red-600 text-center">{message}</p>}
 
           <p>
             Enter the email address associated with your account, and we will

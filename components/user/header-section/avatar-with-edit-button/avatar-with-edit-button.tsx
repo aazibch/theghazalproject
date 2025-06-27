@@ -19,17 +19,6 @@ export default function AvatarWithEditButton({
   const formRef = useRef<HTMLFormElement>(null);
   const [state, formAction] = useActionState(updateProfilePicture, null);
 
-  const { update } = useSession();
-
-  const status = state ? state.status : null;
-
-  useEffect(() => {
-    if (status === 'success') {
-      update();
-      resetInputRef.current!.click();
-    }
-  }, [status, update]);
-
   const handleEditButtonClick = () => {
     imageInputRef.current!.click();
   };

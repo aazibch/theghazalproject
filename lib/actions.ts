@@ -45,6 +45,7 @@ if (process.env.AWS_ID && process.env.AWS_SECRET) {
   });
 }
 
+// TODO: Add more options, such as the ability to choose certain fields to be returned using .select()
 export const getUser = async (username: string): Promise<IUser | undefined> => {
   const user = await getUserFromDB(username);
 
@@ -76,7 +77,7 @@ export const updateProfilePicture = async (
 
   revalidatePath('/', 'layout');
 
-  return { status: 'success' };
+  return { isSuccess: 'success' };
 };
 
 interface UpdatesObj {
@@ -237,13 +238,13 @@ export const submitColGhazalCouplet = async (couplet: {
   revalidatePath('/');
   revalidatePath('/collective-ghazal');
 
-  return { status: 'success' };
+  return { isSuccess: true };
 };
 
 export async function submitEmailForPasswordReset(
   prevState: any,
   formData: FormData
-): Promise<{ status: string | null; message?: string }> {
+): Promise<{ isSuccess: boolean | null; message?: string }> {
   const email = formData.get('email');
 
   await dbConnect();
@@ -252,7 +253,7 @@ export async function submitEmailForPasswordReset(
 
   if (!user) {
     return {
-      status: 'failure',
+      isSuccess: false,
       message:
         "No user with that email address exists or they didn't confirm their email address."
     };
@@ -274,10 +275,10 @@ export async function submitEmailForPasswordReset(
     user.passwordResetTokenExpirationDate = undefined;
     await user.save({ validateBeforeSave: false });
 
-    return { status: 'failure', message: ERROR_MESSAGES.generic };
+    return { isSuccess: false, message: ERROR_MESSAGES.generic };
   }
 
-  return { status: 'success' };
+  return { isSuccess: true };
 }
 
 export async function resetPassword(
@@ -286,7 +287,7 @@ export async function resetPassword(
   passwordConfirmation: string
 ) {
   const tokenError = {
-    status: 'failure',
+    isSuccess: false,
     message: 'Oh, oh! The password reset token has expired or is invalid.'
   };
 
@@ -317,7 +318,7 @@ export async function resetPassword(
   await user.save();
 
   return {
-    status: 'success'
+    isSuccess: true
   };
 }
 
@@ -326,6 +327,4 @@ export async function redirectAfterAuth() {
   redirect('/');
 }
 
-// TODO: Change "status" property in returned objects to "isSuccess".
-// TODO: Update database values only if new values are different from previous values.
 // TODO: Test password functionality since changes have been made to typescript definitions and user schema.
