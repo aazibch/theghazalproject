@@ -1,13 +1,20 @@
 import Link from 'next/link';
 import { Button } from 'flowbite-react';
+import Image from 'next/image';
+import turkishCeilingBg from '@/assets/images/background-images/turkish-ceiling-bg.png';
 
 export default function HeroSection() {
   return (
-    <section
-      className="p-6 flex justify-center items-center h-[40rem] bg-no-repeat bg-[50%_45%] bg-cover bg-[#edebe6] text-white"
-      style={{ backgroundImage: 'url(/images/turkish-ceiling-bg.png)' }}
-    >
-      <div className="text-center max-w-4xl mx-auto">
+    <section className="p-6 flex justify-center items-center h-[40rem] bg-[#edebe6] text-white relative">
+      <Image
+        alt="Ceiling background"
+        src={turkishCeilingBg}
+        placeholder="blur"
+        fill
+        quality={100}
+        className="object-cover object-[50%_45%]"
+      />
+      <div className="text-center max-w-4xl mx-auto z-10">
         <h1 className="text-3xl md:text-4xl mb-10">Learn. Create. Share.</h1>
         <p className="text-xl md:text-2xl mb-8">
           At <span className="font-semibold">The Ghazal Project</span>, we want
@@ -36,5 +43,3 @@ export default function HeroSection() {
     </section>
   );
 }
-
-// TODO: Optimize background images.

@@ -1,12 +1,14 @@
 import { Button } from 'flowbite-react';
 import Link from 'next/link';
+
 import Banner from '../ui/banner';
+import qutbMinarCeiling from '@/assets/images/background-images/qutb-minar-ceiling-bg.png';
 
 export default function AboutSection() {
   return (
     <section>
       <Banner
-        bgImage="/images/qutb-minar-ceiling-bg.png"
+        bgImage={qutbMinarCeiling}
         heading="Want to Get to Know Us?"
         contentText={
           <>

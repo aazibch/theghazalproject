@@ -1,12 +1,14 @@
-import Banner from '@/components/ui/banner';
 import { Button } from 'flowbite-react';
 import Link from 'next/link';
+
+import Banner from '@/components/ui/banner';
+import shahiHammamBg from '@/assets/images/background-images/shahi-hammam-main-dome-bg.png';
 
 export default function AboutSection() {
   return (
     <section>
       <Banner
-        bgImage="/images/shahi-hammam-main-dome-bg.png"
+        bgImage={shahiHammamBg}
         size="lg"
         heading="Get to Know Us"
         contentText={
