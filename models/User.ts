@@ -126,6 +126,8 @@ userSchema.methods.changedPasswordAfterToken = function (
   return false;
 };
 
+//TODO: Logout user if they changed password after the token was issued, perhaps via middleware.
+
 userSchema.methods.createPasswordResetToken = function () {
   const token = crypto.randomBytes(32).toString('hex');
 

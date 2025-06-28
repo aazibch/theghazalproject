@@ -16,10 +16,12 @@ if (process.env.AWS_ID && process.env.AWS_SECRET) {
   });
 }
 
-export const getUserFromDB = async (username: string) => {
+export const getUserFromDB = async (username: string, select?: string) => {
   await dbConnect();
 
-  const user = await User.findOne({ username });
+  const filter = select || '';
+
+  const user = await User.findOne({ username }).select(filter);
 
   return {
     ...user.toObject(),

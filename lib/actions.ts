@@ -45,9 +45,11 @@ if (process.env.AWS_ID && process.env.AWS_SECRET) {
   });
 }
 
-// TODO: Add more options, such as the ability to choose certain fields to be returned using .select()
-export const getUser = async (username: string): Promise<IUser | undefined> => {
-  const user = await getUserFromDB(username);
+export const getUser = async (
+  username: string,
+  select?: string
+): Promise<IUser | undefined> => {
+  const user = await getUserFromDB(username, select);
 
   return user;
 };
@@ -326,5 +328,3 @@ export async function redirectAfterAuth() {
   revalidatePath('/', 'layout');
   redirect('/');
 }
-
-// TODO: Test password functionality since changes have been made to typescript definitions and user schema.
