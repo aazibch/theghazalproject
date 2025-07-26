@@ -1,8 +1,8 @@
 'use client';
 
-import { IUser, SessionUser } from '@/types';
+import { IUser } from '@/types';
 import { Avatar, Button, Dropdown, Navbar } from 'flowbite-react';
-import { useSession, signOut } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { HiOutlineUserCircle } from 'react-icons/hi2';

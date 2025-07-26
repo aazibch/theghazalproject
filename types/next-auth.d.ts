@@ -5,6 +5,7 @@ import { SessionUser, TokenUser, UserToken } from '.';
 
 declare module 'next-auth' {
   interface Session {
+    jwtIat: number;
     user: SessionUser;
   }
 
@@ -15,6 +16,7 @@ declare module 'next-auth' {
 
 declare module 'next-auth/jwt' {
   interface JWT extends TokenUser {
+    iat: number;
     email: string;
   }
 }
