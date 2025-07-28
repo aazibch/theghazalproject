@@ -28,7 +28,7 @@ import {
 } from './col-ghazal-entries';
 import dbConnect from './dbConnect';
 import Email from './email';
-import { generateJwtToken, getValidServerSession } from './auth';
+import { generateJwtToken, getSignedInUser } from './auth';
 import { formatValidationErrors } from './utils';
 
 let s3: S3 | undefined;
@@ -58,32 +58,27 @@ export const updateProfilePicture = async (
 ) => {
   const newImage = formData.get('newImage') as File;
 
-  const session = await getValidServerSession(config);
+  const user = await getSignedInUser(config);
 
-  if (!session) {
+  if (!user) {
     throw new Error('Session not found.');
   }
 
-  if (!session.user || (session.user && !('_id' in session.user))) {
+  if (!user || (user && !('_id' in user))) {
     throw new Error('Invalid session.');
   }
 
   const profilePictureUrl = await updateProfilePictureInCloud(
-    session.user._id,
+    user._id,
     newImage
   );
 
-  await updateUserInDB(session.user._id, { profilePicture: profilePictureUrl });
+  await updateUserInDB(user._id, { profilePicture: profilePictureUrl });
 
   revalidatePath('/', 'layout');
 
   return { isSuccess: 'success' };
 };
-
-interface UpdatesObj {
-  fullName?: string;
-  profilePicture?: File;
-}
 
 export const updateProfileSettings = async (
   profilePictureRemoved: boolean,
@@ -94,9 +89,9 @@ export const updateProfileSettings = async (
   validationErrors?: Record<string, string>;
   formFields: Record<string, any>;
 }> => {
-  const session = await getValidServerSession(config);
+  const user = await getSignedInUser(config);
 
-  if (!session) {
+  if (!user) {
     throw new Error('Session not found.');
   }
 
@@ -126,13 +121,13 @@ export const updateProfileSettings = async (
     docUpdates.profilePicture = DEFAULT_PROFILE_PICTURE;
   } else if (profilePicture.size !== 0) {
     const profilePictureUrl = await updateProfilePictureInCloud(
-      session.user._id,
+      user._id,
       profilePicture
     );
     docUpdates.profilePicture = profilePictureUrl;
   }
 
-  await updateUserInDB(session.user._id, docUpdates);
+  await updateUserInDB(user._id, docUpdates);
   revalidatePath('/', 'layout');
 
   return {
@@ -149,9 +144,9 @@ export const updateAccountEmailSettings = async (
   validationErrors?: Record<string, string>;
   formFields: Record<string, string>;
 }> => {
-  const session = await getValidServerSession(config);
+  const user = await getSignedInUser(config);
 
-  if (!session) {
+  if (!user) {
     throw new Error('Session not found.');
   }
 
@@ -171,8 +166,6 @@ export const updateAccountEmailSettings = async (
     };
   }
 
-  const user = await User.findById(session.user._id).select('fullName');
-
   // Generate confirmation email token
   const token = await generateJwtToken({ email: formFields.email }, '1hr');
 
@@ -187,7 +180,7 @@ export const updateAccountEmailSettings = async (
 
   await email.sendEmailConfirmation();
 
-  await updateUserInDB(session.user._id, {
+  await updateUserInDB(user._id, {
     email: formFields.email,
     emailConfirmed: false
   });
@@ -217,13 +210,13 @@ export const submitColGhazalCouplet = async (couplet: {
   lineOne: string;
   lineTwo: string;
 }) => {
-  const session = await getValidServerSession(config);
+  const user = await getSignedInUser(config);
 
-  if (!session) {
+  if (!user) {
     throw new Error('Session not found.');
   }
 
-  if (!session.user || (session.user && !('_id' in session.user))) {
+  if (!user || (user && !('_id' in user))) {
     throw new Error('Invalid session.');
   }
 
@@ -233,7 +226,7 @@ export const submitColGhazalCouplet = async (couplet: {
     throw error;
   }
 
-  await createColGhazalEntry(couplet, session.user._id);
+  await createColGhazalEntry(couplet, user._id);
 
   revalidatePath('/');
   revalidatePath('/collective-ghazal');

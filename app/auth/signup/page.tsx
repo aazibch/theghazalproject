@@ -4,16 +4,16 @@ import PageHeader from '@/components/layout/pages/page-header';
 import SignupForm from '@/components/auth/signup-form';
 import PageContainer from '@/components/layout/pages/page-container';
 import config from '@/app/api/auth/[...nextauth]/config';
-import { getValidServerSession } from '@/lib/auth';
+import { getSignedInUser } from '@/lib/auth';
 
 export const metadata = {
   title: 'Signup | The Ghazal Project'
 };
 
 export default async function SignupPage() {
-  const session = await getValidServerSession(config);
+  const user = await getSignedInUser(config);
 
-  if (session) {
+  if (user) {
     notFound();
   }
 

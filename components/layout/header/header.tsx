@@ -5,18 +5,11 @@ import NavLink from './nav-link';
 import HeaderDropdown from './header-dropdown';
 
 import Logo from '@/assets/logo.png';
-import { getUser } from '@/lib/actions';
 import config from '@/app/api/auth/[...nextauth]/config';
-import { IUser } from '@/types';
-import { getValidServerSession } from '@/lib/auth';
+import { getSignedInUser } from '@/lib/auth';
 
 export default async function Header() {
-  const session = await getValidServerSession(config);
-  let user: IUser | undefined;
-
-  if (session) {
-    user = await getUser(session.user.username);
-  }
+  const user = await getSignedInUser(config);
 
   return (
     <Navbar

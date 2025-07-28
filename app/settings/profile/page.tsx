@@ -1,16 +1,10 @@
 import SettingsLayout from '@/components/settings/settings-layout/settings-layout';
 import ProfileSettingsForm from '@/components/settings/profile-settings/profile-settings-form/profile-settings-form';
 import config from '@/app/api/auth/[...nextauth]/config';
-import { getUser } from '@/lib/actions';
-import { getValidServerSession } from '@/lib/auth';
+import { getSignedInUser } from '@/lib/auth';
 
 export default async function ProfileSettingsPage() {
-  const session = await getValidServerSession(config);
-
-  const user = await getUser(
-    session!.user.username,
-    'fullName username profilePicture'
-  );
+  const user = await getSignedInUser(config);
 
   return (
     <SettingsLayout>

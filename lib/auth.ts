@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import dbConnect from './dbConnect';
 import { AuthOptions, getServerSession } from 'next-auth';
 
-export const getValidServerSession = async (config: AuthOptions) => {
+export const getSignedInUser = async (config: AuthOptions) => {
   const session = await getServerSession(config);
 
   if (!session) {
@@ -23,7 +23,7 @@ export const getValidServerSession = async (config: AuthOptions) => {
   if (changedPasswordAfterToken) {
     return null;
   } else {
-    return session;
+    return user;
   }
 };
 
