@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import dbConnect from './dbConnect';
 import { AuthOptions, getServerSession } from 'next-auth';
 
+// Checks if password was changed after token issuance.
 export const getSignedInUser = async (config: AuthOptions) => {
   const session = await getServerSession(config);
 
@@ -23,7 +24,7 @@ export const getSignedInUser = async (config: AuthOptions) => {
   if (changedPasswordAfterToken) {
     return null;
   } else {
-    return user;
+    return { ...user.toObject(), _id: user._id.toString() };
   }
 };
 

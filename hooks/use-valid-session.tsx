@@ -1,8 +1,10 @@
+import { IUser } from '@/types';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
 export function useValidSession() {
   const [isFetching, setIsFetching] = useState<boolean>(true);
+  const [user, setUser] = useState<IUser | null>(null);
   const [changedPasswordAfterTokenStatus, setChangedPasswordAfterTokenStatus] =
     useState<boolean>();
 
@@ -17,6 +19,7 @@ export function useValidSession() {
       const res = await response.json();
 
       setChangedPasswordAfterTokenStatus(res.changedPasswordAfterToken);
+      setUser(res.user);
     }
 
     setIsFetching(false);
@@ -30,18 +33,26 @@ export function useValidSession() {
     }
   }, [data, changedPasswordAfterTokenStatus]);
 
-  if (status === 'loading' || isFetching) {
-    return { session: undefined, status: 'loading', update };
+  if ((status === 'loading' || isFetching) && status !== 'unauthenticated') {
+    return { update, session: undefined, user: null, status: 'loading' };
   }
 
-  if (changedPasswordAfterTokenStatus) {
-    // signOut({ callbackUrl: '/', redirect: true });
-    return { session: null, status: 'unauthenticated', update };
+  if (
+    status === 'unauthenticated' ||
+    changedPasswordAfterTokenStatus === false
+  ) {
+    return {
+      update,
+      session: data,
+      user,
+      status
+    };
   }
 
   return {
-    session: data,
     update,
-    status
+    session: null,
+    user: null,
+    status: 'unauthenticated'
   };
 }

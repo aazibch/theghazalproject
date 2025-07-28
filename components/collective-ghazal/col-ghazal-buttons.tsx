@@ -7,6 +7,7 @@ import { Button } from 'flowbite-react';
 
 import ContributeModal from './contribute-modal/contribute-modal';
 import { useValidSession } from '@/hooks/use-valid-session';
+import { useSession } from 'next-auth/react';
 
 export default function ColGhazalButtons() {
   const [openContributeModal, setOpenContributeModal] =

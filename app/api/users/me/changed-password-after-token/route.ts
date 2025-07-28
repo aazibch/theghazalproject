@@ -27,7 +27,8 @@ export async function GET() {
 
     return Response.json({
       isSuccess: true,
-      changedPasswordAfterToken
+      changedPasswordAfterToken,
+      user: user.toObject()
     });
   } catch (error) {
     return Response.json(
