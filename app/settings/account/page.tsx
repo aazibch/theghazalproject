@@ -2,15 +2,15 @@ import EmailSettingsForm from '@/components/settings/account-settings/email-sett
 import PasswordSettingsForm from '@/components/settings/account-settings/password-settings-form';
 import SettingsLayout from '@/components/settings/settings-layout/settings-layout';
 import config from '@/app/api/auth/[...nextauth]/config';
-import { getSignedInUser } from '@/lib/auth';
+import { getValidServerSession } from '@/lib/auth';
 
 export default async function AccountSettingsPage() {
-  const user = await getSignedInUser(config);
+  const session = await getValidServerSession(config);
 
   return (
     <SettingsLayout>
       <div className="basis-full p-10">
-        <EmailSettingsForm user={{ email: user!.email }} />
+        <EmailSettingsForm user={{ email: session!.user.email }} />
         <PasswordSettingsForm />
       </div>
     </SettingsLayout>

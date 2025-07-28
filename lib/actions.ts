@@ -28,7 +28,7 @@ import {
 } from './col-ghazal-entries';
 import dbConnect from './dbConnect';
 import Email from './email';
-import { generateJwtToken, getSignedInUser } from './auth';
+import { generateJwtToken, getValidServerSession } from './auth';
 import { formatValidationErrors } from './utils';
 
 let s3: S3 | undefined;
@@ -58,22 +58,22 @@ export const updateProfilePicture = async (
 ) => {
   const newImage = formData.get('newImage') as File;
 
-  const user = await getSignedInUser(config);
+  const session = await getValidServerSession(config);
 
-  if (!user) {
+  if (!session) {
     throw new Error('Session not found.');
   }
 
-  if (!user || (user && !('_id' in user))) {
+  if (!session || (session && !('_id' in session.user))) {
     throw new Error('Invalid session.');
   }
 
   const profilePictureUrl = await updateProfilePictureInCloud(
-    user._id,
+    session.user._id,
     newImage
   );
 
-  await updateUserInDB(user._id, { profilePicture: profilePictureUrl });
+  await updateUserInDB(session.user._id, { profilePicture: profilePictureUrl });
 
   revalidatePath('/', 'layout');
 
@@ -89,9 +89,9 @@ export const updateProfileSettings = async (
   validationErrors?: Record<string, string>;
   formFields: Record<string, any>;
 }> => {
-  const user = await getSignedInUser(config);
+  const session = await getValidServerSession(config);
 
-  if (!user) {
+  if (!session) {
     throw new Error('Session not found.');
   }
 
@@ -121,13 +121,13 @@ export const updateProfileSettings = async (
     docUpdates.profilePicture = DEFAULT_PROFILE_PICTURE;
   } else if (profilePicture.size !== 0) {
     const profilePictureUrl = await updateProfilePictureInCloud(
-      user._id,
+      session.user._id,
       profilePicture
     );
     docUpdates.profilePicture = profilePictureUrl;
   }
 
-  await updateUserInDB(user._id, docUpdates);
+  await updateUserInDB(session.user._id, docUpdates);
   revalidatePath('/', 'layout');
 
   return {
@@ -144,9 +144,9 @@ export const updateAccountEmailSettings = async (
   validationErrors?: Record<string, string>;
   formFields: Record<string, string>;
 }> => {
-  const user = await getSignedInUser(config);
+  const session = await getValidServerSession(config);
 
-  if (!user) {
+  if (!session) {
     throw new Error('Session not found.');
   }
 
@@ -172,7 +172,7 @@ export const updateAccountEmailSettings = async (
   // Send confirmation email:
   const email = new Email(
     {
-      fullName: user.fullName,
+      fullName: session.user.fullName,
       email: formFields.email
     },
     `${process.env.PRODUCTION_URL}auth/email?token=${token}`
@@ -180,7 +180,7 @@ export const updateAccountEmailSettings = async (
 
   await email.sendEmailConfirmation();
 
-  await updateUserInDB(user._id, {
+  await updateUserInDB(session.user._id, {
     email: formFields.email,
     emailConfirmed: false
   });
@@ -210,13 +210,13 @@ export const submitColGhazalCouplet = async (couplet: {
   lineOne: string;
   lineTwo: string;
 }) => {
-  const user = await getSignedInUser(config);
+  const session = await getValidServerSession(config);
 
-  if (!user) {
+  if (!session) {
     throw new Error('Session not found.');
   }
 
-  if (!user || (user && !('_id' in user))) {
+  if (!session || (session && !('_id' in session.user))) {
     throw new Error('Invalid session.');
   }
 
@@ -226,7 +226,7 @@ export const submitColGhazalCouplet = async (couplet: {
     throw error;
   }
 
-  await createColGhazalEntry(couplet, user._id);
+  await createColGhazalEntry(couplet, session.user._id);
 
   revalidatePath('/');
   revalidatePath('/collective-ghazal');

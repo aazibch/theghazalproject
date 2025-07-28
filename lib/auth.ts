@@ -6,7 +6,7 @@ import dbConnect from './dbConnect';
 import { AuthOptions, getServerSession } from 'next-auth';
 
 // Checks if password was changed after token issuance.
-export const getSignedInUser = async (config: AuthOptions) => {
+export const getValidServerSession = async (config: AuthOptions) => {
   const session = await getServerSession(config);
 
   if (!session) {
@@ -24,7 +24,10 @@ export const getSignedInUser = async (config: AuthOptions) => {
   if (changedPasswordAfterToken) {
     return null;
   } else {
-    return { ...user.toObject(), _id: user._id.toString() };
+    return {
+      data: session,
+      user: { ...user.toObject(), _id: user._id.toString() }
+    };
   }
 };
 

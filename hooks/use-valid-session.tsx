@@ -2,6 +2,7 @@ import { IUser } from '@/types';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
+// Checks if password was changed after token issuance.
 export function useValidSession() {
   const [isFetching, setIsFetching] = useState<boolean>(true);
   const [user, setUser] = useState<IUser | null>(null);
