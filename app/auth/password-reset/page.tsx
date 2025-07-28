@@ -1,10 +1,10 @@
-import { getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
 
 import PageContainer from '@/components/layout/pages/page-container';
 import PageHeader from '@/components/layout/pages/page-header';
 import EmailForm from '@/components/auth/password-reset/email-form/email-form';
 import config from '@/app/api/auth/[...nextauth]/config';
+import { getValidServerSession } from '@/lib/auth';
 
 export const metadata = {
   title: 'Password Reset | The Ghazal Project',
@@ -13,7 +13,7 @@ export const metadata = {
 };
 
 export default async function PasswordResetPage() {
-  const session = await getServerSession(config);
+  const session = await getValidServerSession(config);
 
   if (session) {
     notFound();

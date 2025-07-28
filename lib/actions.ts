@@ -1,11 +1,9 @@
 'use server';
 
 import crypto from 'crypto';
-import Joi from 'joi';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { S3 } from '@aws-sdk/client-s3';
-import { getServerSession } from 'next-auth';
 
 import config from '@/app/api/auth/[...nextauth]/config';
 import User from '@/models/User';
@@ -30,7 +28,7 @@ import {
 } from './col-ghazal-entries';
 import dbConnect from './dbConnect';
 import Email from './email';
-import { generateJwtToken } from './auth';
+import { generateJwtToken, getValidServerSession } from './auth';
 import { formatValidationErrors } from './utils';
 
 let s3: S3 | undefined;
@@ -60,7 +58,7 @@ export const updateProfilePicture = async (
 ) => {
   const newImage = formData.get('newImage') as File;
 
-  const session = await getServerSession(config);
+  const session = await getValidServerSession(config);
 
   if (!session) {
     throw new Error('Session not found.');
@@ -96,7 +94,7 @@ export const updateProfileSettings = async (
   validationErrors?: Record<string, string>;
   formFields: Record<string, any>;
 }> => {
-  const session = await getServerSession(config);
+  const session = await getValidServerSession(config);
 
   if (!session) {
     throw new Error('Session not found.');
@@ -151,7 +149,7 @@ export const updateAccountEmailSettings = async (
   validationErrors?: Record<string, string>;
   formFields: Record<string, string>;
 }> => {
-  const session = await getServerSession(config);
+  const session = await getValidServerSession(config);
 
   if (!session) {
     throw new Error('Session not found.');
@@ -219,7 +217,7 @@ export const submitColGhazalCouplet = async (couplet: {
   lineOne: string;
   lineTwo: string;
 }) => {
-  const session = await getServerSession(config);
+  const session = await getValidServerSession(config);
 
   if (!session) {
     throw new Error('Session not found.');

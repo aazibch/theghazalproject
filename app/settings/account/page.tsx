@@ -1,13 +1,12 @@
-import { getServerSession } from 'next-auth';
-
 import EmailSettingsForm from '@/components/settings/account-settings/email-settings-form';
 import PasswordSettingsForm from '@/components/settings/account-settings/password-settings-form';
 import SettingsLayout from '@/components/settings/settings-layout/settings-layout';
 import config from '@/app/api/auth/[...nextauth]/config';
 import { getUser } from '@/lib/actions';
+import { getValidServerSession } from '@/lib/auth';
 
 export default async function AccountSettingsPage() {
-  const session = await getServerSession(config);
+  const session = await getValidServerSession(config);
 
   let user = await getUser(session!.user.username);
 

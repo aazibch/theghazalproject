@@ -1,6 +1,5 @@
 import { Navbar, NavbarBrand, NavbarCollapse } from 'flowbite-react';
 import Image from 'next/image';
-import { getServerSession } from 'next-auth';
 
 import NavLink from './nav-link';
 import HeaderDropdown from './header-dropdown';
@@ -9,9 +8,10 @@ import Logo from '@/assets/logo.png';
 import { getUser } from '@/lib/actions';
 import config from '@/app/api/auth/[...nextauth]/config';
 import { IUser } from '@/types';
+import { getValidServerSession } from '@/lib/auth';
 
 export default async function Header() {
-  const session = await getServerSession(config);
+  const session = await getValidServerSession(config);
   let user: IUser | undefined;
 
   if (session) {
