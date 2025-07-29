@@ -46,6 +46,9 @@ export default function HeaderDropdown({
           >
             Profile
           </Dropdown.Item>
+          <Dropdown.Item onClick={() => router.push('/settings/profile')}>
+            Settings
+          </Dropdown.Item>
           <Dropdown.Item
             onClick={() => signOut({ callbackUrl: '/', redirect: true })}
           >
