@@ -1,8 +1,19 @@
-import { Button, Label, TextInput } from 'flowbite-react';
+'use client';
+
+import { useActionState } from 'react';
+import { Button, Label, Spinner, TextInput } from 'flowbite-react';
+import { updateAccountPasswordSettings } from '@/lib/actions';
 
 export default function PasswordSettingsForm() {
+  const [state, formAction, pending] = useActionState(
+    updateAccountPasswordSettings,
+    {
+      isSuccess: null
+    }
+  );
+
   return (
-    <form className="flex max-w-md flex-col gap-4 mx-auto">
+    <form action={formAction} className="flex max-w-md flex-col gap-4 mx-auto">
       <h2 className="text-xl font-semibold mb-2">Password</h2>
 
       <div className="mb-1">
@@ -23,17 +34,29 @@ export default function PasswordSettingsForm() {
       </div>
       <div className="mb-1">
         <div className="mb-2 block">
-          <Label htmlFor="passwordConfirmation" value="Password Confirmation" />
+          <Label
+            htmlFor="newPasswordConfirmation"
+            value="Password Confirmation"
+          />
         </div>
         <TextInput
-          name="passwordConfirmation"
-          id="passwordConfirmation"
+          name="newPasswordConfirmation"
+          id="newPasswordConfirmation"
           type="password"
         />
       </div>
       <div>
-        <Button className="float-end px-5" color="blue" type="submit">
-          <span>Save</span>
+        <Button
+          disabled={pending}
+          className="float-end px-5"
+          color="blue"
+          type="submit"
+        >
+          {pending ? (
+            <Spinner size="sm" aria-label="loading spinner" />
+          ) : (
+            'Save'
+          )}
         </Button>
       </div>
     </form>

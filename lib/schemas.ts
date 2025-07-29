@@ -53,6 +53,30 @@ const passwordConfirmationInputSchema = Joi.string()
     'any.only': generateValidationMessage('passwordConfirmation')
   });
 
+const newPasswordInputSchema = Joi.string()
+  .min(8)
+  .required()
+  .messages({
+    'string.min': generateValidationMessage('min', 'new password', 8),
+    'string.empty': generateValidationMessage('required', 'new password'),
+    'any.required': generateValidationMessage('required', 'new password')
+  });
+
+const newPasswordConfirmationInputSchema = Joi.string()
+  .valid(Joi.ref('newPassword'))
+  .required()
+  .messages({
+    'string.empty': generateValidationMessage(
+      'required',
+      'new password confirmation'
+    ),
+    'any.required': generateValidationMessage(
+      'required',
+      'new password confirmation'
+    ),
+    'any.only': generateValidationMessage('newPasswordConfirmation')
+  });
+
 export const signupSchema = Joi.object({
   fullName: fullNameInputSchema,
   username: Joi.string()
@@ -81,9 +105,20 @@ export const updateAccountEmailSettingsSchema = Joi.object({
   email: emailInputSchema
 });
 
+export const updateAccountPasswordSettingsSchema = Joi.object({
+  currentPassword: Joi.string()
+    .required()
+    .messages({
+      'string.empty': generateValidationMessage('required', 'current password'),
+      'any.required': generateValidationMessage('required', 'current password')
+    }),
+  newPassword: newPasswordInputSchema,
+  newPasswordConfirmation: newPasswordConfirmationInputSchema
+});
+
 export const newPasswordSchema = Joi.object({
-  password: passwordInputSchema,
-  passwordConfirmation: passwordConfirmationInputSchema
+  newPassword: newPasswordInputSchema,
+  newPasswordConfirmation: newPasswordConfirmationInputSchema
 });
 
 export const colGhazalEntrySchema = Joi.object({

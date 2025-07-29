@@ -23,18 +23,22 @@ export default function PasswordForm() {
 
   const formik = useFormik({
     initialValues: {
-      password: '',
-      passwordConfirmation: ''
+      newPassword: '',
+      newPasswordConfirmation: ''
     },
     validate: generateValidator(newPasswordSchema, false),
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: async (values) => {
-      const { password, passwordConfirmation } = values;
+      const { newPassword, newPasswordConfirmation } = values;
 
       setIsSubmitting(true);
 
-      const res = await resetPassword(token, password, passwordConfirmation);
+      const res = await resetPassword(
+        token,
+        newPassword,
+        newPasswordConfirmation
+      );
 
       if (!res.isSuccess && 'message' in res) {
         setBackendErrorMessage(res.message);
@@ -60,34 +64,34 @@ export default function PasswordForm() {
       <p>Please enter a new password for your account below.</p>
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="password" value="Password" />
+          <Label htmlFor="newPassword" value="New Password" />
         </div>
         <TextInput
-          id="password"
-          name="password"
+          id="newPassword"
+          name="newPassword"
           type="password"
           required
-          value={formik.values.password}
+          value={formik.values.newPassword}
           onChange={formik.handleChange}
-          color={formik.errors.password && 'failure'}
-          helperText={formik.errors.password && formik.errors.password}
+          color={formik.errors.newPassword && 'failure'}
+          helperText={formik.errors.newPassword && formik.errors.newPassword}
         />
       </div>
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="passwordConfirmation" value="Confirm Password" />
+          <Label htmlFor="newPasswordConfirmation" value="Confirm Password" />
         </div>
         <TextInput
-          id="passwordConfirmation"
-          name="passwordConfirmation"
+          id="newPasswordConfirmation"
+          name="newPasswordConfirmation"
           type="password"
           required
-          value={formik.values.passwordConfirmation}
+          value={formik.values.newPasswordConfirmation}
           onChange={formik.handleChange}
-          color={formik.errors.passwordConfirmation && 'failure'}
+          color={formik.errors.newPasswordConfirmation && 'failure'}
           helperText={
-            formik.errors.passwordConfirmation &&
-            formik.errors.passwordConfirmation
+            formik.errors.newPasswordConfirmation &&
+            formik.errors.newPasswordConfirmation
           }
         />
       </div>
@@ -114,3 +118,5 @@ export default function PasswordForm() {
 
   return <div className="max-w-md mx-auto">{content}</div>;
 }
+
+// TODO: Test UX.

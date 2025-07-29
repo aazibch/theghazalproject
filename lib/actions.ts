@@ -12,6 +12,7 @@ import {
   colGhazalEntrySchema,
   newPasswordSchema,
   updateAccountEmailSettingsSchema,
+  updateAccountPasswordSettingsSchema,
   updateProfileSettingsSchema
 } from './schemas';
 import { IUser } from '@/types';
@@ -186,6 +187,60 @@ export const updateAccountEmailSettings = async (
   });
 
   return { isSuccess: true, formFields };
+};
+
+export const updateAccountPasswordSettings = async (
+  prevState: any,
+  formData: FormData
+): Promise<{
+  isSuccess: boolean | null;
+  message?: string;
+  validationErrors?: Record<string, string>;
+}> => {
+  const session = await getValidServerSession(config);
+
+  if (!session) {
+    throw new Error('Session not found.');
+  }
+
+  const formFields = {
+    currentPassword: formData.get('password') as string,
+    newPassword: formData.get('password') as string,
+    newPasswordConfirmation: formData.get('password') as string
+  };
+
+  const { error } = updateAccountPasswordSettingsSchema.validate(formFields, {
+    abortEarly: true
+  });
+
+  if (error) {
+    const validationErrors = formatValidationErrors(error);
+
+    return {
+      isSuccess: false,
+      validationErrors
+    };
+  }
+
+  await dbConnect();
+
+  const user = await User.findById(session.data.user._id).select('+password');
+
+  if (
+    !(await user.isPasswordCorrect(formFields.currentPassword, user.password))
+  ) {
+    return {
+      isSuccess: false,
+      message: 'Incorrect value for the current password.'
+    };
+  }
+
+  user.password = formFields.newPassword;
+  await user.save();
+
+  return {
+    isSuccess: true
+  };
 };
 
 export const getColGhazalEntriesByUser = async (userId: string) => {

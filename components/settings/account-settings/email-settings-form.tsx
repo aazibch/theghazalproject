@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useState } from 'react';
+import { useActionState } from 'react';
 import { Button, Label, Spinner, TextInput } from 'flowbite-react';
 
 import { IUser } from '@/types';
