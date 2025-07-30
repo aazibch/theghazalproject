@@ -19,16 +19,21 @@ export async function GET() {
 
     await dbConnect();
 
-    const user = await User.findById(session!.user._id);
+    const user = await User.findById(session!.user._id).select(
+      '+passwordChangeDate'
+    );
 
     const changedPasswordAfterToken = await user.changedPasswordAfterToken(
       session!.signInDate
     );
 
+    const userObj = user.toObject();
+    delete userObj.passwordChangeDate;
+
     return Response.json({
       isSuccess: true,
       changedPasswordAfterToken,
-      user: user.toObject()
+      user: { ...userObj, _id: userObj._id.toString() }
     });
   } catch (error) {
     return Response.json(
