@@ -46,7 +46,7 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
           helperText={
             (state.isSuccess &&
               'We have sent a confirmation link to your new email.') ||
-            (state.validationErrors?.email && state.validationErrors?.email)
+            state.validationErrors?.email
           }
         />
       </div>

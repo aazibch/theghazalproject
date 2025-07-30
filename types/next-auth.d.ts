@@ -5,18 +5,16 @@ import { SessionUser, TokenUser, UserToken } from '.';
 
 declare module 'next-auth' {
   interface Session {
-    jwtIat: number;
+    signInDate: number;
     user: SessionUser;
   }
 
-  interface User extends SessionUser {
-    // email: string;
-  }
+  interface User extends SessionUser {}
 }
 
 declare module 'next-auth/jwt' {
   interface JWT extends TokenUser {
-    iat: number;
+    signInDate: number;
     email: string;
   }
 }

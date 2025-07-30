@@ -204,9 +204,9 @@ export const updateAccountPasswordSettings = async (
   }
 
   const formFields = {
-    currentPassword: formData.get('password') as string,
-    newPassword: formData.get('password') as string,
-    newPasswordConfirmation: formData.get('password') as string
+    currentPassword: formData.get('currentPassword') as string,
+    newPassword: formData.get('newPassword') as string,
+    newPasswordConfirmation: formData.get('newPasswordConfirmation') as string
   };
 
   const { error } = updateAccountPasswordSettingsSchema.validate(formFields, {
@@ -231,17 +231,19 @@ export const updateAccountPasswordSettings = async (
   ) {
     return {
       isSuccess: false,
-      message: 'Incorrect value for the current password.'
+      validationErrors: {
+        currentPassword: 'Incorrect value for the current password.'
+      }
     };
   }
 
   user.password = formFields.newPassword;
   await user.save();
 
-  return {
-    isSuccess: true
-  };
+  redirect('/auth/login');
 };
+
+// TODO: Return a response, and then sign out on the client side.
 
 export const getColGhazalEntriesByUser = async (userId: string) => {
   const allEntriesByUser = await getAllColGhazalEntriesByUserFromDB(userId);

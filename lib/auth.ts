@@ -15,18 +15,24 @@ export const getValidServerSession = async (config: AuthOptions) => {
 
   await dbConnect();
 
-  const user = await User.findById(session!.user._id);
+  const user = await User.findById(session!.user._id).select(
+    '+passwordChangeDate'
+  );
 
-  const changedPasswordAfterToken = await user.changedPasswordAfterToken(
-    session!.jwtIat
+  const changedPasswordAfterToken = user.changedPasswordAfterToken(
+    session!.signInDate
   );
 
   if (changedPasswordAfterToken) {
     return null;
   } else {
+    const userObj = user.toObject();
+
+    delete userObj.passwordChangeDate;
+
     return {
       data: session,
-      user: { ...user.toObject(), _id: user._id.toString() }
+      user: { ...userObj, _id: userObj._id.toString() }
     };
   }
 };

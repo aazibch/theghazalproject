@@ -32,7 +32,10 @@ export default function PasswordSettingsForm() {
           name="currentPassword"
           id="currentPassword"
           type="password"
+          required
           onChange={handleInputChange}
+          color={state.validationErrors?.currentPassword && 'failure'}
+          helperText={state.validationErrors?.currentPassword}
         />
       </div>
       <div className="mb-1">
@@ -43,7 +46,10 @@ export default function PasswordSettingsForm() {
           name="newPassword"
           id="newPassword"
           type="password"
+          required
           onChange={handleInputChange}
+          color={state.validationErrors?.newPassword && 'failure'}
+          helperText={state.validationErrors?.newPassword}
         />
       </div>
       <div className="mb-1">
@@ -57,7 +63,10 @@ export default function PasswordSettingsForm() {
           name="newPasswordConfirmation"
           id="newPasswordConfirmation"
           type="password"
+          required
           onChange={handleInputChange}
+          color={state.validationErrors?.newPasswordConfirmation && 'failure'}
+          helperText={state.validationErrors?.newPasswordConfirmation}
         />
       </div>
       <div>

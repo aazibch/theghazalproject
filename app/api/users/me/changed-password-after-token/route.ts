@@ -22,7 +22,7 @@ export async function GET() {
     const user = await User.findById(session!.user._id);
 
     const changedPasswordAfterToken = await user.changedPasswordAfterToken(
-      session!.jwtIat
+      session!.signInDate
     );
 
     return Response.json({
