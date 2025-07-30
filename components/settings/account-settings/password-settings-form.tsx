@@ -2,7 +2,9 @@
 
 import { useActionState } from 'react';
 import { Button, Label, Spinner, TextInput } from 'flowbite-react';
+
 import { updateAccountPasswordSettings } from '@/lib/actions';
+import { useFormChangeTracker } from '@/hooks/use-field-change-tracker';
 
 export default function PasswordSettingsForm() {
   const [state, formAction, pending] = useActionState(
@@ -11,6 +13,12 @@ export default function PasswordSettingsForm() {
       isSuccess: null
     }
   );
+
+  const { enableSave, handleInputChange } = useFormChangeTracker({
+    currentPassword: '',
+    newPassword: '',
+    newPasswordConfirmation: ''
+  });
 
   return (
     <form action={formAction} className="flex max-w-md flex-col gap-4 mx-auto">
@@ -24,13 +32,19 @@ export default function PasswordSettingsForm() {
           name="currentPassword"
           id="currentPassword"
           type="password"
+          onChange={handleInputChange}
         />
       </div>
       <div className="mb-1">
         <div className="mb-2 block">
           <Label htmlFor="newPassword" value="New Password" />
         </div>
-        <TextInput name="newPassword" id="newPassword" type="password" />
+        <TextInput
+          name="newPassword"
+          id="newPassword"
+          type="password"
+          onChange={handleInputChange}
+        />
       </div>
       <div className="mb-1">
         <div className="mb-2 block">
@@ -43,11 +57,12 @@ export default function PasswordSettingsForm() {
           name="newPasswordConfirmation"
           id="newPasswordConfirmation"
           type="password"
+          onChange={handleInputChange}
         />
       </div>
       <div>
         <Button
-          disabled={pending}
+          disabled={pending || !enableSave}
           className="float-end px-5"
           color="blue"
           type="submit"

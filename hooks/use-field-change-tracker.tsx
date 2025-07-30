@@ -14,13 +14,22 @@ export function useFormChangeTracker(initialValues: Record<string, any>) {
     )
   );
 
+  const initialValuesRef = useRef<Record<string, string>>(initialValues);
+
   useEffect(() => {
     const hasChanged = Object.keys(initialValues).some(
-      (key) => initialValues[key] !== changeMapRef.current?.[key]
+      (key) => initialValues[key] !== initialValuesRef.current?.[key]
     );
 
     if (hasChanged) {
+      const newInitialValues: Record<string, string> = {};
       const newChangeMap: Record<string, boolean> = {};
+
+      for (const key of Object.keys(initialValues)) {
+        newInitialValues[key] = initialValues[key];
+      }
+
+      initialValuesRef.current = newInitialValues;
 
       for (const key of Object.keys(initialValues)) {
         newChangeMap[key] = false;
