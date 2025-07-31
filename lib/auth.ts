@@ -19,11 +19,11 @@ export const getValidServerSession = async (config: AuthOptions) => {
     '+passwordChangeDate'
   );
 
-  const changedPasswordAfterToken = user.changedPasswordAfterToken(
+  const changedPasswordAfterSignIn = user.changedPasswordAfterSignIn(
     session!.signInDate
   );
 
-  if (changedPasswordAfterToken) {
+  if (changedPasswordAfterSignIn) {
     return null;
   } else {
     const userObj = user.toObject();

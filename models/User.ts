@@ -11,7 +11,7 @@ interface IUserMethods {
     inputPass: string,
     encryptedPass: string
   ) => Promise<boolean>;
-  changedPasswordAfterToken: (tokenIssuanceTimestamp: number) => boolean;
+  changedPasswordAfterSignIn: (signInTimestamp: number) => boolean;
 }
 
 type UserModel = mongoose.Model<IUser, {}, IUserMethods>;
@@ -114,13 +114,13 @@ userSchema.methods.isPasswordCorrect = async function (
   return await bcrypt.compare(inputPass, encryptedPass);
 };
 
-userSchema.methods.changedPasswordAfterToken = function (
-  tokenIssuanceTimestamp: number
+userSchema.methods.changedPasswordAfterSignIn = function (
+  signInTimestamp: number
 ) {
   if (this.passwordChangeDate) {
     const passwordChangeTimestamp = new Date(this.passwordChangeDate).getTime();
 
-    return passwordChangeTimestamp > tokenIssuanceTimestamp;
+    return passwordChangeTimestamp > signInTimestamp;
   }
 
   return false;

@@ -23,7 +23,7 @@ export async function GET() {
       '+passwordChangeDate'
     );
 
-    const changedPasswordAfterToken = await user.changedPasswordAfterToken(
+    const changedPasswordAfterSignIn = await user.changedPasswordAfterSignIn(
       session!.signInDate
     );
 
@@ -32,7 +32,7 @@ export async function GET() {
 
     return Response.json({
       isSuccess: true,
-      changedPasswordAfterToken,
+      changedPasswordAfterSignIn,
       user: { ...userObj, _id: userObj._id.toString() }
     });
   } catch (error) {

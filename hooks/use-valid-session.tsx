@@ -6,12 +6,14 @@ import { useEffect, useState } from 'react';
 export function useValidSession() {
   const [isFetching, setIsFetching] = useState<boolean>(true);
   const [user, setUser] = useState<IUser | null>(null);
-  const [changedPasswordAfterTokenStatus, setChangedPasswordAfterTokenStatus] =
-    useState<boolean>();
+  const [
+    changedPasswordAfterSignInStatus,
+    setChangedPasswordAfterSignInStatus
+  ] = useState<boolean>();
 
   const { data, update, status } = useSession();
 
-  const fetchChangedPasswordAfterTokenStatus = async () => {
+  const fetchChangedPasswordAfterSignInStatus = async () => {
     setIsFetching(true);
 
     const response = await fetch('/api/users/me/changed-password-after-token');
@@ -19,7 +21,7 @@ export function useValidSession() {
     if (response.ok) {
       const res = await response.json();
 
-      setChangedPasswordAfterTokenStatus(res.changedPasswordAfterToken);
+      setChangedPasswordAfterSignInStatus(res.changedPasswordAfterSignIn);
       setUser(res.user);
     }
 
@@ -27,12 +29,12 @@ export function useValidSession() {
   };
 
   useEffect(() => {
-    if (changedPasswordAfterTokenStatus === undefined) {
+    if (changedPasswordAfterSignInStatus === undefined) {
       if (data) {
-        fetchChangedPasswordAfterTokenStatus();
+        fetchChangedPasswordAfterSignInStatus();
       }
     }
-  }, [data, changedPasswordAfterTokenStatus]);
+  }, [data, changedPasswordAfterSignInStatus]);
 
   if ((status === 'loading' || isFetching) && status !== 'unauthenticated') {
     return { update, session: undefined, user: null, status: 'loading' };
@@ -40,7 +42,7 @@ export function useValidSession() {
 
   if (
     status === 'unauthenticated' ||
-    changedPasswordAfterTokenStatus === false
+    changedPasswordAfterSignInStatus === false
   ) {
     return {
       update,
