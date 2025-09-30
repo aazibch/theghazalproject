@@ -14,13 +14,19 @@ import { HiOutlineUserCircle } from 'react-icons/hi2';
 export default function SettingsSidebar() {
   const path = usePathname();
 
+  let sidebarRootClassNames = 'grow md:grow-0 md:basis-64';
+
+  if (path.endsWith('profile') || path.endsWith('account')) {
+    sidebarRootClassNames += ' hidden md:block';
+  }
+
   return (
     <Sidebar
       aria-label="Settings sidebar"
       className="border-r shrink-0"
       theme={{
         root: {
-          base: 'w-64'
+          base: sidebarRootClassNames
         }
       }}
     >

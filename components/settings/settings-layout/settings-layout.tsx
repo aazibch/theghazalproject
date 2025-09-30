@@ -2,7 +2,7 @@ import PageContainer from '@/components/layout/pages/page-container';
 import PageHeader from '@/components/layout/pages/page-header';
 import SettingsSidebar from './settings-sidebar';
 
-export default async function SettingsLayout({
+export default function SettingsLayout({
   children
 }: {
   children: React.ReactNode;
