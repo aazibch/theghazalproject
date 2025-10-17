@@ -95,7 +95,6 @@ export default function PasswordForm() {
           }
         />
       </div>
-
       <div className="flex justify-end">
         <Button type="submit" disabled={isSubmitting} color="blue">
           {isSubmitting ? (
@@ -118,5 +117,3 @@ export default function PasswordForm() {
 
   return <div className="max-w-md mx-auto">{content}</div>;
 }
-
-// TODO: Test UX.

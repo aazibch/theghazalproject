@@ -333,8 +333,8 @@ export async function submitEmailForPasswordReset(
 
 export async function resetPassword(
   token: string | null,
-  password: string,
-  passwordConfirmation: string
+  newPassword: string,
+  newPasswordConfirmation: string
 ) {
   const tokenError = {
     isSuccess: false,
@@ -356,13 +356,13 @@ export async function resetPassword(
   if (!user) return tokenError;
 
   const { error } = newPasswordSchema.validate({
-    password,
-    passwordConfirmation
+    newPassword,
+    newPasswordConfirmation
   });
 
   if (error) throw error;
 
-  user.password = password;
+  user.password = newPassword;
   user.passwordResetToken = undefined;
   user.passwordResetTokenExpirationDate = undefined;
   await user.save();
