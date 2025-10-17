@@ -46,7 +46,7 @@ export default function HeaderDropdown({
           >
             Profile
           </Dropdown.Item>
-          <Dropdown.Item onClick={() => router.push('/settings/profile')}>
+          <Dropdown.Item onClick={() => router.push('/settings')}>
             Settings
           </Dropdown.Item>
           <Dropdown.Item
