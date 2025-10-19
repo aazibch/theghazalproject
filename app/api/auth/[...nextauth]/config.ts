@@ -75,9 +75,18 @@ const config = {
           // Create email confirmation token:
           const token = await generateJwtToken({ email: userDoc.email }, '1hr');
 
-          // Send email:
-          const email = new Email(
-            { fullName: userDoc.fullName, email: userDoc.email },
+          // Send welcome email:
+          const emailConfig = {
+            fullName: userDoc.fullName,
+            email: userDoc.email
+          };
+
+          let email = new Email(emailConfig);
+          await email.sendWelcome();
+
+          // Send confirmation email:
+          email = new Email(
+            emailConfig,
             `${process.env.PRODUCTION_URL}auth/email?token=${token}`
           );
 
@@ -100,30 +109,23 @@ const config = {
     }) {
       if (user) {
         token._id = user._id;
-        token.fullName = user.fullName;
         token.username = user.username;
-        token.email = user.email;
-        token.profilePicture = user.profilePicture;
+        token.signInDate = Date.now();
       }
 
       if (trigger === 'update') {
         await dbConnect();
         const user = await User.findById(token._id);
 
-        token.fullName = user.fullName;
         token.username = user.username;
-        token.email = user.email;
-        token.profilePicture = user.profilePicture;
       }
 
       return token;
     },
     async session({ session, token }: { session: Session; token: JWT }) {
       session.user._id = token._id;
-      session.user.fullName = token.fullName;
       session.user.username = token.username;
-      session.user.email = token.email;
-      session.user.profilePicture = token.profilePicture;
+      session.signInDate = token.signInDate;
 
       return session;
     }

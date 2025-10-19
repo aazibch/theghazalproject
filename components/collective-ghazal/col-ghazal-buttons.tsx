@@ -2,16 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import {
-  redirect,
-  usePathname,
-  useRouter,
-  useSearchParams
-} from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Button } from 'flowbite-react';
-import { useSession } from 'next-auth/react';
 
 import ContributeModal from './contribute-modal/contribute-modal';
+import { useValidSession } from '@/hooks/use-valid-session';
+import { useSession } from 'next-auth/react';
 
 export default function ColGhazalButtons() {
   const [openContributeModal, setOpenContributeModal] =
@@ -19,7 +15,7 @@ export default function ColGhazalButtons() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { data: session } = useSession();
+  const { session } = useValidSession();
 
   const contributingSearchParamValue = searchParams.get('contributing');
 

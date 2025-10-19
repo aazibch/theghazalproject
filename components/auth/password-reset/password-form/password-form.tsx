@@ -9,27 +9,7 @@ import { newPasswordSchema } from '@/lib/schemas';
 import { resetPassword } from '@/lib/actions';
 import PasswordFailureScreen from './password-failure-screen';
 import PasswordSuccessScreen from './password-success-screen';
-
-interface FormErrors {
-  password?: string;
-  passwordConfirmation?: string;
-}
-
-const validate = (values: FormErrors) => {
-  const validationErrors: FormErrors = {};
-
-  const { error } = newPasswordSchema.validate(values, { abortEarly: false });
-
-  if (error) {
-    for (let x of error.details) {
-      if (x.context?.label) {
-        validationErrors[x.context.label as keyof FormErrors] = x.message;
-      }
-    }
-  }
-
-  return validationErrors;
-};
+import { generateValidator } from '@/lib/utils';
 
 export default function PasswordForm() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -43,24 +23,28 @@ export default function PasswordForm() {
 
   const formik = useFormik({
     initialValues: {
-      password: '',
-      passwordConfirmation: ''
+      newPassword: '',
+      newPasswordConfirmation: ''
     },
-    validate: validate,
+    validate: generateValidator(newPasswordSchema, false),
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: async (values) => {
-      const { password, passwordConfirmation } = values;
+      const { newPassword, newPasswordConfirmation } = values;
 
       setIsSubmitting(true);
 
-      const res = await resetPassword(token, password, passwordConfirmation);
+      const res = await resetPassword(
+        token,
+        newPassword,
+        newPasswordConfirmation
+      );
 
-      if (res.status === 'failure' && 'message' in res) {
+      if (!res.isSuccess && 'message' in res) {
         setBackendErrorMessage(res.message);
       }
 
-      if (res.status === 'success') {
+      if (res.isSuccess) {
         setIsSuccess(true);
       }
 
@@ -80,38 +64,37 @@ export default function PasswordForm() {
       <p>Please enter a new password for your account below.</p>
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="password" value="Password" />
+          <Label htmlFor="newPassword" value="New Password" />
         </div>
         <TextInput
-          id="password"
-          name="password"
+          id="newPassword"
+          name="newPassword"
           type="password"
           required
-          value={formik.values.password}
+          value={formik.values.newPassword}
           onChange={formik.handleChange}
-          color={formik.errors.password && 'failure'}
-          helperText={formik.errors.password && formik.errors.password}
+          color={formik.errors.newPassword && 'failure'}
+          helperText={formik.errors.newPassword && formik.errors.newPassword}
         />
       </div>
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="passwordConfirmation" value="Confirm Password" />
+          <Label htmlFor="newPasswordConfirmation" value="Confirm Password" />
         </div>
         <TextInput
-          id="passwordConfirmation"
-          name="passwordConfirmation"
+          id="newPasswordConfirmation"
+          name="newPasswordConfirmation"
           type="password"
           required
-          value={formik.values.passwordConfirmation}
+          value={formik.values.newPasswordConfirmation}
           onChange={formik.handleChange}
-          color={formik.errors.passwordConfirmation && 'failure'}
+          color={formik.errors.newPasswordConfirmation && 'failure'}
           helperText={
-            formik.errors.passwordConfirmation &&
-            formik.errors.passwordConfirmation
+            formik.errors.newPasswordConfirmation &&
+            formik.errors.newPasswordConfirmation
           }
         />
       </div>
-
       <div className="flex justify-end">
         <Button type="submit" disabled={isSubmitting} color="blue">
           {isSubmitting ? (

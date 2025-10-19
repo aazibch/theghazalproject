@@ -32,8 +32,9 @@ export const ConfirmationEmail = ({
       />
     </Head>
     <Preview>
-      Welcome to The Ghazal Project. We're glad to be joined by you. To enjoy
-      all the features on the platform, please confirm your email address.
+      You either created a new account or changed your email address at The
+      Ghazal Project. To enjoy all the features on the platform, please confirm
+      your email.
     </Preview>
     <Tailwind>
       <Body style={main}>
@@ -49,12 +50,12 @@ export const ConfirmationEmail = ({
 
           <Text style={paragraph}>Hi {fullName},</Text>
           <Text style={paragraph}>
-            Welcome to <Link href={baseUrl}>The Ghazal Project</Link>. We're
-            glad to be joined by you.
+            You either created a new account or changed your email address at{' '}
+            <Link href={baseUrl}>The Ghazal Project</Link>.
           </Text>
           <Text style={paragraph}>
-            To enjoy all the features on the platform, please confirm your email
-            address.
+            To enjoy all the features on the platform, please confirm your
+            email.
           </Text>
           <Section style={btnContainer}>
             <Button style={button} href={url}>

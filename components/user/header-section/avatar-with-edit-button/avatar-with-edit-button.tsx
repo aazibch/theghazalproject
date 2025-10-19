@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useActionState } from 'react';
+import { useRef, useActionState } from 'react';
 import { Avatar, Button } from 'flowbite-react';
 import { FiEdit } from 'react-icons/fi';
 import { updateProfilePicture } from '@/lib/actions';
-import { useSession } from 'next-auth/react';
 import LoadingOverlayAndEditButton from './loading-overlay-and-edit-button';
 
 export default function AvatarWithEditButton({
@@ -18,17 +17,6 @@ export default function AvatarWithEditButton({
   const resetInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [state, formAction] = useActionState(updateProfilePicture, null);
-
-  const { update } = useSession();
-
-  const status = state ? state.status : null;
-
-  useEffect(() => {
-    if (status === 'success') {
-      update();
-      resetInputRef.current!.click();
-    }
-  }, [status, update]);
 
   const handleEditButtonClick = () => {
     imageInputRef.current!.click();

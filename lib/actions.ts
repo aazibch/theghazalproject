@@ -4,12 +4,23 @@ import crypto from 'crypto';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { S3 } from '@aws-sdk/client-s3';
-import { getServerSession } from 'next-auth';
 
 import config from '@/app/api/auth/[...nextauth]/config';
-import { colGhazalEntrySchema, newPasswordSchema } from './schemas';
+import User from '@/models/User';
+import { DEFAULT_PROFILE_PICTURE, ERROR_MESSAGES } from '@/constants';
+import {
+  colGhazalEntrySchema,
+  newPasswordSchema,
+  updateAccountEmailSettingsSchema,
+  updateAccountPasswordSettingsSchema,
+  updateProfileSettingsSchema
+} from './schemas';
 import { IUser } from '@/types';
-import { getUserFromDB, updateProfilePictureInDb } from './users';
+import {
+  getUserFromDB,
+  updateProfilePictureInCloud,
+  updateUserInDB
+} from './users';
 import {
   createColGhazalEntry,
   getAllColGhazalEntriesByUserFromDB,
@@ -17,9 +28,9 @@ import {
   getRecentColGhazalEntriesFromDB
 } from './col-ghazal-entries';
 import dbConnect from './dbConnect';
-import User from '@/models/User';
 import Email from './email';
-import { ERROR_MESSAGES } from '@/constants';
+import { generateJwtToken, getValidServerSession } from './auth';
+import { formatValidationErrors } from './utils';
 
 let s3: S3 | undefined;
 
@@ -33,8 +44,11 @@ if (process.env.AWS_ID && process.env.AWS_SECRET) {
   });
 }
 
-export const getUser = async (username: string): Promise<IUser | undefined> => {
-  const user = await getUserFromDB(username);
+export const getUser = async (
+  username: string,
+  select?: string
+): Promise<IUser | undefined> => {
+  const user = await getUserFromDB(username, select);
 
   return user;
 };
@@ -45,25 +59,190 @@ export const updateProfilePicture = async (
 ) => {
   const newImage = formData.get('newImage') as File;
 
-  const session = await getServerSession(config);
+  const session = await getValidServerSession(config);
 
   if (!session) {
     throw new Error('Session not found.');
   }
 
-  if (!session.user || (session.user && !('_id' in session.user))) {
+  if (!session || (session && !('_id' in session.user))) {
     throw new Error('Invalid session.');
   }
 
-  await updateProfilePictureInDb(
-    newImage,
+  const profilePictureUrl = await updateProfilePictureInCloud(
     session.user._id,
-    session.user.username
+    newImage
   );
+
+  await updateUserInDB(session.user._id, { profilePicture: profilePictureUrl });
 
   revalidatePath('/', 'layout');
 
-  return { status: 'success' };
+  return { isSuccess: 'success' };
+};
+
+export const updateProfileSettings = async (
+  profilePictureRemoved: boolean,
+  prevState: any,
+  formData: FormData
+): Promise<{
+  isSuccess: boolean | null;
+  validationErrors?: Record<string, string>;
+  formFields: Record<string, any>;
+}> => {
+  const session = await getValidServerSession(config);
+
+  if (!session) {
+    throw new Error('Session not found.');
+  }
+
+  const formFields = {
+    fullName: formData.get('fullName') as string
+  };
+
+  const profilePicture = formData.get('avatar') as File;
+
+  const { error } = updateProfileSettingsSchema.validate(formFields, {
+    abortEarly: true
+  });
+
+  if (error) {
+    const validationErrors = formatValidationErrors(error);
+
+    return {
+      isSuccess: false,
+      validationErrors,
+      formFields
+    };
+  }
+
+  const docUpdates: Record<string, any> = formFields;
+
+  if (profilePictureRemoved) {
+    docUpdates.profilePicture = DEFAULT_PROFILE_PICTURE;
+  } else if (profilePicture.size !== 0) {
+    const profilePictureUrl = await updateProfilePictureInCloud(
+      session.user._id,
+      profilePicture
+    );
+    docUpdates.profilePicture = profilePictureUrl;
+  }
+
+  await updateUserInDB(session.user._id, docUpdates);
+  revalidatePath('/', 'layout');
+
+  return {
+    isSuccess: true,
+    formFields
+  };
+};
+
+export const updateAccountEmailSettings = async (
+  prevState: any,
+  formData: FormData
+): Promise<{
+  isSuccess: boolean | null;
+  validationErrors?: Record<string, string>;
+  formFields: Record<string, string>;
+}> => {
+  const session = await getValidServerSession(config);
+
+  if (!session) {
+    throw new Error('Session not found.');
+  }
+
+  const formFields = { email: formData.get('email') as string };
+
+  const { error } = updateAccountEmailSettingsSchema.validate(formFields, {
+    abortEarly: true
+  });
+
+  if (error) {
+    const validationErrors = formatValidationErrors(error);
+
+    return {
+      isSuccess: false,
+      validationErrors,
+      formFields
+    };
+  }
+
+  // Generate confirmation email token
+  const token = await generateJwtToken({ email: formFields.email }, '1hr');
+
+  // Send confirmation email:
+  const email = new Email(
+    {
+      fullName: session.user.fullName,
+      email: formFields.email
+    },
+    `${process.env.PRODUCTION_URL}auth/email?token=${token}`
+  );
+
+  await email.sendEmailConfirmation();
+
+  await updateUserInDB(session.user._id, {
+    email: formFields.email,
+    emailConfirmed: false
+  });
+
+  return { isSuccess: true, formFields };
+};
+
+export const updateAccountPasswordSettings = async (
+  prevState: any,
+  formData: FormData
+): Promise<{
+  isSuccess: boolean | null;
+  message?: string;
+  validationErrors?: Record<string, string>;
+}> => {
+  const session = await getValidServerSession(config);
+
+  if (!session) {
+    throw new Error('Session not found.');
+  }
+
+  const formFields = {
+    currentPassword: formData.get('currentPassword') as string,
+    newPassword: formData.get('newPassword') as string,
+    newPasswordConfirmation: formData.get('newPasswordConfirmation') as string
+  };
+
+  const { error } = updateAccountPasswordSettingsSchema.validate(formFields, {
+    abortEarly: true
+  });
+
+  if (error) {
+    const validationErrors = formatValidationErrors(error);
+
+    return {
+      isSuccess: false,
+      validationErrors
+    };
+  }
+
+  await dbConnect();
+
+  const user = await User.findById(session.data.user._id).select('+password');
+
+  if (
+    !(await user.isPasswordCorrect(formFields.currentPassword, user.password))
+  ) {
+    return {
+      isSuccess: false,
+      validationErrors: {
+        currentPassword: 'Incorrect value for the current password.'
+      }
+    };
+  }
+
+  user.password = formFields.newPassword;
+  await user.save();
+
+  return {
+    isSuccess: true
+  };
 };
 
 export const getColGhazalEntriesByUser = async (userId: string) => {
@@ -88,13 +267,13 @@ export const submitColGhazalCouplet = async (couplet: {
   lineOne: string;
   lineTwo: string;
 }) => {
-  const session = await getServerSession(config);
+  const session = await getValidServerSession(config);
 
   if (!session) {
     throw new Error('Session not found.');
   }
 
-  if (!session.user || (session.user && !('_id' in session.user))) {
+  if (!session || (session && !('_id' in session.user))) {
     throw new Error('Invalid session.');
   }
 
@@ -109,13 +288,13 @@ export const submitColGhazalCouplet = async (couplet: {
   revalidatePath('/');
   revalidatePath('/collective-ghazal');
 
-  return { status: 'success' };
+  return { isSuccess: true };
 };
 
 export async function submitEmailForPasswordReset(
   prevState: any,
   formData: FormData
-): Promise<{ status: string | null; message?: string }> {
+): Promise<{ isSuccess: boolean | null; message?: string }> {
   const email = formData.get('email');
 
   await dbConnect();
@@ -124,7 +303,7 @@ export async function submitEmailForPasswordReset(
 
   if (!user) {
     return {
-      status: 'failure',
+      isSuccess: false,
       message:
         "No user with that email address exists or they didn't confirm their email address."
     };
@@ -146,19 +325,19 @@ export async function submitEmailForPasswordReset(
     user.passwordResetTokenExpirationDate = undefined;
     await user.save({ validateBeforeSave: false });
 
-    return { status: 'failure', message: ERROR_MESSAGES.generic };
+    return { isSuccess: false, message: ERROR_MESSAGES.generic };
   }
 
-  return { status: 'success' };
+  return { isSuccess: true };
 }
 
 export async function resetPassword(
   token: string | null,
-  password: string,
-  passwordConfirmation: string
+  newPassword: string,
+  newPasswordConfirmation: string
 ) {
   const tokenError = {
-    status: 'failure',
+    isSuccess: false,
     message: 'Oh, oh! The password reset token has expired or is invalid.'
   };
 
@@ -177,19 +356,19 @@ export async function resetPassword(
   if (!user) return tokenError;
 
   const { error } = newPasswordSchema.validate({
-    password,
-    passwordConfirmation
+    newPassword,
+    newPasswordConfirmation
   });
 
   if (error) throw error;
 
-  user.password = password;
+  user.password = newPassword;
   user.passwordResetToken = undefined;
   user.passwordResetTokenExpirationDate = undefined;
   await user.save();
 
   return {
-    status: 'success'
+    isSuccess: true
   };
 }
 

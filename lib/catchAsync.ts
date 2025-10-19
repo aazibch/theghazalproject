@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import { Awaitable, User } from 'next-auth';
-import AppError from './utils';
 
 import { ERROR_MESSAGES } from '@/constants';
 import { AuthCredentials, AuthRequest } from '@/types';

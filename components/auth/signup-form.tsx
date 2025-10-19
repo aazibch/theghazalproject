@@ -9,36 +9,13 @@ import { useFormik } from 'formik';
 import { redirectAfterAuth } from '@/lib/actions';
 import { signupSchema } from '@/lib/schemas';
 import styles from './form.module.css';
-
-interface FormErrors {
-  fullName?: string;
-  username?: string;
-  email?: string;
-  password?: string;
-  passwordConfirmation?: string;
-}
+import { generateValidator } from '@/lib/utils';
 
 export default function SignupForm() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [backendErrorMessage, setBackendErrorMessage] = useState<
     string | undefined
   >();
-
-  const validate = (values: FormErrors) => {
-    const validationErrors: FormErrors = {};
-
-    const { error } = signupSchema.validate(values, { abortEarly: false });
-
-    if (error) {
-      for (let x of error.details) {
-        if (x.context?.label) {
-          validationErrors[x.context.label as keyof FormErrors] = x.message;
-        }
-      }
-    }
-
-    return validationErrors;
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -48,7 +25,7 @@ export default function SignupForm() {
       password: '',
       passwordConfirmation: ''
     },
-    validate: validate,
+    validate: generateValidator(signupSchema, false),
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: async (values) => {
@@ -186,3 +163,5 @@ export default function SignupForm() {
     </form>
   );
 }
+
+// TODO: Where possible, manage forms using useActionState() hook.

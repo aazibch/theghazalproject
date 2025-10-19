@@ -1,3 +1,6 @@
+export const DEFAULT_PROFILE_PICTURE =
+  'https://theghazalproject-user-avatars.s3.ap-southeast-2.amazonaws.com/default.jpg';
+
 export const ERROR_MESSAGES = {
   generic: 'Something went wrong! Please try again in a while.',
   nonUniqueUsername: 'An account with the same username already exists.',

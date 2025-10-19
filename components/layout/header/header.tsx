@@ -5,8 +5,12 @@ import NavLink from './nav-link';
 import HeaderDropdown from './header-dropdown';
 
 import Logo from '@/assets/logo.png';
+import config from '@/app/api/auth/[...nextauth]/config';
+import { getValidServerSession } from '@/lib/auth';
 
 export default async function Header() {
+  const session = await getValidServerSession(config);
+
   return (
     <Navbar
       theme={{
@@ -28,7 +32,7 @@ export default async function Header() {
           priority
         />
       </NavbarBrand>
-      <HeaderDropdown />
+      <HeaderDropdown sessionUser={session?.user} />
 
       <NavbarCollapse>
         <NavLink href="/">Home</NavLink>
