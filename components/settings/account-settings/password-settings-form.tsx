@@ -5,6 +5,7 @@ import { Button, Label, Spinner, TextInput } from 'flowbite-react';
 
 import { updateAccountPasswordSettings } from '@/lib/actions';
 import { useFormChangeTracker } from '@/hooks/use-field-change-tracker';
+import { signOut } from 'next-auth/react';
 
 export default function PasswordSettingsForm() {
   const [state, formAction, pending] = useActionState(
@@ -19,6 +20,10 @@ export default function PasswordSettingsForm() {
     newPassword: '',
     newPasswordConfirmation: ''
   });
+
+  if (state.isSuccess) {
+    signOut({ callbackUrl: '/auth/login', redirect: true });
+  }
 
   return (
     <form action={formAction} className="flex max-w-md flex-col gap-4 mx-auto">

@@ -240,10 +240,10 @@ export const updateAccountPasswordSettings = async (
   user.password = formFields.newPassword;
   await user.save();
 
-  redirect('/auth/login');
+  return {
+    isSuccess: true
+  };
 };
-
-// TODO: Return a response, and then sign out on the client side.
 
 export const getColGhazalEntriesByUser = async (userId: string) => {
   const allEntriesByUser = await getAllColGhazalEntriesByUserFromDB(userId);
