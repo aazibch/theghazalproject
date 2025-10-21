@@ -110,7 +110,7 @@ export default function ProfileSettingsForm({
             required
             defaultValue={state.formFields.fullName}
             color={state.validationErrors?.fullName && 'failure'}
-            helperText={state.validationErrors?.email}
+            helperText={state.validationErrors?.fullName}
           />
         </div>
         <div className="mb-1">

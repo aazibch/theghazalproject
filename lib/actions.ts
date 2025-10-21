@@ -333,12 +333,40 @@ export async function submitEmailForPasswordReset(
 
 export async function resetPassword(
   token: string | null,
-  newPassword: string,
-  newPasswordConfirmation: string
-) {
+  prevState: any,
+  formData: FormData
+): Promise<{
+  isSuccess: boolean | null;
+  errorMessage?: string;
+  validationErrors?: Record<string, string>;
+}> {
+  const formFields = {
+    newPassword: formData.get('newPassword') as string,
+    newPasswordConfirmation: formData.get('newPasswordConfirmation') as string
+  };
+
+  const { error } = newPasswordSchema.validate(
+    {
+      newPassword: formFields.newPassword,
+      newPasswordConfirmation: formFields.newPasswordConfirmation
+    },
+    {
+      abortEarly: true
+    }
+  );
+
+  if (error) {
+    const validationErrors = formatValidationErrors(error);
+
+    return {
+      isSuccess: false,
+      validationErrors
+    };
+  }
+
   const tokenError = {
     isSuccess: false,
-    message: 'Oh, oh! The password reset token has expired or is invalid.'
+    errorMessage: 'Oh, oh! The password reset token has expired or is invalid.'
   };
 
   if (!token) {
@@ -355,14 +383,7 @@ export async function resetPassword(
 
   if (!user) return tokenError;
 
-  const { error } = newPasswordSchema.validate({
-    newPassword,
-    newPasswordConfirmation
-  });
-
-  if (error) throw error;
-
-  user.password = newPassword;
+  user.password = formFields.newPassword;
   user.passwordResetToken = undefined;
   user.passwordResetTokenExpirationDate = undefined;
   await user.save();
