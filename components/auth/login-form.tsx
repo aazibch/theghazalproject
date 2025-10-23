@@ -24,16 +24,13 @@ export default function LoginForm() {
     const res = await signIn('credentials', {
       email: emailRef.current!.value,
       password: passwordRef.current!.value,
-      redirect: false
+      redirect: true,
+      callbackUrl: '/'
     });
 
     if (res?.error) {
       setBackendErrorMessage(res.error);
       setIsSubmitting(false);
-    }
-
-    if (res?.status === 200) {
-      redirectAfterAuth();
     }
   };
 
