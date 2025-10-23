@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useEffect } from 'react';
 import { Button, Label, Spinner, TextInput } from 'flowbite-react';
 
 import { updateAccountPasswordSettings } from '@/lib/actions';
@@ -21,9 +21,11 @@ export default function PasswordSettingsForm() {
     newPasswordConfirmation: ''
   });
 
-  if (state.isSuccess) {
-    signOut({ callbackUrl: '/auth/login', redirect: true });
-  }
+  useEffect(() => {
+    if (state.isSuccess) {
+      signOut({ callbackUrl: '/auth/login', redirect: true });
+    }
+  }, [state.isSuccess]);
 
   return (
     <form action={formAction} className="flex max-w-md flex-col gap-4 mx-auto">
