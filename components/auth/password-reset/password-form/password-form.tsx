@@ -20,11 +20,12 @@ export default function PasswordForm() {
   );
 
   let content = (
-    <form action={formAction} method="POST" className="flex flex-col gap-4">
+    <form action={formAction} className="flex flex-col gap-4">
       {formState.errorMessage && (
         <p className="text-red-600 text-center">{formState.errorMessage}</p>
       )}
       <p>Please enter a new password for your account below.</p>
+      <p>Hello</p>
       <div>
         <div className="mb-2 block">
           <Label htmlFor="newPassword" value="New Password" />
