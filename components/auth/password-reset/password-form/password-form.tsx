@@ -1,67 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { useActionState, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useFormik } from 'formik';
 import { Button, Label, Spinner, TextInput } from 'flowbite-react';
 
-import { newPasswordSchema } from '@/lib/schemas';
-import { resetPassword } from '@/lib/actions';
 import PasswordFailureScreen from './password-failure-screen';
 import PasswordSuccessScreen from './password-success-screen';
-import { generateValidator } from '@/lib/utils';
+import { resetPassword } from '@/lib/actions';
 
 export default function PasswordForm() {
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [backendErrorMessage, setBackendErrorMessage] = useState<
-    string | undefined
-  >();
-
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
 
-  const formik = useFormik({
-    initialValues: {
-      newPassword: '',
-      newPasswordConfirmation: ''
-    },
-    validate: generateValidator(newPasswordSchema, false),
-    validateOnChange: false,
-    validateOnBlur: false,
-    onSubmit: async (values) => {
-      const { newPassword, newPasswordConfirmation } = values;
-
-      setIsSubmitting(true);
-
-      const res = await resetPassword(
-        token,
-        newPassword,
-        newPasswordConfirmation
-      );
-
-      if (!res.isSuccess && 'message' in res) {
-        setBackendErrorMessage(res.message);
-      }
-
-      if (res.isSuccess) {
-        setIsSuccess(true);
-      }
-
-      setIsSubmitting(false);
+  const [formState, formAction, pending] = useActionState(
+    resetPassword.bind(null, token),
+    {
+      isSuccess: null
     }
-  });
+  );
 
   let content = (
-    <form
-      method="post"
-      onSubmit={formik.handleSubmit}
-      className="flex flex-col gap-4"
-    >
-      {backendErrorMessage && (
-        <p className="text-red-600 text-center">{backendErrorMessage}</p>
+    <form action={formAction} className="flex flex-col gap-4">
+      {formState.errorMessage && (
+        <p className="text-red-600 text-center">{formState.errorMessage}</p>
       )}
       <p>Please enter a new password for your account below.</p>
+      <p>Hello</p>
       <div>
         <div className="mb-2 block">
           <Label htmlFor="newPassword" value="New Password" />
@@ -71,10 +35,8 @@ export default function PasswordForm() {
           name="newPassword"
           type="password"
           required
-          value={formik.values.newPassword}
-          onChange={formik.handleChange}
-          color={formik.errors.newPassword && 'failure'}
-          helperText={formik.errors.newPassword && formik.errors.newPassword}
+          color={formState.validationErrors?.newPassword && 'failure'}
+          helperText={formState.validationErrors?.newPassword}
         />
       </div>
       <div>
@@ -86,18 +48,15 @@ export default function PasswordForm() {
           name="newPasswordConfirmation"
           type="password"
           required
-          value={formik.values.newPasswordConfirmation}
-          onChange={formik.handleChange}
-          color={formik.errors.newPasswordConfirmation && 'failure'}
-          helperText={
-            formik.errors.newPasswordConfirmation &&
-            formik.errors.newPasswordConfirmation
+          color={
+            formState.validationErrors?.newPasswordConfirmation && 'failure'
           }
+          helperText={formState.validationErrors?.newPasswordConfirmation}
         />
       </div>
       <div className="flex justify-end">
-        <Button type="submit" disabled={isSubmitting} color="blue">
-          {isSubmitting ? (
+        <Button type="submit" disabled={pending} color="blue">
+          {pending ? (
             <Spinner size="sm" aria-label="loading spinner" />
           ) : (
             'Submit'
@@ -107,11 +66,11 @@ export default function PasswordForm() {
     </form>
   );
 
-  if (backendErrorMessage) {
-    content = <PasswordFailureScreen message={backendErrorMessage} />;
+  if (formState.errorMessage) {
+    content = <PasswordFailureScreen message={formState.errorMessage} />;
   }
 
-  if (isSuccess) {
+  if (formState.isSuccess) {
     content = <PasswordSuccessScreen />;
   }
 

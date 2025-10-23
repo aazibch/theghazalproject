@@ -263,24 +263,33 @@ export const getColGhazalEntries = async () => {
   return allEntries;
 };
 
-export const submitColGhazalCouplet = async (couplet: {
-  lineOne: string;
-  lineTwo: string;
-}) => {
+export const submitColGhazalCouplet = async (
+  prevState: any,
+  formData: FormData
+): Promise<{
+  isSuccess: boolean | null;
+  formFields: Record<string, string>;
+  validationErrors?: Record<string, string>;
+}> => {
   const session = await getValidServerSession(config);
 
   if (!session) {
     throw new Error('Session not found.');
   }
 
-  if (!session || (session && !('_id' in session.user))) {
-    throw new Error('Invalid session.');
-  }
+  const couplet = {
+    lineOne: formData.get('lineOne') as string,
+    lineTwo: formData.get('lineTwo') as string
+  };
 
-  const { error } = colGhazalEntrySchema.validate(couplet);
+  const { error } = colGhazalEntrySchema.validate(couplet, {
+    abortEarly: true
+  });
 
   if (error) {
-    throw error;
+    const validationErrors = formatValidationErrors(error);
+
+    return { isSuccess: false, validationErrors, formFields: couplet };
   }
 
   await createColGhazalEntry(couplet, session.user._id);
@@ -288,7 +297,7 @@ export const submitColGhazalCouplet = async (couplet: {
   revalidatePath('/');
   revalidatePath('/collective-ghazal');
 
-  return { isSuccess: true };
+  return { isSuccess: true, formFields: couplet };
 };
 
 export async function submitEmailForPasswordReset(
@@ -333,12 +342,40 @@ export async function submitEmailForPasswordReset(
 
 export async function resetPassword(
   token: string | null,
-  newPassword: string,
-  newPasswordConfirmation: string
-) {
+  prevState: any,
+  formData: FormData
+): Promise<{
+  isSuccess: boolean | null;
+  errorMessage?: string;
+  validationErrors?: Record<string, string>;
+}> {
+  const formFields = {
+    newPassword: formData.get('newPassword') as string,
+    newPasswordConfirmation: formData.get('newPasswordConfirmation') as string
+  };
+
+  const { error } = newPasswordSchema.validate(
+    {
+      newPassword: formFields.newPassword,
+      newPasswordConfirmation: formFields.newPasswordConfirmation
+    },
+    {
+      abortEarly: true
+    }
+  );
+
+  if (error) {
+    const validationErrors = formatValidationErrors(error);
+
+    return {
+      isSuccess: false,
+      validationErrors
+    };
+  }
+
   const tokenError = {
     isSuccess: false,
-    message: 'Oh, oh! The password reset token has expired or is invalid.'
+    errorMessage: 'Oh, oh! The password reset token has expired or is invalid.'
   };
 
   if (!token) {
@@ -355,14 +392,7 @@ export async function resetPassword(
 
   if (!user) return tokenError;
 
-  const { error } = newPasswordSchema.validate({
-    newPassword,
-    newPasswordConfirmation
-  });
-
-  if (error) throw error;
-
-  user.password = newPassword;
+  user.password = formFields.newPassword;
   user.passwordResetToken = undefined;
   user.passwordResetTokenExpirationDate = undefined;
   await user.save();

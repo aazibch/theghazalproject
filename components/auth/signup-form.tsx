@@ -40,16 +40,13 @@ export default function SignupForm() {
         email,
         password,
         passwordConfirmation,
-        redirect: false
+        redirect: true,
+        callbackUrl: '/'
       });
 
       if (res?.error) {
         setBackendErrorMessage(res.error);
         setIsSubmitting(false);
-      }
-
-      if (res?.status === 200) {
-        redirectAfterAuth();
       }
     }
   });
