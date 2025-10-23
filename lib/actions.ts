@@ -263,24 +263,33 @@ export const getColGhazalEntries = async () => {
   return allEntries;
 };
 
-export const submitColGhazalCouplet = async (couplet: {
-  lineOne: string;
-  lineTwo: string;
-}) => {
+export const submitColGhazalCouplet = async (
+  prevState: any,
+  formData: FormData
+): Promise<{
+  isSuccess: boolean | null;
+  formFields: Record<string, string>;
+  validationErrors?: Record<string, string>;
+}> => {
   const session = await getValidServerSession(config);
 
   if (!session) {
     throw new Error('Session not found.');
   }
 
-  if (!session || (session && !('_id' in session.user))) {
-    throw new Error('Invalid session.');
-  }
+  const couplet = {
+    lineOne: formData.get('lineOne') as string,
+    lineTwo: formData.get('lineTwo') as string
+  };
 
-  const { error } = colGhazalEntrySchema.validate(couplet);
+  const { error } = colGhazalEntrySchema.validate(couplet, {
+    abortEarly: true
+  });
 
   if (error) {
-    throw error;
+    const validationErrors = formatValidationErrors(error);
+
+    return { isSuccess: false, validationErrors, formFields: couplet };
   }
 
   await createColGhazalEntry(couplet, session.user._id);
@@ -288,7 +297,7 @@ export const submitColGhazalCouplet = async (couplet: {
   revalidatePath('/');
   revalidatePath('/collective-ghazal');
 
-  return { isSuccess: true };
+  return { isSuccess: true, formFields: couplet };
 };
 
 export async function submitEmailForPasswordReset(

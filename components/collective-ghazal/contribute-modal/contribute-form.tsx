@@ -1,11 +1,8 @@
-import { useState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { Button, Modal, Spinner, TextInput } from 'flowbite-react';
-import { useFormik } from 'formik';
 
 import { submitColGhazalCouplet } from '@/lib/actions';
-import { colGhazalEntrySchema } from '@/lib/schemas';
 import Link from 'next/link';
-import { generateValidator } from '@/lib/utils';
 
 interface FormErrors {
   lineOne?: string;
@@ -21,30 +18,26 @@ export default function ContributeForm({
   setIsSuccessHandler: (value: boolean) => void;
   setOpenContributeModalHandler: (value: boolean) => void;
 }) {
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-
-  const formik = useFormik({
-    initialValues: {
-      lineOne: '',
-      lineTwo: ''
-    },
-    validate: generateValidator(colGhazalEntrySchema, false),
-    validateOnChange: false,
-    onSubmit: async (values) => {
-      setIsSubmitting(true);
-      const res = await submitColGhazalCouplet(values);
-
-      if (res.isSuccess) {
-        setIsSuccessHandler(true);
+  const [formState, formAction, pending] = useActionState(
+    submitColGhazalCouplet,
+    {
+      isSuccess: null,
+      formFields: {
+        lineOne: '',
+        lineTwo: ''
       }
-
-      setIsSubmitting(false);
     }
-  });
+  );
+
+  useEffect(() => {
+    if (formState.isSuccess && !pending) {
+      setIsSuccessHandler(true);
+    }
+  }, [formState.isSuccess, pending, setIsSuccessHandler]);
 
   return (
     <>
-      <form onSubmit={formik.handleSubmit}>
+      <form action={formAction}>
         <Modal.Body className="flex items-center justify-center">
           <div className="space-y-6">
             <div className="text-base leading-relaxed text-gray-500 space-y-2">
@@ -82,10 +75,9 @@ export default function ContributeForm({
                   type="text"
                   placeholder="Line 1"
                   name="lineOne"
-                  value={formik.values.lineOne}
-                  onChange={formik.handleChange}
-                  color={formik.errors.lineOne && 'failure'}
-                  helperText={formik.errors.lineOne}
+                  defaultValue={formState.formFields.lineOne}
+                  color={formState.validationErrors?.lineOne && 'failure'}
+                  helperText={formState.validationErrors?.lineOne}
                 />
               </div>
               <div>
@@ -93,10 +85,9 @@ export default function ContributeForm({
                   type="text"
                   placeholder="Line 2"
                   name="lineTwo"
-                  value={formik.values.lineTwo}
-                  onChange={formik.handleChange}
-                  color={formik.errors.lineTwo && 'failure'}
-                  helperText={formik.errors.lineTwo}
+                  defaultValue={formState.formFields.lineTwo}
+                  color={formState.validationErrors?.lineTwo && 'failure'}
+                  helperText={formState.validationErrors?.lineTwo}
                 />
               </div>
             </div>
@@ -106,11 +97,11 @@ export default function ContributeForm({
           {!isSuccess && (
             <Button
               className="w-20"
-              disabled={isSubmitting}
+              disabled={pending}
               color="blue"
               type="submit"
             >
-              {isSubmitting ? (
+              {pending ? (
                 <Spinner size="sm" aria-label="loading spinner" />
               ) : (
                 <span>Submit</span>
