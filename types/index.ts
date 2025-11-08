@@ -8,6 +8,7 @@ export interface IUser {
   username: string;
   email: string;
   emailConfirmed: boolean;
+  role: 'user' | 'admin';
   profilePicture: string;
   password?: string;
   passwordChangeDate?: Date;
