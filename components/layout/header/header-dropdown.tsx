@@ -49,6 +49,11 @@ export default function HeaderDropdown({
           <Dropdown.Item onClick={() => router.push('/settings')}>
             Settings
           </Dropdown.Item>
+          {sessionUser.role === 'admin' && (
+            <Dropdown.Item onClick={() => router.push('/admin/control-panel')}>
+              Control Panel
+            </Dropdown.Item>
+          )}
           <Dropdown.Item
             onClick={() => signOut({ callbackUrl: '/', redirect: true })}
           >
