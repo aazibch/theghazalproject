@@ -33,6 +33,7 @@
     "validator": "^13.12.0"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.15.3",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20",
