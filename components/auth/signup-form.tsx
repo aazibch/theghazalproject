@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Button, Label, Spinner, TextInput } from 'flowbite-react';
+import { Button, HelperText, Label, Spinner, TextInput } from 'flowbite-react';
 import { signIn } from 'next-auth/react';
 import { useFormik } from 'formik';
 
@@ -62,7 +62,7 @@ export default function SignupForm() {
       )}
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="fullName" value="Full Name" />
+          <Label htmlFor="fullName">Full Name</Label>
         </div>
         <TextInput
           name="fullName"
@@ -72,12 +72,14 @@ export default function SignupForm() {
           value={formik.values.fullName}
           onChange={formik.handleChange}
           color={formik.errors.fullName && 'failure'}
-          helperText={formik.errors.fullName && formik.errors.fullName}
         />
+        {formik.errors.fullName && (
+          <HelperText>{formik.errors.fullName}</HelperText>
+        )}
       </div>
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="username" value="Username" />
+          <Label htmlFor="username">Username</Label>
         </div>
         <TextInput
           name="username"
@@ -87,12 +89,14 @@ export default function SignupForm() {
           value={formik.values.username}
           onChange={formik.handleChange}
           color={formik.errors.username && 'failure'}
-          helperText={formik.errors.username && formik.errors.username}
         />
+        {formik.errors.username && (
+          <HelperText>{formik.errors.username}</HelperText>
+        )}
       </div>
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="email" value="Email" />
+          <Label htmlFor="email">Email</Label>
         </div>
         <TextInput
           name="email"
@@ -102,12 +106,12 @@ export default function SignupForm() {
           value={formik.values.email}
           onChange={formik.handleChange}
           color={formik.errors.email && 'failure'}
-          helperText={formik.errors.email && formik.errors.email}
         />
+        {formik.errors.email && <HelperText>{formik.errors.email}</HelperText>}
       </div>
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="password" value="Password" />
+          <Label htmlFor="password">Password</Label>
         </div>
         <TextInput
           id="password"
@@ -116,12 +120,14 @@ export default function SignupForm() {
           value={formik.values.password}
           onChange={formik.handleChange}
           color={formik.errors.password && 'failure'}
-          helperText={formik.errors.password && formik.errors.password}
         />
+        {formik.errors.password && (
+          <HelperText>{formik.errors.password}</HelperText>
+        )}
       </div>
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="passwordConfirmation" value="Confirm Password" />
+          <Label htmlFor="passwordConfirmation">Confirm Password</Label>
         </div>
         <TextInput
           name="passwordConfirmation"
@@ -131,11 +137,10 @@ export default function SignupForm() {
           value={formik.values.passwordConfirmation}
           onChange={formik.handleChange}
           color={formik.errors.passwordConfirmation && 'failure'}
-          helperText={
-            formik.errors.passwordConfirmation &&
-            formik.errors.passwordConfirmation
-          }
         />
+        {formik.errors.passwordConfirmation && (
+          <HelperText>{formik.errors.passwordConfirmation}</HelperText>
+        )}
       </div>
 
       <Button disabled={isSubmitting} color="blue" type="submit">

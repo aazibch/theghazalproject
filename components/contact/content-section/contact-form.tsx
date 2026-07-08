@@ -1,7 +1,7 @@
 import { contactSchema } from '@/lib/schemas';
 
 import { useRef, useState } from 'react';
-import { Button, Label, Textarea, TextInput } from 'flowbite-react';
+import { Button, HelperText, Label, Textarea, TextInput } from 'flowbite-react';
 import { useFormik } from 'formik';
 
 interface FormErrors {
@@ -85,7 +85,7 @@ export default function ContactForm({
       </div>
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="fullName" value="Full Name*" />
+          <Label htmlFor="fullName">Full Name*</Label>
         </div>
         <TextInput
           id="fullName"
@@ -93,14 +93,16 @@ export default function ContactForm({
           type="text"
           required
           color={formik.errors.fullName && 'failure'}
-          helperText={formik.errors.fullName && formik.errors.fullName}
           value={formik.values.fullName}
           onChange={formik.handleChange}
         />
+        {formik.errors.fullName && (
+          <HelperText>{formik.errors.fullName}</HelperText>
+        )}
       </div>
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="email" value="Email*" />
+          <Label htmlFor="email">Email*</Label>
         </div>
         <TextInput
           id="email"
@@ -108,25 +110,27 @@ export default function ContactForm({
           type="email"
           required
           color={formik.errors.email && 'failure'}
-          helperText={formik.errors.email && formik.errors.email}
           value={formik.values.email}
           onChange={formik.handleChange}
         />
+        {formik.errors.email && <HelperText>{formik.errors.email}</HelperText>}
       </div>
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="message" value="Message*" />
+          <Label htmlFor="message">Message*</Label>
         </div>
         <Textarea
           id="message"
           name="message"
           required
           color={formik.errors.message && 'failure'}
-          helperText={formik.errors.message && formik.errors.message}
           rows={15}
           value={formik.values.message}
           onChange={formik.handleChange}
         />
+        {formik.errors.message && (
+          <HelperText>{formik.errors.message}</HelperText>
+        )}
       </div>
       <Button type="submit" color="blue">
         Send

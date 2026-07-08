@@ -10,7 +10,7 @@ export default function AvatarFileInput({
   setAvatarPreviewHandler,
   handleFileInputChange
 }: {
-  avatarInputRef: React.RefObject<HTMLInputElement>;
+  avatarInputRef: React.RefObject<HTMLInputElement | null>;
   userProfilePicture: string;
   avatarPreview: string;
   setIsProfilePictureRemovedHandler: (value: boolean) => void;
@@ -47,9 +47,7 @@ export default function AvatarFileInput({
           ref={avatarInputRef}
           onChange={handleFileInputChange}
           theme={{
-            root: {
-              base: 'w-full'
-            }
+            base: 'w-full'
           }}
         />
       </div>

@@ -45,13 +45,13 @@ export default function LoginForm() {
       )}
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="email" value="Email" />
+          <Label htmlFor="email">Email</Label>
         </div>
         <TextInput id="email" type="email" required ref={emailRef} />
       </div>
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="password" value="Password" />
+          <Label htmlFor="password">Password</Label>
         </div>
         <TextInput id="password" type="password" required ref={passwordRef} />
       </div>

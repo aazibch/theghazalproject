@@ -1,7 +1,7 @@
 'use client';
 
 import { useActionState } from 'react';
-import { Button, Label, Spinner, TextInput } from 'flowbite-react';
+import { Button, HelperText, Label, Spinner, TextInput } from 'flowbite-react';
 
 import { IUser } from '@/types';
 import { updateAccountEmailSettings } from '@/lib/actions';
@@ -33,7 +33,7 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
       <h2 className="text-xl font-semibold mb-2">Email Address</h2>
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="email" value="Email" />
+          <Label htmlFor="email">Email</Label>
         </div>
         <TextInput
           onChange={handleInputChange}
@@ -43,12 +43,15 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
           defaultValue={state.formFields.email}
           required
           color={state.validationErrors?.email && 'failure'}
-          helperText={
-            (state.isSuccess &&
-              'We have sent a confirmation link to your new email.') ||
-            state.validationErrors?.email
-          }
         />
+        {state.isSuccess ||
+          (state.validationErrors?.email && (
+            <HelperText>
+              {(state.isSuccess &&
+                'We have sent a confirmation link to your new email.') ||
+                state.validationErrors?.email}
+            </HelperText>
+          ))}
       </div>
       <div>
         <Button

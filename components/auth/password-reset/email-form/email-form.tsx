@@ -29,7 +29,7 @@ export default function EmailForm() {
 
           <div>
             <div className="mb-2 block">
-              <Label htmlFor="email" value="Email" />
+              <Label htmlFor="email">Email</Label>
             </div>
             <TextInput id="email" name="email" type="email" required />
           </div>

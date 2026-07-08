@@ -1,7 +1,7 @@
 'use client';
 
 import { useActionState, useEffect, useRef, useState } from 'react';
-import { Button, Label, Spinner, TextInput } from 'flowbite-react';
+import { Button, HelperText, Label, Spinner, TextInput } from 'flowbite-react';
 
 import { IUser } from '@/types';
 import { updateProfileSettings } from '@/lib/actions';
@@ -100,7 +100,7 @@ export default function ProfileSettingsForm({
       >
         <div>
           <div className="mb-2 block">
-            <Label htmlFor="fullName" value="Full Name" />
+            <Label htmlFor="fullName">Full Name</Label>
           </div>
           <TextInput
             onChange={handleInputChange}
@@ -110,12 +110,14 @@ export default function ProfileSettingsForm({
             required
             defaultValue={state.formFields.fullName}
             color={state.validationErrors?.fullName && 'failure'}
-            helperText={state.validationErrors?.fullName}
           />
+          {state.validationErrors?.fullName && (
+            <HelperText>{state.validationErrors?.fullName}</HelperText>
+          )}
         </div>
         <div className="mb-1">
           <div className="mb-2 block">
-            <Label htmlFor="username" value="Username" />
+            <Label htmlFor="username">Username</Label>
           </div>
           <TextInput
             name="username"
@@ -123,8 +125,8 @@ export default function ProfileSettingsForm({
             type="text"
             disabled
             value={user.username}
-            helperText="You cannot change the username."
           />
+          <HelperText>You cannot change the username.</HelperText>
         </div>
         <AvatarFileInput
           handleFileInputChange={handleFileInputChange}

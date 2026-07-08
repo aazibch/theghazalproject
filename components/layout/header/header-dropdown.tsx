@@ -1,7 +1,15 @@
 'use client';
 
 import { IUser } from '@/types';
-import { Avatar, Button, Dropdown, Navbar } from 'flowbite-react';
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  DropdownHeader,
+  DropdownItem,
+  Navbar,
+  NavbarToggle
+} from 'flowbite-react';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -33,43 +41,47 @@ export default function HeaderDropdown({
           }
           placement="bottom-end"
         >
-          <Dropdown.Header>
+          <DropdownHeader>
             <span className="block text-sm font-semibold">
               {sessionUser.fullName}
             </span>
             <span className="block truncate text-sm font-medium">
               <a href={`mailto:${sessionUser.email}`}>{sessionUser.email}</a>
             </span>
-          </Dropdown.Header>
-          <Dropdown.Item
+          </DropdownHeader>
+          <DropdownItem
             onClick={() => router.push(`/users/${sessionUser.username}`)}
           >
             Profile
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => router.push('/settings')}>
+          </DropdownItem>
+          <DropdownItem onClick={() => router.push('/settings')}>
             Settings
-          </Dropdown.Item>
+          </DropdownItem>
           {sessionUser.role === 'admin' && (
-            <Dropdown.Item onClick={() => router.push('/admin/control-panel')}>
+            <DropdownItem onClick={() => router.push('/admin/control-panel')}>
               Control Panel
-            </Dropdown.Item>
+            </DropdownItem>
           )}
-          <Dropdown.Item
+          <DropdownItem
             onClick={() => signOut({ callbackUrl: '/', redirect: true })}
           >
             Sign out
-          </Dropdown.Item>
+          </DropdownItem>
         </Dropdown>
       ) : (
         <Link className="hover:no-underline" href="/auth/login">
-          <Button color="blue" gradientDuoTone="purpleToBlue" outline>
+          <Button
+            className="hover:bg-gradient-to-bl hover:from-purple-600 hover:to-blue-500 focus:ring-blue-300 hover:border-0"
+            color="blue"
+            outline
+          >
             <HiOutlineUserCircle className="mr-1 h-5 w-5" />
             Login
           </Button>
         </Link>
       )}
 
-      <Navbar.Toggle className="ml-2" />
+      <NavbarToggle className="ml-2" />
     </div>
   );
 }

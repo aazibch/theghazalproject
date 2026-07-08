@@ -25,13 +25,17 @@ export default function HeroSection() {
 
         <div className="flex justify-center gap-4">
           <Link className="hover:no-underline" href="/auth/signup">
-            <Button color="blue" gradientDuoTone="purpleToBlue" size="lg" pill>
+            <Button
+              className="bg-gradient-to-br from-purple-600 to-blue-500 text-white hover:bg-gradient-to-bl focus:ring-blue-300"
+              size="lg"
+              pill
+            >
               Join Us
             </Button>
           </Link>
           <Link className="hover:no-underline" href="/collective-ghazal">
             <Button
-              className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:bg-gradient-to-bl focus:ring-cyan-300" // Using gradientDuoTone for this effect doesn't work
+              className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:bg-gradient-to-bl focus:ring-cyan-300"
               size="lg"
               pill
             >

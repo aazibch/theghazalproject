@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Modal } from 'flowbite-react';
+import { Modal, ModalHeader } from 'flowbite-react';
 
 import ContributeSuccessScreen from './contribute-success-screen';
 import ContributeForm from './contribute-form';
@@ -23,7 +23,7 @@ export default function ContributeModal({
       show={openContributeModal}
       onClose={() => setOpenContributeModalHandler(false)}
     >
-      <Modal.Header>Contribute a Stanza to the Collective Ghazal</Modal.Header>
+      <ModalHeader>Contribute a Stanza to the Collective Ghazal</ModalHeader>
       {isSuccess ? (
         <ContributeSuccessScreen
           setIsSuccessHandler={setIsSuccessHandler}

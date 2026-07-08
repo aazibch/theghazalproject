@@ -2,7 +2,7 @@
 
 import { useActionState, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Button, Label, Spinner, TextInput } from 'flowbite-react';
+import { Button, HelperText, Label, Spinner, TextInput } from 'flowbite-react';
 
 import PasswordFailureScreen from './password-failure-screen';
 import PasswordSuccessScreen from './password-success-screen';
@@ -28,7 +28,7 @@ export default function PasswordForm() {
       <p>Hello</p>
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="newPassword" value="New Password" />
+          <Label htmlFor="newPassword">New Password</Label>
         </div>
         <TextInput
           id="newPassword"
@@ -36,12 +36,14 @@ export default function PasswordForm() {
           type="password"
           required
           color={formState.validationErrors?.newPassword && 'failure'}
-          helperText={formState.validationErrors?.newPassword}
         />
+        {formState.validationErrors?.newPassword && (
+          <HelperText>{formState.validationErrors?.newPassword}</HelperText>
+        )}
       </div>
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="newPasswordConfirmation" value="Confirm Password" />
+          <Label htmlFor="newPasswordConfirmation">Confirm Password</Label>
         </div>
         <TextInput
           id="newPasswordConfirmation"
@@ -51,8 +53,12 @@ export default function PasswordForm() {
           color={
             formState.validationErrors?.newPasswordConfirmation && 'failure'
           }
-          helperText={formState.validationErrors?.newPasswordConfirmation}
         />
+        {formState.validationErrors?.newPasswordConfirmation && (
+          <HelperText>
+            {formState.validationErrors?.newPasswordConfirmation}
+          </HelperText>
+        )}
       </div>
       <div className="flex justify-end">
         <Button type="submit" disabled={pending} color="blue">
