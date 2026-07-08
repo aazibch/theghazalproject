@@ -44,14 +44,14 @@ export default function EmailSettingsForm({ user }: EmailSettingsFormProps) {
           required
           color={state.validationErrors?.email && 'failure'}
         />
-        {state.isSuccess ||
-          (state.validationErrors?.email && (
-            <HelperText>
-              {(state.isSuccess &&
-                'We have sent a confirmation link to your new email.') ||
-                state.validationErrors?.email}
-            </HelperText>
-          ))}
+
+        {(state.isSuccess || state.validationErrors?.email) && (
+          <HelperText color={state.validationErrors?.email && 'failure'}>
+            {(state.isSuccess &&
+              'We have sent a confirmation link to your new email.') ||
+              state.validationErrors?.email}
+          </HelperText>
+        )}
       </div>
       <div>
         <Button

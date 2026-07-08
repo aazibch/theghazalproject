@@ -97,7 +97,7 @@ export default function ContactForm({
           onChange={formik.handleChange}
         />
         {formik.errors.fullName && (
-          <HelperText>{formik.errors.fullName}</HelperText>
+          <HelperText color="failure">{formik.errors.fullName}</HelperText>
         )}
       </div>
       <div>
@@ -113,7 +113,9 @@ export default function ContactForm({
           value={formik.values.email}
           onChange={formik.handleChange}
         />
-        {formik.errors.email && <HelperText>{formik.errors.email}</HelperText>}
+        {formik.errors.email && (
+          <HelperText color="failure">{formik.errors.email}</HelperText>
+        )}
       </div>
       <div>
         <div className="mb-2 block">
@@ -129,7 +131,7 @@ export default function ContactForm({
           onChange={formik.handleChange}
         />
         {formik.errors.message && (
-          <HelperText>{formik.errors.message}</HelperText>
+          <HelperText color="failure">{formik.errors.message}</HelperText>
         )}
       </div>
       <Button type="submit" color="blue">

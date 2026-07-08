@@ -74,7 +74,7 @@ export default function SignupForm() {
           color={formik.errors.fullName && 'failure'}
         />
         {formik.errors.fullName && (
-          <HelperText>{formik.errors.fullName}</HelperText>
+          <HelperText color="failure">{formik.errors.fullName}</HelperText>
         )}
       </div>
       <div>
@@ -91,7 +91,7 @@ export default function SignupForm() {
           color={formik.errors.username && 'failure'}
         />
         {formik.errors.username && (
-          <HelperText>{formik.errors.username}</HelperText>
+          <HelperText color="failure">{formik.errors.username}</HelperText>
         )}
       </div>
       <div>
@@ -107,7 +107,9 @@ export default function SignupForm() {
           onChange={formik.handleChange}
           color={formik.errors.email && 'failure'}
         />
-        {formik.errors.email && <HelperText>{formik.errors.email}</HelperText>}
+        {formik.errors.email && (
+          <HelperText color="failure">{formik.errors.email}</HelperText>
+        )}
       </div>
       <div>
         <div className="mb-2 block">
@@ -122,7 +124,7 @@ export default function SignupForm() {
           color={formik.errors.password && 'failure'}
         />
         {formik.errors.password && (
-          <HelperText>{formik.errors.password}</HelperText>
+          <HelperText color="failure">{formik.errors.password}</HelperText>
         )}
       </div>
       <div>
@@ -139,7 +141,9 @@ export default function SignupForm() {
           color={formik.errors.passwordConfirmation && 'failure'}
         />
         {formik.errors.passwordConfirmation && (
-          <HelperText>{formik.errors.passwordConfirmation}</HelperText>
+          <HelperText color="failure">
+            {formik.errors.passwordConfirmation}
+          </HelperText>
         )}
       </div>
 

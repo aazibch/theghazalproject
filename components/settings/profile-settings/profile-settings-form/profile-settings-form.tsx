@@ -112,7 +112,9 @@ export default function ProfileSettingsForm({
             color={state.validationErrors?.fullName && 'failure'}
           />
           {state.validationErrors?.fullName && (
-            <HelperText>{state.validationErrors?.fullName}</HelperText>
+            <HelperText color="failure">
+              {state.validationErrors?.fullName}
+            </HelperText>
           )}
         </div>
         <div className="mb-1">

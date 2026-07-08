@@ -38,7 +38,9 @@ export default function PasswordForm() {
           color={formState.validationErrors?.newPassword && 'failure'}
         />
         {formState.validationErrors?.newPassword && (
-          <HelperText>{formState.validationErrors?.newPassword}</HelperText>
+          <HelperText color="failure">
+            {formState.validationErrors?.newPassword}
+          </HelperText>
         )}
       </div>
       <div>
@@ -55,7 +57,7 @@ export default function PasswordForm() {
           }
         />
         {formState.validationErrors?.newPasswordConfirmation && (
-          <HelperText>
+          <HelperText color="failure">
             {formState.validationErrors?.newPasswordConfirmation}
           </HelperText>
         )}

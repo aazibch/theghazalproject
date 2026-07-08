@@ -44,7 +44,9 @@ export default function PasswordSettingsForm() {
           color={state.validationErrors?.currentPassword && 'failure'}
         />
         {state.validationErrors?.currentPassword && (
-          <HelperText>{state.validationErrors?.currentPassword}</HelperText>
+          <HelperText color="failure">
+            {state.validationErrors?.currentPassword}
+          </HelperText>
         )}
       </div>
       <div className="mb-1">
@@ -60,7 +62,9 @@ export default function PasswordSettingsForm() {
           color={state.validationErrors?.newPassword && 'failure'}
         />
         {state.validationErrors?.newPassword && (
-          <HelperText>{state.validationErrors?.newPassword}</HelperText>
+          <HelperText color="failure">
+            {state.validationErrors?.newPassword}
+          </HelperText>
         )}
       </div>
       <div className="mb-1">
@@ -76,7 +80,7 @@ export default function PasswordSettingsForm() {
           color={state.validationErrors?.newPasswordConfirmation && 'failure'}
         />
         {state.validationErrors?.newPasswordConfirmation && (
-          <HelperText>
+          <HelperText color="failure">
             {state.validationErrors?.newPasswordConfirmation}
           </HelperText>
         )}
