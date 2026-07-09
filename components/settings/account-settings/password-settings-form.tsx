@@ -1,7 +1,7 @@
 'use client';
 
 import { useActionState, useEffect } from 'react';
-import { Button, Label, Spinner, TextInput } from 'flowbite-react';
+import { Button, HelperText, Label, Spinner, TextInput } from 'flowbite-react';
 
 import { updateAccountPasswordSettings } from '@/lib/actions';
 import { useFormChangeTracker } from '@/hooks/use-field-change-tracker';
@@ -33,7 +33,7 @@ export default function PasswordSettingsForm() {
 
       <div className="mb-1">
         <div className="mb-2 block">
-          <Label htmlFor="currentPassword" value="Current Password" />
+          <Label htmlFor="currentPassword">Current Password</Label>
         </div>
         <TextInput
           name="currentPassword"
@@ -42,12 +42,16 @@ export default function PasswordSettingsForm() {
           required
           onChange={handleInputChange}
           color={state.validationErrors?.currentPassword && 'failure'}
-          helperText={state.validationErrors?.currentPassword}
         />
+        {state.validationErrors?.currentPassword && (
+          <HelperText color="failure">
+            {state.validationErrors?.currentPassword}
+          </HelperText>
+        )}
       </div>
       <div className="mb-1">
         <div className="mb-2 block">
-          <Label htmlFor="newPassword" value="New Password" />
+          <Label htmlFor="newPassword">New Password</Label>
         </div>
         <TextInput
           name="newPassword"
@@ -56,15 +60,16 @@ export default function PasswordSettingsForm() {
           required
           onChange={handleInputChange}
           color={state.validationErrors?.newPassword && 'failure'}
-          helperText={state.validationErrors?.newPassword}
         />
+        {state.validationErrors?.newPassword && (
+          <HelperText color="failure">
+            {state.validationErrors?.newPassword}
+          </HelperText>
+        )}
       </div>
       <div className="mb-1">
         <div className="mb-2 block">
-          <Label
-            htmlFor="newPasswordConfirmation"
-            value="Password Confirmation"
-          />
+          <Label htmlFor="newPasswordConfirmation">Password Confirmation</Label>
         </div>
         <TextInput
           name="newPasswordConfirmation"
@@ -73,8 +78,12 @@ export default function PasswordSettingsForm() {
           required
           onChange={handleInputChange}
           color={state.validationErrors?.newPasswordConfirmation && 'failure'}
-          helperText={state.validationErrors?.newPasswordConfirmation}
         />
+        {state.validationErrors?.newPasswordConfirmation && (
+          <HelperText color="failure">
+            {state.validationErrors?.newPasswordConfirmation}
+          </HelperText>
+        )}
       </div>
       <div>
         <Button

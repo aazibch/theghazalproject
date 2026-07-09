@@ -36,9 +36,7 @@ export default function ArticleCard({
           color="blue"
           className="w-full"
           theme={{
-            inner: {
-              base: 'flex items-center transition-all duration-200'
-            }
+            base: 'flex items-center transition-all duration-200'
           }}
         >
           Read More <HiArrowRight className="ml-2" />

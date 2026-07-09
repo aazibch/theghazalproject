@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { ThemeInit } from '@/.flowbite-react/init';
 import { Inter, Crimson_Text, Merriweather } from 'next/font/google';
 import './globals.css';
 import Layout from '@/components/layout/layout';
@@ -45,6 +46,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${crimson_text.variable} ${merriweather.variable}`}
       >
+        <ThemeInit />
         <AuthProvider>
           <Layout>{children}</Layout>
         </AuthProvider>

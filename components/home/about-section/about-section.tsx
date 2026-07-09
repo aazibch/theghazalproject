@@ -31,7 +31,10 @@ export default function AboutSection() {
         }
         contentButtons={
           <Link className="hover:no-underline" href="/about">
-            <Button color="blue" gradientDuoTone="purpleToBlue" pill>
+            <Button
+              className="bg-gradient-to-br from-purple-600 to-blue-500 text-white hover:bg-gradient-to-bl focus:ring-blue-300"
+              pill
+            >
               Learn More
             </Button>
           </Link>

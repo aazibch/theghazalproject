@@ -1,5 +1,13 @@
 import { useActionState, useEffect, useState } from 'react';
-import { Button, Modal, Spinner, TextInput } from 'flowbite-react';
+import {
+  Button,
+  HelperText,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  Spinner,
+  TextInput
+} from 'flowbite-react';
 
 import { submitColGhazalCouplet } from '@/lib/actions';
 import Link from 'next/link';
@@ -38,7 +46,7 @@ export default function ContributeForm({
   return (
     <>
       <form action={formAction}>
-        <Modal.Body className="flex items-center justify-center">
+        <ModalBody className="flex items-center justify-center">
           <div className="space-y-6">
             <div className="text-base leading-relaxed text-gray-500 space-y-2">
               <p>
@@ -77,8 +85,10 @@ export default function ContributeForm({
                   name="lineOne"
                   defaultValue={formState.formFields.lineOne}
                   color={formState.validationErrors?.lineOne && 'failure'}
-                  helperText={formState.validationErrors?.lineOne}
                 />
+                {formState.validationErrors?.lineOne && (
+                  <HelperText>{formState.validationErrors?.lineOne}</HelperText>
+                )}
               </div>
               <div>
                 <TextInput
@@ -87,13 +97,15 @@ export default function ContributeForm({
                   name="lineTwo"
                   defaultValue={formState.formFields.lineTwo}
                   color={formState.validationErrors?.lineTwo && 'failure'}
-                  helperText={formState.validationErrors?.lineTwo}
                 />
+                {formState.validationErrors?.lineTwo && (
+                  <HelperText>{formState.validationErrors?.lineTwo}</HelperText>
+                )}
               </div>
             </div>
           </div>
-        </Modal.Body>
-        <Modal.Footer>
+        </ModalBody>
+        <ModalFooter>
           {!isSuccess && (
             <Button
               className="w-20"
@@ -115,7 +127,7 @@ export default function ContributeForm({
           >
             Close
           </Button>
-        </Modal.Footer>
+        </ModalFooter>
       </form>
     </>
   );
