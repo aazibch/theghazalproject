@@ -41,15 +41,6 @@ export default function ControlPanelSidebar() {
           >
             Collective Ghazal
           </SidebarItem>
-          <SidebarItem
-            active={path === '/settings/account'}
-            className="hover:no-underline"
-            href="/settings/account"
-            icon={HiOutlineCog6Tooth}
-            as={Link}
-          >
-            Account
-          </SidebarItem>
         </SidebarItemGroup>
       </SidebarItems>
     </Sidebar>
