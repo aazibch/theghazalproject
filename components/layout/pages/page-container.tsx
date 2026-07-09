@@ -3,5 +3,7 @@ export default function PageContainer({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="max-w-screen-xl mx-auto px-4 py-12">{children}</div>;
+  return (
+    <div className="max-w-screen-xl mx-auto px-4 py-12 h-full">{children}</div>
+  );
 }

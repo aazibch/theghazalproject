@@ -44,7 +44,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${crimson_text.variable} ${merriweather.variable}`}
+        className={`${inter.variable} ${crimson_text.variable} ${merriweather.variable} h-full`}
       >
         <ThemeInit />
         <AuthProvider>
