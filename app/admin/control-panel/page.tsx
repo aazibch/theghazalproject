@@ -3,7 +3,7 @@
 import { redirect, usePathname } from 'next/navigation';
 import { useMediaQuery } from 'usehooks-ts';
 
-import ControlPanelLayout from '@/components/control-panel/control-panel-layout';
+import ControlPanelLayout from '@/components/control-panel/control-panel-layout/control-panel-layout';
 
 export default function ControlPanelPage() {
   // const path = usePathname();
@@ -15,7 +15,7 @@ export default function ControlPanelPage() {
 
   return (
     <ControlPanelLayout>
-      <p className="hidden">Settings Page</p>
+      <p className="hidden">Control Panel Page</p>
     </ControlPanelLayout>
   );
 }
