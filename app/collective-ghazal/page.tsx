@@ -6,7 +6,7 @@ import GhazalCouplet from '@/components/home/ghazal-section/ghazal-couplet';
 import PageContainer from '@/components/layout/pages/page-container';
 import PageHeader from '@/components/layout/pages/page-header';
 import ScrollToBottomButton from '@/components/ui/scroll-to-bottom-button';
-import { getColGhazalEntries } from '@/lib/actions';
+import { getAllApprovedColGhazalEntries } from '@/lib/actions';
 
 export const metadata = {
   title: 'Collective Ghazal | The Ghazal Project',
@@ -15,7 +15,7 @@ export const metadata = {
 };
 
 export default async function CollectiveGhazalPage() {
-  const entries = await getColGhazalEntries();
+  const entries = await getAllApprovedColGhazalEntries();
 
   return (
     <PageContainer>

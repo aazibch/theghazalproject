@@ -12,10 +12,29 @@ export const getRecentColGhazalEntriesFromDB = async () => {
   return recentEntries;
 };
 
-export const getAllColGhazalEntriesFromDB = async () => {
+export const getAllApprovedColGhazalEntriesFromDB = async () => {
   await dbConnect();
 
   const entries = await ColGhazalEntry.find({ approved: true })
+    .populate('user')
+    .sort({ createdAt: 1 });
+
+  return entries.map((e) => {
+    const docObject = e.toObject();
+
+    return {
+      ...docObject,
+      _id: docObject._id.toString()
+    };
+  });
+};
+
+// TODO: Refactor
+
+export const getAllColGhazalEntriesFromDB = async () => {
+  await dbConnect();
+
+  const entries = await ColGhazalEntry.find()
     .populate('user')
     .sort({ createdAt: 1 });
 

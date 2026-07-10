@@ -71,7 +71,7 @@ export default function ColGhazalButtons() {
           className="hover:no-underline"
           href="/articles/how-to-write-english-ghazal"
         >
-          <Button>Learn More</Button>
+          <Button color="light">Learn More</Button>
         </Link>
       </div>
     </>

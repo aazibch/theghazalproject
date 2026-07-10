@@ -23,6 +23,7 @@ import {
 } from './users';
 import {
   createColGhazalEntry,
+  getAllApprovedColGhazalEntriesFromDB,
   getAllColGhazalEntriesByUserFromDB,
   getAllColGhazalEntriesFromDB,
   getRecentColGhazalEntriesFromDB
@@ -257,7 +258,13 @@ export const getRecentColGhazalEntries = async () => {
   return recentEntries;
 };
 
-export const getColGhazalEntries = async () => {
+export const getAllApprovedColGhazalEntries = async () => {
+  const allEntries = await getAllApprovedColGhazalEntriesFromDB();
+
+  return allEntries;
+};
+
+export const getAllColGhazalEntries = async () => {
   const allEntries = await getAllColGhazalEntriesFromDB();
 
   return allEntries;

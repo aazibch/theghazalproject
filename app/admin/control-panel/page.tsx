@@ -1,21 +1,16 @@
-'use client';
+import { notFound } from 'next/navigation';
 
-import { redirect, usePathname } from 'next/navigation';
-import { useMediaQuery } from 'usehooks-ts';
+import { getValidServerSession } from '@/lib/auth';
+import config from '@/app/api/auth/[...nextauth]/config';
+import ControlPanel from '@/components/control-panel/control-panel';
 
-import ControlPanelLayout from '@/components/control-panel/control-panel-layout/control-panel-layout';
+export default async function ControlPanelPage() {
+  const session = await getValidServerSession(config);
 
-export default function ControlPanelPage() {
-  // const path = usePathname();
-  // const matches = useMediaQuery('(width >= 48rem)');
+  if (!session) {
+    notFound();
+  }
 
-  // if (path.endsWith('control-panel') && matches) {
-  //   redirect('/admin/control-panel/collective-ghazal');
-  // }
-
-  return (
-    <ControlPanelLayout>
-      <p className="hidden">Control Panel Page</p>
-    </ControlPanelLayout>
-  );
+  return <ControlPanel />;
 }
+// TODO: Create a better setup for protecting pages, possibly via middleware

@@ -1,3 +1,4 @@
+import { IColGhazalEntry, IUser } from '@/types';
 import {
   Button,
   ButtonGroup,
@@ -9,9 +10,13 @@ import {
   TableRow
 } from 'flowbite-react';
 
-export default function ColGhazalEntriesTable() {
+export default function ColGhazalEntriesTable({
+  entries
+}: {
+  entries: IColGhazalEntry[];
+}) {
   return (
-    <div className="m-5">
+    <div className="m-5 overflow-auto">
       <div className="flex justify-between items-center mb-5">
         <p className="ml-2 text-sm font-medium text-gray-500">Filter by:</p>
         <ButtonGroup>
@@ -35,7 +40,32 @@ export default function ColGhazalEntriesTable() {
             </TableRow>
           </TableHead>
           <TableBody className="divide-y">
-            <TableRow className="bg-white ">
+            {entries.map((e) => (
+              <TableRow className="bg-white">
+                <TableCell className="whitespace-nowrap font-medium text-gray-900 ">
+                  <p>{e.couplet[0]}</p>
+                  <p>{e.couplet[1]}</p>
+                </TableCell>
+                <TableCell>
+                  @{'username' in e.user && e.user.username}
+                </TableCell>
+                <TableCell>
+                  <time dateTime={e.createdAt}>
+                    {new Date(e.createdAt).toLocaleDateString('en-GB')}
+                  </time>
+                </TableCell>
+                <TableCell>{e.approved ? 'Approved' : 'Pending'}</TableCell>
+                <TableCell className="flex gap-1">
+                  <Button className="w-[5.5rem]" color="light" size="xs">
+                    Unapprove
+                  </Button>
+                  <Button color="red" size="xs">
+                    Delete
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+            <TableRow className="bg-white">
               <TableCell className="whitespace-nowrap font-medium text-gray-900 ">
                 <p>To understand my words one must know silence,</p>
                 <p>For these words emerge from the womb of silence.</p>
@@ -44,7 +74,7 @@ export default function ColGhazalEntriesTable() {
               <TableCell>9/7/2026</TableCell>
               <TableCell>Approved</TableCell>
               <TableCell className="flex gap-1">
-                <Button className="w-[5.5rem]" color="green" size="xs">
+                <Button className="w-[5.5rem]" color="light" size="xs">
                   Unapprove
                 </Button>
                 <Button color="red" size="xs">
@@ -52,7 +82,7 @@ export default function ColGhazalEntriesTable() {
                 </Button>
               </TableCell>
             </TableRow>
-            <TableRow className="bg-white ">
+            <TableRow className="bg-white">
               <TableCell className="whitespace-nowrap font-medium text-gray-900 ">
                 <p>In self-exile I speak to no one but you, beloved:</p>
                 <p>You who are the melodious voice of silence.</p>
@@ -61,7 +91,7 @@ export default function ColGhazalEntriesTable() {
               <TableCell>9/7/2026</TableCell>
               <TableCell>Pending</TableCell>
               <TableCell className="flex gap-1 justify-center">
-                <Button className="w-[5.5rem]" color="green" size="xs">
+                <Button className="w-[5.5rem]" color="light" size="xs">
                   Approve
                 </Button>
                 <Button color="red" size="xs">
