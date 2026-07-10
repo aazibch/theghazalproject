@@ -8,8 +8,7 @@ import {
   SidebarItemGroup,
   SidebarItems
 } from 'flowbite-react';
-import { HiOutlineCog6Tooth } from 'react-icons/hi2';
-import { HiOutlineUserCircle } from 'react-icons/hi2';
+import { HiOutlineUserGroup } from 'react-icons/hi2';
 
 export default function ControlPanelSidebar() {
   const path = usePathname();
@@ -36,7 +35,7 @@ export default function ControlPanelSidebar() {
             active={path === '/admin/control-panel/collective-ghazal'}
             className="hover:no-underline"
             href="/admin/control-panel/collective-ghazal"
-            icon={HiOutlineUserCircle}
+            icon={HiOutlineUserGroup}
             as={Link}
           >
             Collective Ghazal
