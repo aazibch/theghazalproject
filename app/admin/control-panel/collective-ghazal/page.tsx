@@ -1,4 +1,4 @@
-import ColGhazalEntriesTable from '@/components/control-panel/col-ghazal-controls/col-ghazal-entries-table';
+import ColGhazalEntriesTable from '@/components/control-panel/col-ghazal-controls/col-ghazal-table/col-ghazal-entries';
 import ControlPanelLayout from '@/components/control-panel/control-panel-layout/control-panel-layout';
 import { getAllColGhazalEntries } from '@/lib/actions';
 

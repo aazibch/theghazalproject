@@ -10,9 +10,9 @@ export default function ControlPanelLayout({
   return (
     <PageContainer>
       <PageHeader heading="Control Panel" />
-      <div className="flex border rounded-md mt-[-1rem] h-[40rem] overflow-x-scroll">
+      <div className="flex border rounded-md mt-[-1rem] h-[40rem]">
         <ControlPanelSidebar />
-        {children}
+        <div className="m-5 w-full overflow-x-auto">{children}</div>
       </div>
     </PageContainer>
   );
