@@ -24,12 +24,11 @@ export const getAllApprovedColGhazalEntriesFromDB = async () => {
 
     return {
       ...docObject,
-      _id: docObject._id.toString()
+      _id: docObject._id.toString(),
+      user: { ...docObject.user, _id: docObject.user._id.toString() }
     };
   });
 };
-
-// TODO: Refactor
 
 export const getAllColGhazalEntriesFromDB = async () => {
   await dbConnect();
@@ -43,7 +42,8 @@ export const getAllColGhazalEntriesFromDB = async () => {
 
     return {
       ...docObject,
-      _id: docObject._id.toString()
+      _id: docObject._id.toString(),
+      user: { ...docObject.user, _id: docObject.user._id.toString() }
     };
   });
 };
