@@ -24,6 +24,7 @@ import {
 import {
   approveOrUnapproveColGhazalEntry,
   createColGhazalEntry,
+  deleteColGhazalEntry,
   getAllApprovedColGhazalEntriesFromDB,
   getAllColGhazalEntriesByUserFromDB,
   getAllColGhazalEntriesFromDB,
@@ -414,8 +415,6 @@ export async function performAdminActionOnColGhazalEntry(
   id: string,
   action: 'approve' | 'unapprove' | 'delete'
 ) {
-  // await new Promise((resolve) => setTimeout(resolve, 2000));
-
   const session = await getValidServerSession(config);
 
   if (!session) {
@@ -428,9 +427,15 @@ export async function performAdminActionOnColGhazalEntry(
 
   if (action === 'approve' || action === 'unapprove') {
     await approveOrUnapproveColGhazalEntry(id, action);
-    revalidatePath('/collective-ghazal');
-    revalidatePath('/admin/control-panel/collective-ghazal');
   }
+
+  if (action === 'delete') {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await deleteColGhazalEntry(id);
+  }
+
+  revalidatePath('/collective-ghazal');
+  revalidatePath('/admin/control-panel/collective-ghazal');
 }
 
 export async function redirectAfterAuth() {

@@ -92,3 +92,8 @@ export const approveOrUnapproveColGhazalEntry = async (
     runValidators: true
   });
 };
+
+export const deleteColGhazalEntry = async (id: string) => {
+  await dbConnect();
+  await ColGhazalEntry.findByIdAndDelete(id);
+};
