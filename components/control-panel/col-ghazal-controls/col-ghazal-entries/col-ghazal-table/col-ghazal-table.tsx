@@ -1,6 +1,5 @@
-import { IColGhazalEntry } from '@/types';
+import Link from 'next/link';
 import {
-  Button,
   Table,
   TableBody,
   TableCell,
@@ -8,7 +7,9 @@ import {
   TableHeadCell,
   TableRow
 } from 'flowbite-react';
-import Link from 'next/link';
+
+import { IColGhazalEntry } from '@/types';
+import ActionButtons from './action-buttons';
 
 export default function ColGhazalTable({
   entries
@@ -53,12 +54,7 @@ export default function ColGhazalTable({
                 </TableCell>
                 <TableCell>{e.approved ? 'Approved' : 'Pending'}</TableCell>
                 <TableCell className="flex gap-1">
-                  <Button className="w-[5.5rem]" color="light" size="xs">
-                    Unapprove
-                  </Button>
-                  <Button color="red" size="xs">
-                    Delete
-                  </Button>
+                  <ActionButtons id={e._id.toString()} approved={e.approved} />
                 </TableCell>
               </TableRow>
             );

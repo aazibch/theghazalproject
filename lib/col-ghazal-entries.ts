@@ -79,3 +79,16 @@ export const createColGhazalEntry = async (
   await dbConnect();
   await ColGhazalEntry.create(colGhazalEntry);
 };
+
+export const approveOrUnapproveColGhazalEntry = async (
+  id: string,
+  action: 'approve' | 'unapprove'
+) => {
+  await dbConnect();
+
+  const updates = { approved: action === 'approve' };
+
+  await ColGhazalEntry.findByIdAndUpdate(id, updates, {
+    runValidators: true
+  });
+};

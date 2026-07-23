@@ -2,7 +2,7 @@
 
 import { IColGhazalEntry } from '@/types';
 
-import ColGhazalTable from './col-ghazal-table';
+import ColGhazalTable from './col-ghazal-table/col-ghazal-table';
 import ColGhazalEntriesFilterButtons from './col-ghazal-entries-filter-buttons';
 import { useState } from 'react';
 

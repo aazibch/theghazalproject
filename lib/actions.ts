@@ -22,6 +22,7 @@ import {
   updateUserInDB
 } from './users';
 import {
+  approveOrUnapproveColGhazalEntry,
   createColGhazalEntry,
   getAllApprovedColGhazalEntriesFromDB,
   getAllColGhazalEntriesByUserFromDB,
@@ -407,6 +408,29 @@ export async function resetPassword(
   return {
     isSuccess: true
   };
+}
+
+export async function performAdminActionOnColGhazalEntry(
+  id: string,
+  action: 'approve' | 'unapprove' | 'delete'
+) {
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  const session = await getValidServerSession(config);
+
+  if (!session) {
+    throw new Error('Unauthorized.');
+  }
+
+  if (session.user.role !== 'admin') {
+    throw new Error('Forbidden');
+  }
+
+  if (action === 'approve' || action === 'unapprove') {
+    await approveOrUnapproveColGhazalEntry(id, action);
+    revalidatePath('/collective-ghazal');
+    revalidatePath('/admin/control-panel/collective-ghazal');
+  }
 }
 
 export async function redirectAfterAuth() {
