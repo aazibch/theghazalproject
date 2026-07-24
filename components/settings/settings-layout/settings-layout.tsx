@@ -1,5 +1,4 @@
-import PageContainer from '@/components/layout/pages/page-container';
-import PageHeader from '@/components/layout/pages/page-header';
+import PageWithSidebar from '@/components/layout/pages/page-with-sidebar';
 import SettingsSidebar from './settings-sidebar';
 
 export default function SettingsLayout({
@@ -8,12 +7,12 @@ export default function SettingsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <PageContainer>
-      <PageHeader heading="Settings" />
-      <div className="flex border rounded-md mt-[-1rem] h-[45rem]">
-        <SettingsSidebar />
-        {children}
-      </div>
-    </PageContainer>
+    <PageWithSidebar
+      title="Settings"
+      sidebar={<SettingsSidebar />}
+      contentClassName="h-[45rem]"
+    >
+      {children}
+    </PageWithSidebar>
   );
 }

@@ -1,5 +1,4 @@
-import PageContainer from '@/components/layout/pages/page-container';
-import PageHeader from '@/components/layout/pages/page-header';
+import PageWithSidebar from '@/components/layout/pages/page-with-sidebar';
 import ControlPanelSidebar from './control-panel-sidebar';
 
 export default function ControlPanelLayout({
@@ -8,12 +7,8 @@ export default function ControlPanelLayout({
   children: React.ReactNode;
 }) {
   return (
-    <PageContainer>
-      <PageHeader heading="Control Panel" />
-      <div className="flex border rounded-md mt-[-1rem] h-[40rem]">
-        <ControlPanelSidebar />
-        {children}
-      </div>
-    </PageContainer>
+    <PageWithSidebar title="Control Panel" sidebar={<ControlPanelSidebar />}>
+      {children}
+    </PageWithSidebar>
   );
 }
