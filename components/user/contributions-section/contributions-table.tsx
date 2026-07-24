@@ -1,7 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from 'flowbite-react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeadCell,
+  TableRow
+} from 'flowbite-react';
 import { IColGhazalEntry } from '@/types';
 
 export default function ContributionsTable({
@@ -13,13 +20,15 @@ export default function ContributionsTable({
     <div className="overflow-x-auto">
       <Table>
         <TableHead>
-          <TableHeadCell>Couplet</TableHeadCell>
-          <TableHeadCell className="hidden md:block">
-            Date Submitted
-          </TableHeadCell>
-          <TableHeadCell>
-            <span className="sr-only">View</span>
-          </TableHeadCell>
+          <TableRow>
+            <TableHeadCell>Couplet</TableHeadCell>
+            <TableHeadCell className="hidden md:block">
+              Date Submitted
+            </TableHeadCell>
+            <TableHeadCell>
+              <span className="sr-only">View</span>
+            </TableHeadCell>
+          </TableRow>
         </TableHead>
         <TableBody className="divide-y">
           {contributions.map((e) => (
