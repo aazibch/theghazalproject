@@ -12,7 +12,8 @@ export default function ControlPanelLayout({
       <PageHeader heading="Control Panel" />
       <div className="flex border rounded-md mt-[-1rem] h-[40rem]">
         <ControlPanelSidebar />
-        <div className="m-5 w-full overflow-x-auto">{children}</div>
+        {/* <div className="m-5 w-full overflow-x-auto">{children}</div> */}
+        {children}
       </div>
     </PageContainer>
   );

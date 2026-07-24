@@ -7,7 +7,9 @@ export default async function CollectiveGhazalControlsPage() {
 
   return (
     <ControlPanelLayout>
-      <ColGhazalEntries entries={entries} />
+      <div className="m-5 w-full overflow-x-auto">
+        <ColGhazalEntries entries={entries} />
+      </div>
     </ControlPanelLayout>
   );
 }
