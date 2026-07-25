@@ -35,6 +35,7 @@ export interface SessionUser {
   username: string;
   // email: string;
   // profilePicture: string;
+  role: 'user' | 'admin';
 }
 
 export interface TokenUser {
@@ -43,6 +44,7 @@ export interface TokenUser {
   username: string;
   // email: string;
   // profilePicture: string;
+  role: 'user' | 'admin';
 }
 
 export type AuthRequest = Pick<

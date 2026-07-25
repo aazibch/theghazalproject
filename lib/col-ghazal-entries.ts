@@ -12,7 +12,7 @@ export const getRecentColGhazalEntriesFromDB = async () => {
   return recentEntries;
 };
 
-export const getAllColGhazalEntriesFromDB = async () => {
+export const getAllApprovedColGhazalEntriesFromDB = async () => {
   await dbConnect();
 
   const entries = await ColGhazalEntry.find({ approved: true })
@@ -24,7 +24,26 @@ export const getAllColGhazalEntriesFromDB = async () => {
 
     return {
       ...docObject,
-      _id: docObject._id.toString()
+      _id: docObject._id.toString(),
+      user: { ...docObject.user, _id: docObject.user._id.toString() }
+    };
+  });
+};
+
+export const getAllColGhazalEntriesFromDB = async () => {
+  await dbConnect();
+
+  const entries = await ColGhazalEntry.find()
+    .populate('user')
+    .sort({ createdAt: 1 });
+
+  return entries.map((e) => {
+    const docObject = e.toObject();
+
+    return {
+      ...docObject,
+      _id: docObject._id.toString(),
+      user: { ...docObject.user, _id: docObject.user._id.toString() }
     };
   });
 };
@@ -59,4 +78,22 @@ export const createColGhazalEntry = async (
 
   await dbConnect();
   await ColGhazalEntry.create(colGhazalEntry);
+};
+
+export const approveOrUnapproveColGhazalEntry = async (
+  id: string,
+  action: 'approve' | 'unapprove'
+) => {
+  await dbConnect();
+
+  const updates = { approved: action === 'approve' };
+
+  await ColGhazalEntry.findByIdAndUpdate(id, updates, {
+    runValidators: true
+  });
+};
+
+export const deleteColGhazalEntry = async (id: string) => {
+  await dbConnect();
+  await ColGhazalEntry.findByIdAndDelete(id);
 };

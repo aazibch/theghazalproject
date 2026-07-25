@@ -110,6 +110,7 @@ const config = {
       if (user) {
         token._id = user._id;
         token.username = user.username;
+        token.role = user.role;
         token.signInDate = Date.now();
       }
 
@@ -125,6 +126,7 @@ const config = {
     async session({ session, token }: { session: Session; token: JWT }) {
       session.user._id = token._id;
       session.user.username = token.username;
+      session.user.role = token.role;
       session.signInDate = token.signInDate;
 
       return session;

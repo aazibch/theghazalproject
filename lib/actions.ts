@@ -22,7 +22,10 @@ import {
   updateUserInDB
 } from './users';
 import {
+  approveOrUnapproveColGhazalEntry,
   createColGhazalEntry,
+  deleteColGhazalEntry,
+  getAllApprovedColGhazalEntriesFromDB,
   getAllColGhazalEntriesByUserFromDB,
   getAllColGhazalEntriesFromDB,
   getRecentColGhazalEntriesFromDB
@@ -257,7 +260,13 @@ export const getRecentColGhazalEntries = async () => {
   return recentEntries;
 };
 
-export const getColGhazalEntries = async () => {
+export const getAllApprovedColGhazalEntries = async () => {
+  const allEntries = await getAllApprovedColGhazalEntriesFromDB();
+
+  return allEntries;
+};
+
+export const getAllColGhazalEntries = async () => {
   const allEntries = await getAllColGhazalEntriesFromDB();
 
   return allEntries;
@@ -400,6 +409,33 @@ export async function resetPassword(
   return {
     isSuccess: true
   };
+}
+
+export async function performAdminActionOnColGhazalEntry(
+  id: string,
+  action: 'approve' | 'unapprove' | 'delete'
+) {
+  const session = await getValidServerSession(config);
+
+  if (!session) {
+    throw new Error('Unauthorized.');
+  }
+
+  if (session.user.role !== 'admin') {
+    throw new Error('Forbidden');
+  }
+
+  if (action === 'approve' || action === 'unapprove') {
+    await approveOrUnapproveColGhazalEntry(id, action);
+  }
+
+  if (action === 'delete') {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await deleteColGhazalEntry(id);
+  }
+
+  revalidatePath('/collective-ghazal');
+  revalidatePath('/admin/control-panel/collective-ghazal');
 }
 
 export async function redirectAfterAuth() {
