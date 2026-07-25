@@ -27,7 +27,19 @@ export default function AvatarFileInput({
   return (
     <div className="flex">
       <div className="shrink-0 flex flex-col mr-4">
-        <Avatar img={avatarPreview} rounded size="lg" className="mb-2" />
+        <Avatar
+          theme={{
+            root: {
+              img: {
+                base: 'object-cover'
+              }
+            }
+          }}
+          img={avatarPreview}
+          rounded
+          size="lg"
+          className="mb-2"
+        />
 
         {avatarPreview === userProfilePicture &&
           userProfilePicture !== DEFAULT_PROFILE_PICTURE && (
@@ -46,6 +58,7 @@ export default function AvatarFileInput({
           id="file-upload"
           ref={avatarInputRef}
           onChange={handleFileInputChange}
+          accept="image/png, image/jpeg"
           theme={{
             base: 'w-full'
           }}
