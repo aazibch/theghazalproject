@@ -1,13 +1,21 @@
 'use client';
 
 import { useActionState, useEffect, useRef, useState } from 'react';
-import { Button, HelperText, Label, Spinner, TextInput } from 'flowbite-react';
+import {
+  Avatar,
+  Button,
+  HelperText,
+  Label,
+  Spinner,
+  TextInput
+} from 'flowbite-react';
 
 import { IUser } from '@/types';
 import { updateProfileSettings } from '@/lib/actions';
 import { DEFAULT_PROFILE_PICTURE } from '@/constants';
 import AvatarFileInput from './avatar-file-input';
 import { useFormChangeTracker } from '@/hooks/use-field-change-tracker';
+import AvatarEditorModal from './avatar-editor-modal';
 
 interface ProfileSettingsFormProps {
   user: {
@@ -25,6 +33,11 @@ export default function ProfileSettingsForm({
   const [avatarPreview, setAvatarPreview] = useState<string>(
     DEFAULT_PROFILE_PICTURE
   );
+  const [openAvatarEditorModal, setOpenAvatarEditorModal] = useState(false);
+
+  const setOpenAvatarEditorModalHandler = (value: boolean) => {
+    setOpenAvatarEditorModal(value);
+  };
 
   const [state, formAction, pending] = useActionState(
     updateProfileSettings.bind(null, isProfilePictureRemoved),
@@ -89,6 +102,8 @@ export default function ProfileSettingsForm({
       };
 
       reader.readAsDataURL(profilePicture);
+
+      setOpenAvatarEditorModal(true);
     }
   };
 
@@ -98,6 +113,13 @@ export default function ProfileSettingsForm({
         action={formAction}
         className="flex max-w-md flex-col gap-4 mx-auto"
       >
+        <AvatarEditorModal
+          openAvatarEditorModal={openAvatarEditorModal}
+          avatarPreview={avatarPreview}
+          avatarInputRef={avatarInputRef}
+          setOpenAvatarEditorModalHandler={setOpenAvatarEditorModalHandler}
+          setAvatarPreviewHandler={setAvatarPreviewHandler}
+        />
         <div>
           <div className="mb-2 block">
             <Label htmlFor="fullName">Full Name</Label>

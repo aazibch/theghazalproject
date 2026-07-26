@@ -51,8 +51,8 @@ export const updateProfilePictureInCloud = async (
     throw new Error('Could not connect to cloud storage.');
   }
 
-  const extension = image.name.split('.').pop();
-  const fileName = `${userId}-${new Date().getTime()}.${extension}`;
+  // const extension = image.name.split('.').pop();
+  const fileName = `${userId}-${new Date().getTime()}.jpg`;
 
   // Resize profile picture.
   const resizedBufferImage = await resizeProfilePicture(image);
@@ -62,7 +62,7 @@ export const updateProfilePictureInCloud = async (
     Bucket: 'theghazalproject-user-avatars',
     Key: fileName,
     Body: resizedBufferImage,
-    ContentType: image.type
+    ContentType: 'image/jpeg'
   });
 
   return `https://theghazalproject-user-avatars.s3.ap-southeast-2.amazonaws.com/${fileName}`;
