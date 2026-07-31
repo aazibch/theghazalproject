@@ -4,9 +4,15 @@ import User from '@/models/User';
 import jwt from 'jsonwebtoken';
 import dbConnect from './dbConnect';
 import { AuthOptions, getServerSession } from 'next-auth';
+import { IUser } from '@/types';
 
 // Checks if password was changed after token issuance.
-export const getValidServerSession = async (config: AuthOptions) => {
+export const getValidServerSession = async (
+  config: AuthOptions
+): Promise<{
+  data: typeof session;
+  user: Omit<IUser, '_id'> & { _id: string };
+} | null> => {
   const session = await getServerSession(config);
 
   if (!session) {

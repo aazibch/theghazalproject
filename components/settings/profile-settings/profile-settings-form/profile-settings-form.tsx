@@ -7,6 +7,7 @@ import {
   HelperText,
   Label,
   Spinner,
+  Textarea,
   TextInput
 } from 'flowbite-react';
 
@@ -22,6 +23,7 @@ interface ProfileSettingsFormProps {
     fullName: IUser['fullName'];
     username: IUser['username'];
     profilePicture: IUser['profilePicture'];
+    bio: IUser['bio'];
   };
 }
 
@@ -45,7 +47,8 @@ export default function ProfileSettingsForm({
       isSuccess: null,
       formFields: {
         fullName: user.fullName,
-        avatar: null
+        avatar: null,
+        bio: user.bio
       }
     }
   );
@@ -160,6 +163,25 @@ export default function ProfileSettingsForm({
           setIsProfilePictureRemovedHandler={setIsProfilePictureRemovedHandler}
           setAvatarPreviewHandler={setAvatarPreviewHandler}
         />
+        <div className="mb-1">
+          <div className="mb-2 block">
+            <Label htmlFor="bio">Bio</Label>
+          </div>
+          <Textarea
+            className="resize-none"
+            onInput={handleInputChange}
+            name="bio"
+            id="bio"
+            defaultValue={state.formFields.bio}
+            rows={4}
+            color={state.validationErrors?.bio && 'failure'}
+          />
+          {state.validationErrors?.bio && (
+            <HelperText color="failure">
+              {state.validationErrors?.bio}
+            </HelperText>
+          )}
+        </div>
         <div>
           <Button
             disabled={pending || !enableSave}

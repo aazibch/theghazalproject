@@ -16,7 +16,8 @@ export default async function ProfileSettingsPage() {
             user={{
               fullName: session!.user.fullName,
               username: session!.user.username,
-              profilePicture: session!.user.profilePicture
+              profilePicture: session!.user.profilePicture,
+              bio: session!.user.bio ? session!.user.bio : ''
             }}
           />
         </div>

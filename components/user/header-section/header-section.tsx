@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { IUser } from '@/types';
 import AvatarWithEditButton from './avatar-with-edit-button/avatar-with-edit-button';
-import { useState } from 'react';
+import { use, useState } from 'react';
 
 export default function HeaderSection({ user }: { user: IUser }) {
   const [avatarFormKey, setAvatarFormKey] = useState<number>(0);
@@ -27,6 +27,14 @@ export default function HeaderSection({ user }: { user: IUser }) {
         <Link href={`/users/${user.username}`} className="text-sm">
           @{user.username}
         </Link>
+        {user.bio && (
+          <div
+            className="text-sm mt-4"
+            dangerouslySetInnerHTML={{
+              __html: user.bio.replace(/\n/g, '<br/>')
+            }}
+          ></div>
+        )}
       </div>
     </header>
   );

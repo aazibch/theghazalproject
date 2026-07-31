@@ -60,3 +60,5 @@ type SignupCredentials = Record<
 >;
 
 export type AuthCredentials = LoginCredentials | SignupCredentials | undefined;
+
+// TODO: Improve schemas, especially the one for user object.

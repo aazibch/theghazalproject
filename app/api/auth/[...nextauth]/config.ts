@@ -135,3 +135,5 @@ const config = {
 };
 
 export default config;
+
+// TODO: Create custom error routes for auth errors.

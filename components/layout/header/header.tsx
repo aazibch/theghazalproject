@@ -44,3 +44,5 @@ export default async function Header() {
     </Navbar>
   );
 }
+
+// TODO: Check to see if it's possible to reduce the number of requests to get user authentication status (and the user doc)

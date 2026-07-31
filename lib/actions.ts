@@ -34,6 +34,7 @@ import dbConnect from './dbConnect';
 import Email from './email';
 import { generateJwtToken, getValidServerSession } from './auth';
 import { formatValidationErrors } from './utils';
+import xss from 'xss';
 
 let s3: S3 | undefined;
 
@@ -99,8 +100,12 @@ export const updateProfileSettings = async (
     throw new Error('Session not found.');
   }
 
+  const rawBio = formData.get('bio') as string;
+  const normalizedBio = rawBio.replace(/(?:\r?\n){2,}/g, '\n');
+
   const formFields = {
-    fullName: formData.get('fullName') as string
+    fullName: formData.get('fullName') as string,
+    bio: xss(normalizedBio)
   };
 
   const profilePicture = formData.get('avatar') as File;
@@ -227,7 +232,7 @@ export const updateAccountPasswordSettings = async (
 
   await dbConnect();
 
-  const user = await User.findById(session.data.user._id).select('+password');
+  const user = await User.findById(session.data!.user._id).select('+password');
 
   if (
     !(await user.isPasswordCorrect(formFields.currentPassword, user.password))

@@ -79,11 +79,11 @@ const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
   passwordResetTokenExpirationDate: { type: Date, select: false },
   bio: {
     type: String,
-    maxlength: [50, generateValidationMessage('max', 'bio', 150)]
+    maxlength: [150, generateValidationMessage('max', 'bio', 150)]
   },
   laureateTitle: {
     type: String,
-    maxlength: [50, generateValidationMessage('max', 'title', 25)]
+    maxlength: [25, generateValidationMessage('max', 'title', 25)]
   }
 });
 

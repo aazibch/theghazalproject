@@ -46,8 +46,12 @@ export function useFormChangeTracker(initialValues: Record<string, any>) {
     setEnableSave(shouldEnable);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleInputChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.InputEvent<HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.currentTarget;
 
     const isChanged = value !== initialValues[name];
     changeMapRef.current[name] = isChanged;

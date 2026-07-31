@@ -98,7 +98,13 @@ export const signupSchema = Joi.object({
 });
 
 export const updateProfileSettingsSchema = Joi.object({
-  fullName: fullNameInputSchema
+  fullName: fullNameInputSchema,
+  bio: Joi.string()
+    .allow('')
+    .max(150)
+    .messages({
+      'string.max': generateValidationMessage('max', 'full name', 150)
+    })
 });
 
 export const updateAccountEmailSettingsSchema = Joi.object({
