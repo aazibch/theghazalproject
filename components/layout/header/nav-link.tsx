@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Navbar, NavbarLink } from 'flowbite-react';
+import { NavbarLink } from 'flowbite-react';
 import { usePathname } from 'next/navigation';
 
 interface NavLinkProps {
